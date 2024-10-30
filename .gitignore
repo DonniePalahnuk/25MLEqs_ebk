@@ -1,0 +1,51 @@
+
+# R config files - and project files 
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.hst
+
+# Core latex/pdflatex auxiliary files
+*.aux
+*.bbl
+*.blg
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.fls
+*.fdb_latexmk
+*.cb
+*.cb2
+*.lb
+
+# Intermediate documents
+*.dvi
+*.xdv
+
+# Bibliography auxiliary files
+*.acn
+*.acr
+*.alg
+*.ilg
+*.ind
+
+# version laetex lib file
+*.ver
+
+# Other temporary files 
+*~ 
+/*.bak 
+/*.run.xml 
+/*.synctex.gz 
+
+# Ignore auto-generated directories 
+**/auto/**
+
+# Ignore special directory 
+/figure_latex/
+/refmats/
+
+
