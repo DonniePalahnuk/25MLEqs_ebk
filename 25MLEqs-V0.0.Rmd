@@ -582,7 +582,7 @@ ggplot() +
 \normalsize
 
 \newpage
-# testing Python Integration (temp section - to remove later)
+## testing Python Integration (temp section - to remove later)
 Create a variable `x` in the Python session:
 
 ```{python}
@@ -733,6 +733,22 @@ Gradient descent works by always taking steps in the direction that most rapidly
 \setstretch{1.25}
 
 \newpage
+
+## Additonal ideas to explore 
+Stochastic Gradient Descent (SGD), Mini-Batch Gradient Descent, or concepts like Momentum and Learning Rate Scheduling.
+
+We could also explore more code examples, such as:
+
+Adding stopping criteria to our gradient descent R code, like a tolerance for change in cost function.
+
+Visualizing the convergence of the gradient descent with multiple starting points.
+
+Implementing different cost functions and comparing their optimization trajectories.
+Let me know which direction you’d like to explore, and I'll get started!
+
+
+\newpage
+
 
 # Normal Distribution
 
