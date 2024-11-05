@@ -1,7 +1,6 @@
 # Load the required libraries
 library(ggplot2)
 library(plotly)
-library(rgl)
 
 # Further Modified Objective function to make the minimum extremely pronounced
 objective_function <- function(x, y) {
@@ -18,7 +17,7 @@ partial_derivative_y <- function(x, y) {
 }
 
 # Gradient Descent Function
-gradient_descent_3d <- function(learning_rate = 0.01, iterations = 100, start_x = 1, start_y = 1) {
+gradient_descent_3d <- function(learning_rate, iterations, start_x, start_y) {
   x <- start_x
   y <- start_y
   
@@ -45,10 +44,10 @@ gradient_descent_3d <- function(learning_rate = 0.01, iterations = 100, start_x 
 }
 
 # Run the Gradient Descent with specific parameters
-learning_rate <- 0.01
-iterations <- 100
+learning_rate <- 0.005
+iterations <- 200
 start_x <- -2
-start_y <- 1
+start_y <- 2
 gd_result <- gradient_descent_3d(learning_rate, iterations, start_x, start_y)
 
 # Create a sequence for x and y to plot the surface
