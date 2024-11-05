@@ -3,18 +3,18 @@ library(ggplot2)
 library(plotly)
 library(rgl)
 
-# Objective function
+# Further Modified Objective function to make the minimum extremely pronounced
 objective_function <- function(x, y) {
-  return(x^3 - 3 * x * y + y^2 + 2 * x + y)
+  return(10 * (x^4) - 15 * (x^2) * y + 2 * (y^4) + 5 * (x^2) + 8 * y^2)
 }
 
-# Derivatives of the function
+# Derivatives of the further modified function
 partial_derivative_x <- function(x, y) {
-  return(3 * x^2 - 3 * y + 2)
+  return(40 * x^3 - 30 * x * y + 10 * x)
 }
 
 partial_derivative_y <- function(x, y) {
-  return(-3 * x + 2 * y + 1)
+  return(-15 * x^2 + 8 * y^3 + 16 * y)
 }
 
 # Gradient Descent Function
@@ -47,7 +47,7 @@ gradient_descent_3d <- function(learning_rate = 0.01, iterations = 100, start_x 
 # Run the Gradient Descent with specific parameters
 learning_rate <- 0.01
 iterations <- 100
-start_x <- 1
+start_x <- -2
 start_y <- 1
 gd_result <- gradient_descent_3d(learning_rate, iterations, start_x, start_y)
 
@@ -56,33 +56,32 @@ x_seq <- seq(-3, 3, length.out = 50)
 y_seq <- seq(-3, 3, length.out = 50)
 z_matrix <- outer(x_seq, y_seq, objective_function)
 
-# Plot the surface using plotly (already existing plot)
+# Plot the surface using plotly with modified color scheme
 p <- plot_ly(x = ~x_seq, y = ~y_seq, z = ~z_matrix) %>%
-  add_surface(contours = list(z = list(show = TRUE))) %>%
-  layout(scene = list(title = "Gradient Descent Path on Objective Function",
+  add_surface(
+    contours = list(z = list(show = TRUE, color = "black")),
+    colorscale = list(
+      c(0, "lightyellow"),
+      c(0.5, "lightgreen"),
+      c(1, "lightblue")
+    ),
+    opacity = 0.8
+  ) %>%
+  layout(scene = list(title = "Gradient Descent Path on Pronounced Objective Function",
                       xaxis = list(title = "x"),
                       yaxis = list(title = "y"),
                       zaxis = list(title = "f(x, y)")))
 
-# Add the gradient descent path
-gd_trace <- list(
-  x = gd_result$x_values,
-  y = gd_result$y_values,
-  z = gd_result$z_values,
+# Add the gradient descent path to the plotly plot
+p <- p %>% add_trace(
+  x = ~gd_result$x_values,
+  y = ~gd_result$y_values,
+  z = ~gd_result$z_values,
   type = "scatter3d",
   mode = "markers+lines",
-  marker = list(size = 3, color = 'red'),
-  line = list(color = 'red', width = 2)
+  marker = list(size = 4, color = 'red', opacity = 0.9),
+  line = list(color = 'red', width = 3)
 )
-p <- p %>% add_trace(gd_trace)
 
 # Print the plotly plot
 p
-
-# Create a 3D perspective plot using rgl
-open3d()
-persp3d(x_seq, y_seq, z_matrix, col = "lightblue", xlab = "x", ylab = "y", zlab = "f(x, y)")
-
-# Add the gradient descent path points to the rgl plot
-points3d(gd_result$x_values, gd_result$y_values, gd_result$z_values, col = "red", size = 5)
-lines3d(gd_result$x_values, gd_result$y_values, gd_result$z_values, col = "red", lwd = 2)
