@@ -285,6 +285,7 @@ library(reticulate) # Python integration
   \vhEntry{0.0}{2024.10.25}{DP}{Created!}
   \vhEntry{0.1}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
   \vhEntry{0.3}{2024.10.26}{DP}{Buildout Chapter Frames}
+  \vhEntry{0.4}{2024.11.07}{DP}{Sigmoid Chapter}
 \end{versionhistory}
 \newpage
 \setcounter{table}{0}
@@ -1407,6 +1408,19 @@ This function smoothly scales inputs, but its range only extends from -1 to 1. I
 
 
 \newpage 
+
+\begin{figure}[H]
+    \centering
+    % Left Image (Sigmoid)
+    \begin{minipage}[t]{1.0\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/Sigmoids_comparisons.jpeg}
+        \caption{Summary of Alternate Sigmoid Like Curves}
+    \end{minipage}
+    \label{fig:normal-distribution-layout}
+\end{figure}
+
+Note: All functions are normalized in such a way that their slope at the origin is 1
 
 \newpage 
 
