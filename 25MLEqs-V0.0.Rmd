@@ -1123,9 +1123,41 @@ This example showcases how the Z-score helps normalize data to a common scale, m
 
 # Sigmoid Function
 
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $\sigma(x) = \frac{1}{1 + e^{-x}}$}
+\end{center}
+\
+
+<!-- no tracking - only a floating 'cartoon' figure -->
+\begin{figure*}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-4-Sigmoid.jpeg}
+    \caption*{\Large A smooth on or off transition}
+  \end{center}
+\end{figure*}
+
+\newpage
+
+
+\vspace*{\fill}
+\begin{a_def_eq}{Sigmoid Function}{def1} 
+
 $$
-\sigma(x) = \frac{1}{1 + e^{-x}}
+\sigma(z) = \frac{1}{1 + e^{-z}}
 $$
+
+\begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
+    \item[$z$] The \textbf{input variable}, which is the linear combination of features and weights in a model. It represents the score calculated before applying the sigmoid transformation and can take any real value.
+    \vspace{0.5\baselineskip}
+    \item[$\sigma(z)$] The \textbf{sigmoid output}, which is the transformed value of \( z \), mapped between 0 and 1. This output represents the probability that the input belongs to a particular class (e.g., 1 for positive, 0 for negative in binary classification).
+    \vspace{0.5\baselineskip}
+    \item[$e$] The mathematical constant, approximately equal to 2.718, which forms the base of the natural logarithm. The exponential term \( e^{-z} \) causes the sigmoid function to asymptotically approach 0 for large negative \( z \) and 1 for large positive \( z \).
+    \vspace{0.5\baselineskip}
+\end{description}
+
+\end{a_def_eq}
+\
+
 
 **Introduction**: The sigmoid function is an activation function that outputs values between 0 and 1.
 
@@ -1133,9 +1165,254 @@ $$
 
 **Importance in ML**: The sigmoid function is widely used in logistic regression and as an activation function in neural networks. It helps in modeling binary classification problems and introduces non-linearity into neural models.
 
----
+\vspace*{\fill}
+
 
 \newpage
+
+## What is Behind the Equation
+
+The sigmoid function, denoted as \(\sigma(x)\), is an activation function widely used in machine learning and data science. It maps any real-valued number to a value between 0 and 1, making it ideal for scenarios where probability-related interpretations are essential, especially binary classification problems.
+
+This equation transforms an input \(x\) into an output within the range of 0 to 1, effectively normalizing the input space.
+\begin{align}
+\sigma(x) = \frac{1}{1 + e^{-x}} = \frac{e^x}{1 + e^x} = 1 - \sigma(-x)
+\end{align}
+
+This is a usefeul identity allows for simplifications in various mathematical expressions and facilitates gradient-based optimization in machine learning models. Note that the function is differentiable, which is crucial for backpropagation in neural networks.
+
+In many fields, particularly in artificial neural networks, the term sigmoid function usually refers to the logistic function, a specific type of S-shaped, or “sigmoid,” curve. While other functions like the Gompertz curve or the ogee curve may appear similar because they share the same general S-shape, these are distinct mathematical functions with unique properties and applications.
+
+A sigmoid function is characterized by its shape: it begins at a low value, then increases rapidly in the middle, and finally levels off at a high value. The logistic function, which is a common example, maps any real number (from negative to positive infinity) to an output between 0 and 1. This makes it especially useful when working with probabilities or values that need to be constrained within this range.
+
+Other variations of sigmoid functions, like the hyperbolic tangent function (tanh
+⁡
+tanh), also share the S-shaped curve but differ in their output ranges. The hyperbolic tangent function, for example, produces outputs between -1 and 1, which may be more suitable in cases where negative values are meaningful (such as for representing balanced or symmetric outcomes).
+
+## General Overview of Applications of Sigmoid Functions
+
+* Artificial Neural Networks: Sigmoid functions are widely used as activation functions, which means they determine whether a neuron in a neural network should be “activated” (i.e., pass on its signal). In particular, the logistic function is popular because it maps values to a range between 0 and 1, simulating the all-or-nothing activation seen in biological neurons. This behavior allows neural networks to make decisions in a gradual, continuous manner.
+
+* Cumulative Distribution Functions in Statistics: The sigmoid function is also useful in statistics, where it can represent the cumulative distribution function (CDF) of a probability distribution. In this context, the function’s smooth, continuous increase models the accumulation of probability from one extreme to another, representing how likely it is to observe values up to a certain point.
+
+* Probabilistic Interpretation: When the output of the logistic sigmoid is interpreted as a probability (from 0 to 1), it enables the function to model binary classification problems, where there are only two possible outcomes (such as yes/no or true/false). By setting a threshold (e.g., 0.5), predictions can be made based on the probability that an input belongs to a certain class.
+
+* Invertibility: The logistic sigmoid function is invertible, meaning it has an inverse function called the logit function. The logit function transforms probabilities (between 0 and 1) back into raw values from all real numbers, which can be useful in logistic regression and other statistical models that seek to model relationships in probability terms.
+
+In summary, sigmoid functions, particularly the logistic function, are versatile tools in both machine learning and statistics due to their S-shape, bounded output range, and smooth transition, which makes them ideal for modeling gradual changes in various contexts.
+
+
+## Application to Machine Learning: Sigmoid Function in Binary Classification
+
+In binary classification tasks, the sigmoid function is particularly valuable as it can be used to estimate the probability that a given input belongs to a certain class. Logistic regression, for example, uses the sigmoid function to model the probability of a binary outcome, with predictions being based on whether the probability exceeds a specified threshold (e.g., 0.5). By mapping outputs to a range between 0 and 1, the sigmoid function enables interpretable probability scores and smooth gradients for optimization.
+
+## How Sigmoid Works in Logistic Regression
+
+In logistic regression, the sigmoid function serves as the “activation” that transforms the output of a linear model into a probability.
+
+1. **Linear Combination of Features**: First, we calculate a linear combination of the input features. For example, in a logistic regression model with two features \(x_1\) and \(x_2\), the model calculates:
+
+   \begin{align}
+   z = w_1 x_1 + w_2 x_2 + b
+   \end{align}
+
+   where \(w_1\) and \(w_2\) are weights learned from the data, and \(b\) is the bias term. This value \(z\) represents a "score" that is not yet bounded between 0 and 1.
+
+2. **Applying the Sigmoid Transformation**: Next, we pass this linear combination \(z\) through the sigmoid function, which transforms it into a probability:
+
+   \begin{align}
+   \sigma(z) = \frac{1}{1 + e^{-z}}
+   \end{align}
+
+   This output \(\sigma(z)\) now represents the estimated probability that the input belongs to the positive class (e.g., “spam” or “yes”).
+
+3. **Thresholding for Classification**: Once we have the probability, we can decide on a threshold to classify the input. For example, if we set a threshold of 0.5, we would classify the input as belonging to the positive class if \(\sigma(z) \geq 0.5\), and to the negative class otherwise. This threshold is often set based on the problem’s specific requirements and the balance of classes.
+
+## Example Walkthrough
+
+Imagine you’re building a model to detect spam emails based on certain features, like the presence of certain words or the frequency of punctuation marks. Here’s how the process might work step-by-step:
+
+1. **Input Features**: Let’s say we have two features:
+   - \(x_1\): The frequency of the word "free."
+   - \(x_2\): The number of exclamation marks in the email.
+
+2. **Model Weights**: After training on a dataset, the model might assign the following weights:
+   - \(w_1 = 1.2\) (suggesting "free" is an indicator of spam)
+   - \(w_2 = 0.8\) (suggesting a high number of exclamation marks also correlates with spam)
+
+   Let’s assume the bias term \(b\) is -1.5.
+
+3. **Calculate \(z\)**: For an email where \(x_1 = 2\) and \(x_2 = 3\) (meaning "free" appears twice and there are three exclamation marks), we calculate:
+
+   \begin{align}
+   z = (1.2 \times 2) + (0.8 \times 3) - 1.5 = 2.4 + 2.4 - 1.5 = 3.3
+   \end{align}
+
+4. **Apply Sigmoid to Get Probability**: Now, we pass \(z\) through the sigmoid function:
+
+   \begin{align}
+   \sigma(z) = \frac{1}{1 + e^{-3.3}} \approx 0.964
+   \end{align}
+
+   This probability, 0.964, indicates a high likelihood that the email is spam.
+
+5. **Classification Decision**: If our threshold is 0.5, we would classify this email as "spam" since 0.964 > 0.5. This probability-based approach allows us to adjust the threshold based on how conservative or lenient we want our classification to be.
+
+## Why Sigmoid is Useful for Optimization
+
+The sigmoid function also has smooth gradients, meaning that even small changes in \(z\) lead to gradual changes in the output probability \(\sigma(z)\). This smoothness is critical for optimization because it allows gradient-based algorithms, such as gradient descent, to make small, continuous updates to model parameters.
+
+To demonstrate the smooth gradient of the sigmoid function mathematically, we can derive its derivative, which shows how the output changes with respect to changes in the input $z$. This derivative will show that the sigmoid function has a continuous and smooth gradient, making it suitable for gradient-based optimization methods.
+
+### Smooth Gradient of the Sigmoid Function
+
+To understand why the sigmoid function has smooth gradients, let’s derive its first derivative. We can calculate the derivative of \( \sigma(z) \) with respect to \( z \), which will tell us how sensitive the output \( \sigma(z) \) is to small changes in \( z \).
+
+## Deriving the Derivative of the Sigmoid Function
+
+1. Start with the sigmoid function:
+
+   \begin{align}
+   \sigma(z) = \frac{1}{1 + e^{-z}}
+   \end{align}
+
+2. To find \( \frac{d\sigma}{dz} \), we apply the chain rule. Let’s rewrite the function in a form that will make it easier to differentiate:
+
+   \begin{align}
+   \sigma(z) = \left(1 + e^{-z}\right)^{-1}
+   \end{align}
+
+3. Now, differentiate with respect to \( z \):
+
+   \begin{align}
+   \frac{d\sigma}{dz} = -\left(1 + e^{-z}\right)^{-2} \cdot (-e^{-z})
+   \end{align}
+
+4. Simplify the expression:
+
+   \begin{align}
+   \frac{d\sigma}{dz} = \frac{e^{-z}}{\left(1 + e^{-z}\right)^2}
+   \end{align}
+
+5. Notice that we can rewrite \( e^{-z} \) in terms of \( \sigma(z) \) because:
+
+   \begin{align}
+   \sigma(z) = \frac{1}{1 + e^{-z}} \Rightarrow e^{-z} = \frac{1 - \sigma(z)}{\sigma(z)}
+   \end{align}
+
+6. Substitute this back to express \( \frac{d\sigma}{dz} \) in terms of \( \sigma(z) \):
+
+   \begin{align}
+   \frac{d\sigma}{dz} = \sigma(z)(1 - \sigma(z))
+   \end{align}
+
+### Interpretation of the Derivative
+
+The derivative of the sigmoid function, \( \frac{d\sigma}{dz} = \sigma(z)(1 - \sigma(z)) \), shows us that:
+
+- The gradient is always positive and smooth for all values of \( z \).
+- This derivative is largest around \( z = 0 \), where the sigmoid curve is steepest, and it becomes smaller as \( z \) moves towards positive or negative infinity, where the curve flattens out.
+  
+This smooth gradient is crucial for gradient descent, as it allows the algorithm to make gradual updates to the weights. Because the derivative never suddenly changes, the model can adjust parameters smoothly without sudden jumps, aiding in stable and effective learning.
+
+Thus, the sigmoid’s smooth gradient makes it well-suited for optimization in machine learning.
+
+
+
+## Typical Ranges or Values for the Sigmoid Function
+
+The sigmoid function is bounded by 0 and 1. At \(x = 0\), \(\sigma(x)\) returns 0.5. As \(x \to \infty\), \(\sigma(x) \to 1\); and as \(x \to -\infty\), \(\sigma(x) \to 0\). The sigmoid function's characteristic "S"-shaped curve makes it particularly suited for gradual transitions between classes in classification tasks.
+
+
+## Important Mathematical Identities
+
+Some useful identities associated with the sigmoid function include:
+
+1. Derivative of the sigmoid:
+   \begin{align}
+   \sigma'(x) = \sigma(x)(1 - \sigma(x))
+   \end{align}
+
+2. Relationship with the hyperbolic tangent:
+   \begin{align}
+   \sigma(x) = \frac{1 + \tanh\left(\frac{x}{2}\right)}{2}
+   \end{align}
+
+These identities assist in understanding the behavior of the sigmoid function in neural networks and other machine learning algorithms.
+
+
+\newpage 
+
+## Comparative Functions
+
+Several functions exhibit similar "S"-shaped or smooth transition behaviors. Here are some of them:
+
+$$
+\begin{array}{ll}
+-\operatorname{erf}\left(\frac{\sqrt{\pi}}{2} x\right) & -\frac{x}{\sqrt{1+x^2}} \\
+-\tanh (x) & -\frac{2}{\pi} \arctan \left(\frac{\pi}{2} x\right) \\
+-\frac{2}{\pi} \operatorname{gd}\left(\frac{\pi}{2} x\right) & -\frac{x}{1+|x|}
+\end{array}
+$$
+
+
+In addition to the sigmoid function, there are several other functions that exhibit smooth, "S"-shaped curves and are used for various applications in machine learning and mathematics. Below are six of these comparative functions, along with a brief description of their unique properties.
+
+### Error Function: 
+The error function, denoted as \( \operatorname{erf}(x) \), is often used in probability and statistics, particularly in relation to the normal distribution. It approximates the integral of the Gaussian function, and its shape closely resembles that of the sigmoid. The error function has applications in fields such as signal processing and heat diffusion.
+
+\begin{align}
+-\operatorname{erf}\left(\frac{\sqrt{\pi}}{2} x\right)
+\end{align}
+
+### Reciprocal Square Root:
+
+This function smooths inputs similarly to the sigmoid but has a different asymptotic behavior. Unlike the sigmoid, which approaches 1 and 0, this function approaches -1 and 1 as \( x \) tends to \( \infty \) and \( -\infty \), respectively. It is sometimes used in neural networks as an alternative activation function.
+
+\begin{align}
+-\frac{x}{\sqrt{1+x^2}}
+\end{align}
+
+### Hyperbolic Tangent:
+
+The hyperbolic tangent function, \( \tanh(x) \), is a popular alternative to the sigmoid in neural networks because its range is from -1 to 1, allowing for more balanced gradient flows during backpropagation. It provides output symmetry, which can sometimes lead to faster training.
+
+\begin{align}
+-\tanh(x)
+\end{align}
+
+### Arctangent:
+
+This function maps inputs to a range between -1 and 1 similarly to the hyperbolic tangent but has a slightly different curve. The arctangent function is sometimes used in machine learning models when smaller gradients or more gradual transitions are preferred.
+
+\begin{align}
+\frac{2}{\pi} \arctan \left(\frac{\pi}{2} x\right)
+\end{align}
+
+### Gudermannian Function:
+
+The Gudermannian function, \( \operatorname{gd}(x) \), provides a link between circular and hyperbolic functions without involving complex numbers. This function has applications in geometry and physics, particularly in mapping problems.
+
+\begin{align}
+\frac{2}{\pi} \operatorname{gd}\left(\frac{\pi}{2} x\right)
+\end{align}
+
+### Inverse Absolute:
+
+This function smoothly scales inputs, but its range only extends from -1 to 1. Its asymptotic properties are particularly useful when a smoother transition around zero is preferred.
+
+\begin{align}
+\frac{x}{1+|x|}
+\end{align}
+
+
+\newpage 
+
+\newpage 
+
+\newpage 
+
+
 
 # Correlation
 
