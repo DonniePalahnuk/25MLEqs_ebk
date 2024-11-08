@@ -39,7 +39,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\usepackage[margin=0.9in]{geometry}
+\usepackage[margin = 0.9in]{geometry}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -326,7 +326,7 @@ borderline west={1mm}{0pt}{red}
 \urlstyle{same}
 \hypersetup{
   pdftitle={25 Key Equations in Machine Learning},
-  pdfauthor={Donald Palahnuk},
+  pdfauthor={to-ohru iwanami \{the hatch keeper\}},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
@@ -338,10 +338,9 @@ borderline west={1mm}{0pt}{red}
 }
 \makeatother
 \subtitle{\textit{Insight Hatch Machine Leanring Reviews - Vol 1}}
-\author{Donald Palahnuk}
+\author{to-ohru iwanami \{the hatch keeper\}}
 \date{\vhCurrentDate\\
 version \vhCurrentVersion\\
-\strut \\
 InsightHatch: ``25MLEqs''\\
 \textbf{IH-25MLEqs-v}\textbf{\vhCurrentVersion}}
 
@@ -362,7 +361,7 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
   \vhEntry{0.04.0}{2024.11.07}{DP}{Sigmoid Chapter}
-  \vhEntry{0.04.5}{2024.11.08}{DP}{Code clean up - house keeping, typos}
+  \vhEntry{0.04.1}{2024.11.08}{DP}{Code clean up - house keeping, typos}
 \end{versionhistory}
 \newpage
 
@@ -426,14 +425,14 @@ tools}\label{some-notes-on-the-typesetting-framework-and-tools}}
 framework and tools}
 
 With the current advent of ML based LLMs and the availability of
-typesetting \LaTeX, we combine tools like
+typesetting \LaTeX , we combine tools like
 \textbf{\large{\textpoppins{Mathpix}}} (the \LaTeX  equation generating
 snipping tool) and \textcouriernew{R Markdown} driven by
 \textbf{\large{\textarial{Pandoc}}} and
 \textbf{\large{\textpalatino{knitr}}} to essentially ``GET IT DONE''.
 Obviously your mileage may vary; we find this tool set perfect for
 typesetting combined with computational analysis. Why? Well you have
-nearly full \LaTeX capability with access to R \&
+nearly full \LaTeX  capability with access to R \&
 \textbf{\large{\textfluxreg{Python}}} (via
 \textbf{\large{\textlato{reticulate}}}) programming code blocks and also
 the ability to bridge to
@@ -465,39 +464,36 @@ be lazy, each section must be scrutinized for accuracy and consistency.
 The speed gains allow for a very large group of examples and highly
 detailed presentations.
 
-\hypertarget{notes-to-springer-and-usage}{%
-\subsection*{Notes to Springer and
-usage}\label{notes-to-springer-and-usage}}
-\addcontentsline{toc}{subsection}{Notes to Springer and usage}
+\hypertarget{notes-to-usage}{%
+\subsection*{Notes to usage}\label{notes-to-usage}}
+\addcontentsline{toc}{subsection}{Notes to usage}
 
 We give full credit for any original works that are used herein to reach
-the stated objective. As this is not a financial pursuit we do not
-provide any license related repsect to previous publisher, and basically
-ignore copyrights. Go figure. Why would we take such a stand - this is
-educational open source material. We strongly recommend you take the
-time to do some background research on any referenced authors.\\
-\strut \\
+the stated objective. At this point this is not a financial pursuit we
+do not provide any license related respect to any previous publisher. Go
+figure. Why would we take such a stand - this is educational open source
+material. We strongly recommend you take the time to do some background
+research on any referenced authors.\\
 
 \emph{We truly hope you enjoy the tour, as much as we have enjoyed our
 journey to write it\ldots{}}
 
 to-ohru iwanami, 2024, somewhere in asia
 
-\hypertarget{the-25-uhh-24-most-important}{%
-\chapter{The 25 (uhh 24) Most
-Important}\label{the-25-uhh-24-most-important}}
+\hypertarget{the-25-uhh-24}{%
+\chapter{The 25 (uhh 24)}\label{the-25-uhh-24}}
 
 How did we arrive at the 25 (uhh 24) most important equations? Well,
 it's partly a matter of educated opinion, partly a rough statistical
 average of what people talk about most when they're exhilarated by the
-magic of machine learning, and partly---let's be real---because I'm
-smart, and you should just listen to me (only half-joking here). These
-equations are more than just mathematical tools; they represent
-milestones that have shaped the evolution of artificial intelligence,
-each one contributing a brick in the formidable wall of progress we've
-built over the decades.
+magic of machine learning, and partly---let's be real, you should just
+listen to me (fully joking here). These equations are more than just
+mathematical tools; they represent milestones that have shaped the
+evolution of artificial intelligence, each one contributing a brick or
+building block in the formidable wall of progress we've built over the
+decades.
 
-Take, for instance, Gradient Descent---a cornerstone of optimization,
+Take, for instance, Gradient Descent --- a cornerstone of optimization,
 whose principles date back to the early 19th century and the work of
 Adrien-Marie Legendre and Carl Friedrich Gauss in minimizing residuals.
 The modern incarnation of Gradient Descent, essential for training deep
@@ -507,24 +503,15 @@ researchers trying to teach machines to ``learn.'' Fast forward to the
 evident that iterative optimization methods like Gradient Descent could
 unlock the potential of early neural networks.
 
-Then we have Bayes' theorem, named after Reverend Thomas Bayes, who
-developed his idea of conditional probability back in the 18th century.
-Although it lay relatively dormant for years, it became a key
-breakthrough in the 1950s when Alan Turing and others applied Bayesian
-methods to codebreaking during World War II. Today, its cousin---Naive
-Bayes---is still a powerful tool for classification, especially for
-natural language processing, allowing us to create chatbots and email
-spam filters. This ancient theorem found new life, propelling us toward
-a world of probabilistic understanding in machines.
-
-Let's not forget the ReLU (Rectified Linear Unit) function. While it
-seems so simple, this piece of mathematical elegance emerged as a
-game-changer for deep learning in the 2010s, thanks to the work of
-Geoffrey Hinton and his colleagues. Before ReLU, neural networks
-struggled with the vanishing gradient problem, limiting their ability to
-learn effectively. By simply transforming negative inputs to zero and
-retaining positive ones, ReLU helped neural networks go deeper and
-deeper, giving birth to the deep learning revolution we know today.
+Then we have Bayes' theorem, after Reverend Thomas Bayes, who developed
+his idea of conditional probability back in the 18th century. Although
+it lay relatively dormant for years, it became a key breakthrough in the
+1950s when Alan Turing and others applied Bayesian methods to
+codebreaking during World War II. Today, its cousin---Naive Bayes --- is
+still a powerful tool for classification, especially for natural
+language processing, allowing us to create chatbots and email spam
+filters. This dormant theorem found new life, propelling us toward a
+world of probabilistic understanding in machines.
 
 Singular Value Decomposition (SVD), another member of our elite list,
 found its fame in the 1990s when it was used for information retrieval
@@ -533,6 +520,16 @@ for how we handle and understand textual data. The underlying
 mathematics, discovered by Eugenio Beltrami and others in the 19th
 century, helps us not only reduce dimensionality but also reveal the
 hidden relationships between concepts in data.
+
+Fast forward to today to the ReLU (Rectified Linear Unit) function.
+While it seems so simple, this piece of mathematical elegance emerged as
+a game-changer for deep learning in the 2010s, thanks to the work of
+Geoffrey Hinton and his colleagues. Before ReLU, neural networks
+struggled with the vanishing gradient problem, limiting their ability to
+learn effectively. By simply transforming negative inputs to zero and
+retaining positive ones, ReLU helped neural networks go deeper and
+deeper (pun-ch!), giving birth to the deep learning revolution we know
+today.
 
 Each of these equations is a testament to the evolution of knowledge, a
 story of breakthroughs spanning centuries. Together, they form a bridge
@@ -545,14 +542,14 @@ collection captures a human legacy of curiosity and ingenuity, guiding
 you on your intellectual journey through the ever-growing forest of
 machine learning---one equation, one insight at a time.
 
-As we reflect on these 24 equations, on to the 25th, one cannot ignore
-the human spirit that threads through each mathematical symbol and
-formula. Behind every breakthrough is a mind driven by curiosity, a
+As we reflect on these 1 through 24 equations, and on to 25, one cannot
+ignore the human spirit that threads through each mathematical symbol
+and formula. Behind every breakthrough is a mind driven by curiosity, a
 determination to see beyond the obvious, to turn abstraction into
 discovery. Each equation, in its own way, captures a moment where human
 thought transcended barriers---whether it was a problem of optimization,
 uncertainty, or understanding the nature of learning itself. Yet, even
-as these 24 pillars of insight stand tall, there remains one more---a
+as these 24 pillars of insight stand tall, there remains one more --- a
 keystone that binds them all, born not out of calculation alone but from
 the essence of what it means to explore, to question, and to create.
 This final entry goes beyond numbers and symbols, embracing the very
@@ -590,8 +587,7 @@ unveil, one that's been with us all along.
 \large{\theta_{j+1} = \theta_j - \alpha \nabla J(\theta_j)}
 \end{align}
 
-<!-- \label{sk_int} ...
-... \ref{sk_int} -->
+
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$\theta_j$] The current value of the \textbf{parameter vector} at iteration $j$, which represents the current estimate of the model parameters.
@@ -626,9 +622,8 @@ reducing the error, making it crucial for model accuracy.\\
 \newpage
 
 \hypertarget{what-is-behind-the-equation}{%
-\section*{What is behind the
+\section{What is behind the
 equation}\label{what-is-behind-the-equation}}
-\addcontentsline{toc}{section}{What is behind the equation}
 
 \hypertarget{structure-of-the-parameter-vector-theta}{%
 \section{\texorpdfstring{Structure of the Parameter Vector

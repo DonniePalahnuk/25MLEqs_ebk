@@ -1,10 +1,10 @@
----
+--- 
+#yaml#
 title:    "25 Key Equations in Machine Learning"
-author:   "Donald Palahnuk"
+author:   "to-ohru iwanami {the hatch keeper}"
 date: |   
       | \vhCurrentDate
       | version \vhCurrentVersion
-      |
       | InsightHatch: "25MLEqs"
       | \textbf{IH-25MLEqs-v}\textbf{\vhCurrentVersion}
 documentclass:    book
@@ -18,12 +18,14 @@ output:
 subtitle: \textit{Insight Hatch Machine Leanring Reviews - Vol 1}
 #bibliography: citations.bib
 #csl: microbiology.csl
-link-citations: yes
+link-citations:         yes
 nocite: '@*'
-fontsize: 12    pt
-geometry: margin=0.9in
-linestretch: 1.25
-papersize: a4
+fontsize:               12 pt
+geometry:               margin = 0.9in
+linestretch:            1.25
+papersize:              a4
+
+#latex header
 header-includes:
  - |
   ```{=latex}
@@ -274,7 +276,7 @@ library(reticulate)           # Python integration
   \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
   \vhEntry{0.04.0}{2024.11.07}{DP}{Sigmoid Chapter}
-  \vhEntry{0.04.5}{2024.11.08}{DP}{Code clean up - house keeping, typos}
+  \vhEntry{0.04.1}{2024.11.08}{DP}{Code clean up - house keeping, typos}
 \end{versionhistory}
 \newpage
 
@@ -299,15 +301,14 @@ Whenever possible, all examples that originate from a particular source are ackn
 
 
 ### Some notes on the typesetting framework and tools {-}
-With the current advent of ML based LLMs and the availability of typesetting \LaTeX, we combine tools like \textbf{\large{\textpoppins{Mathpix}}} (the \LaTeX  equation generating snipping tool) and \textcouriernew{R Markdown} driven by \textbf{\large{\textarial{Pandoc}}} and \textbf{\large{\textpalatino{knitr}}} to essentially "GET IT DONE". Obviously your mileage may vary; we find this tool set perfect for typesetting combined with computational analysis. Why? Well you have nearly full \LaTeX capability with access to R & \textbf{\large{\textfluxreg{Python}}} (via \textbf{\large{\textlato{reticulate}}}) programming code blocks and also the ability to bridge to \text{\large{\textssp{MATHEMATICA}}}\textsuperscript{\textregistered} if needed. On a powerful laptop, this tool suite (under RStudio) leaves the door open to a wider world of analysis and computation. While RStudio is not perfect, it does allow for an IDE approach which leverages typesetting and computation framework (through R, \textbf{\large{\textfluxreg{Python}}} and \text{\large{\textssp{MATHEMATICA}}}\textsuperscript{\textregistered}) that makes it a worthy Swiss Army Knife. The alternative is also VS Code, which is great, however the mixed mode \textcouriernew{R Markdown} & \LaTeX  computational environment is pretty flexible.
+With the current advent of ML based LLMs and the availability of typesetting \LaTeX , we combine tools like \textbf{\large{\textpoppins{Mathpix}}} (the \LaTeX  equation generating snipping tool) and \textcouriernew{R Markdown} driven by \textbf{\large{\textarial{Pandoc}}} and \textbf{\large{\textpalatino{knitr}}} to essentially "GET IT DONE". Obviously your mileage may vary; we find this tool set perfect for typesetting combined with computational analysis. Why? Well you have nearly full \LaTeX  capability with access to R & \textbf{\large{\textfluxreg{Python}}} (via \textbf{\large{\textlato{reticulate}}}) programming code blocks and also the ability to bridge to \text{\large{\textssp{MATHEMATICA}}}\textsuperscript{\textregistered} if needed. On a powerful laptop, this tool suite (under RStudio) leaves the door open to a wider world of analysis and computation. While RStudio is not perfect, it does allow for an IDE approach which leverages typesetting and computation framework (through R, \textbf{\large{\textfluxreg{Python}}} and \text{\large{\textssp{MATHEMATICA}}}\textsuperscript{\textregistered}) that makes it a worthy Swiss Army Knife. The alternative is also VS Code, which is great, however the mixed mode \textcouriernew{R Markdown} & \LaTeX  computational environment is pretty flexible.
 
 
 ### The complimentary nod to ML LLM tools {-}
 Most of this compilation and summary work would not be possible without the advent of LLMs and new found ability to build concise summaries of difficult mathematical concepts. The time savings is basically a gift which save more grey hairs and time flipping pages of numerous cross references. Actually we want to spend time "learning" and not "flipping and skimming" to find the properly defined statement which is of utility in our endeavor. So for that - we lean on LLMs to be more productive, and help clearly convey underlying concepts. This is not to be lazy, each section must be scrutinized for accuracy and consistency. The speed gains allow for a very large group of examples and highly detailed presentations. 
 
-### Notes to Springer and usage {-}
-We give full credit for any original works that are used herein to reach the stated objective. As this is not a financial pursuit we do not provide any license related repsect to previous publisher, and basically ignore copyrights. Go figure. Why would we take such a stand - this is educational open source material. We strongly recommend you take the time to do some background research on any referenced authors. 
-\
+### Notes to usage {-}
+We give full credit for any original works that are used herein to reach the stated objective. At this point this is not a financial pursuit we do not provide any license related respect to any previous publisher. Go figure. Why would we take such a stand - this is educational open source material. We strongly recommend you take the time to do some background research on any referenced authors. 
 \
 
 _We truly hope you enjoy the tour, as much as we have enjoyed our journey to write it..._
@@ -315,21 +316,21 @@ _We truly hope you enjoy the tour, as much as we have enjoyed our journey to wri
 to-ohru iwanami, 2024, somewhere in asia
 
 
-# The 25 (uhh 24) Most Important 
+# The 25 (uhh 24) 
 
-How did we arrive at the 25 (uhh 24) most important equations? Well, it’s partly a matter of educated opinion, partly a rough statistical average of what people talk about most when they’re exhilarated by the magic of machine learning, and partly—let’s be real—because I’m smart, and you should just listen to me (only half-joking here). These equations are more than just mathematical tools; they represent milestones that have shaped the evolution of artificial intelligence, each one contributing a brick in the formidable wall of progress we've built over the decades.
+How did we arrive at the 25 (uhh 24) most important equations? Well, it’s partly a matter of educated opinion, partly a rough statistical average of what people talk about most when they’re exhilarated by the magic of machine learning, and partly—let’s be real, you should just listen to me (fully joking here). These equations are more than just mathematical tools; they represent milestones that have shaped the evolution of artificial intelligence, each one contributing a brick or building block in the formidable wall of progress we've built over the decades.
 
-Take, for instance, Gradient Descent—a cornerstone of optimization, whose principles date back to the early 19th century and the work of Adrien-Marie Legendre and Carl Friedrich Gauss in minimizing residuals. The modern incarnation of Gradient Descent, essential for training deep neural networks, only emerged in the mid-20th century, revitalized by researchers trying to teach machines to “learn.” Fast forward to the 1960s, when Frank Rosenblatt was developing the perceptron, it became evident that iterative optimization methods like Gradient Descent could unlock the potential of early neural networks.
+Take, for instance, Gradient Descent — a cornerstone of optimization, whose principles date back to the early 19th century and the work of Adrien-Marie Legendre and Carl Friedrich Gauss in minimizing residuals. The modern incarnation of Gradient Descent, essential for training deep neural networks, only emerged in the mid-20th century, revitalized by researchers trying to teach machines to “learn.” Fast forward to the 1960s, when Frank Rosenblatt was developing the perceptron, it became evident that iterative optimization methods like Gradient Descent could unlock the potential of early neural networks.
 
-Then we have Bayes' theorem, named after Reverend Thomas Bayes, who developed his idea of conditional probability back in the 18th century. Although it lay relatively dormant for years, it became a key breakthrough in the 1950s when Alan Turing and others applied Bayesian methods to codebreaking during World War II. Today, its cousin—Naive Bayes—is still a powerful tool for classification, especially for natural language processing, allowing us to create chatbots and email spam filters. This ancient theorem found new life, propelling us toward a world of probabilistic understanding in machines.
-
-Let’s not forget the ReLU (Rectified Linear Unit) function. While it seems so simple, this piece of mathematical elegance emerged as a game-changer for deep learning in the 2010s, thanks to the work of Geoffrey Hinton and his colleagues. Before ReLU, neural networks struggled with the vanishing gradient problem, limiting their ability to learn effectively. By simply transforming negative inputs to zero and retaining positive ones, ReLU helped neural networks go deeper and deeper, giving birth to the deep learning revolution we know today.
+Then we have Bayes' theorem, after Reverend Thomas Bayes, who developed his idea of conditional probability back in the 18th century. Although it lay relatively dormant for years, it became a key breakthrough in the 1950s when Alan Turing and others applied Bayesian methods to codebreaking during World War II. Today, its cousin—Naive Bayes — is still a powerful tool for classification, especially for natural language processing, allowing us to create chatbots and email spam filters. This dormant theorem found new life, propelling us toward a world of probabilistic understanding in machines.
 
 Singular Value Decomposition (SVD), another member of our elite list, found its fame in the 1990s when it was used for information retrieval in the famous Latent Semantic Analysis (LSA) algorithm—paving the way for how we handle and understand textual data. The underlying mathematics, discovered by Eugenio Beltrami and others in the 19th century, helps us not only reduce dimensionality but also reveal the hidden relationships between concepts in data.
 
+Fast forward to today to the ReLU (Rectified Linear Unit) function. While it seems so simple, this piece of mathematical elegance emerged as a game-changer for deep learning in the 2010s, thanks to the work of Geoffrey Hinton and his colleagues. Before ReLU, neural networks struggled with the vanishing gradient problem, limiting their ability to learn effectively. By simply transforming negative inputs to zero and retaining positive ones, ReLU helped neural networks go deeper and deeper (pun-ch!), giving birth to the deep learning revolution we know today.
+
 Each of these equations is a testament to the evolution of knowledge, a story of breakthroughs spanning centuries. Together, they form a bridge from the deterministic calculus of Newton and Leibniz to the probabilistic dreams of Bayes and the practical algorithms of today’s AI pioneers. Think of them as the greatest hits of mathematics for data scientists—carefully curated, occasionally debated, and ultimately distilled into the essence of what drives machine learning today. This collection captures a human legacy of curiosity and ingenuity, guiding you on your intellectual journey through the ever-growing forest of machine learning—one equation, one insight at a time.
 
-As we reflect on these 24 equations, on to the 25th, one cannot ignore the human spirit that threads through each mathematical symbol and formula. Behind every breakthrough is a mind driven by curiosity, a determination to see beyond the obvious, to turn abstraction into discovery. Each equation, in its own way, captures a moment where human thought transcended barriers—whether it was a problem of optimization, uncertainty, or understanding the nature of learning itself. Yet, even as these 24 pillars of insight stand tall, there remains one more—a keystone that binds them all, born not out of calculation alone but from the essence of what it means to explore, to question, and to create. This final entry goes beyond numbers and symbols, embracing the very source of every theorem, every insight, and every spark of ingenuity. So as you journey onward, remember—there’s always one more equation to unveil, one that’s been with us all along.
+As we reflect on these 1 through 24 equations, and on to 25, one cannot ignore the human spirit that threads through each mathematical symbol and formula. Behind every breakthrough is a mind driven by curiosity, a determination to see beyond the obvious, to turn abstraction into discovery. Each equation, in its own way, captures a moment where human thought transcended barriers—whether it was a problem of optimization, uncertainty, or understanding the nature of learning itself. Yet, even as these 24 pillars of insight stand tall, there remains one more — a keystone that binds them all, born not out of calculation alone but from the essence of what it means to explore, to question, and to create. This final entry goes beyond numbers and symbols, embracing the very source of every theorem, every insight, and every spark of ingenuity. So as you journey onward, remember—there’s always one more equation to unveil, one that’s been with us all along.
 
 \mainmatter
 
@@ -364,8 +365,7 @@ As we reflect on these 24 equations, on to the 25th, one cannot ignore the human
 \large{\theta_{j+1} = \theta_j - \alpha \nabla J(\theta_j)}
 \end{align}
 
-<!-- \label{sk_int} ...
-... \ref{sk_int} -->
+
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$\theta_j$] The current value of the \textbf{parameter vector} at iteration $j$, which represents the current estimate of the model parameters.
