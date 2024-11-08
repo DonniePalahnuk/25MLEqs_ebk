@@ -1,24 +1,23 @@
 ---
-title: "25 Key Equations in Machine Learning"
-author: "Toohru Iwanami"
-date: |
-  | \vhCurrentDate
-  | version \vhCurrentVersion
-  |
-  | InsightHatch: "25MLEqs"
-  | \textbf{IH-25MLEqs-v}\textbf{\vhCurrentVersion}
-  
-documentclass: book
+title:    "25 Key Equations in Machine Learning"
+author:   "Donald Palahnuk"
+date: |   
+      | \vhCurrentDate
+      | version \vhCurrentVersion
+      |
+      | InsightHatch: "25MLEqs"
+      | \textbf{IH-25MLEqs-v}\textbf{\vhCurrentVersion}
+documentclass:    book
 output:
   pdf_document:
-    toc: yes
-    number_sections: yes
-    keep_tex: yes
-    latex_engine: lualatex
-    fig_caption: yes
+    latex_engine:       lualatex
+    toc:                yes
+    number_sections:    yes
+    keep_tex:           yes
+    fig_caption:        yes
 subtitle: \textit{Insight Hatch Machine Leanring Reviews - Vol 1}
-bibliography: citations.bib
-csl: microbiology.csl
+#bibliography: citations.bib
+#csl: microbiology.csl
 link-citations: yes
 nocite: '@*'
 fontsize: 12    pt
@@ -36,35 +35,37 @@ header-includes:
   \newcounter{chonlycounter}
   \renewcommand{\thechonlycounter}{\thechapter}
 
-  % setup some special branding fonts
-  \usepackage{fontspec}
-  \usepackage{textcomp}
-  \newfontface\poppins{Poppins}[Path=fonts/, 
+  % setup some special branding fonts 
+  % (this is only used at start of document - for product names )
+    \usepackage{fontspec}
+    \usepackage{textcomp}
+    \newfontface\poppins{Poppins}[Path=fonts/, 
                               UprightFont=*-Regular, 
                               BoldFont=*-Bold]
-  \newcommand{\textpoppins}[1]{{\poppins #1}}
+    \newcommand{\textpoppins}[1]{{\poppins #1}}
   
-  \newfontface\fluxreg{FluxRegular}[Path=fonts/, 
+    \newfontface\fluxreg{FluxRegular}[Path=fonts/, 
                               UprightFont=*.otf]
-  \newcommand{\textfluxreg}[1]{{\fluxreg #1}}
+    \newcommand{\textfluxreg}[1]{{\fluxreg #1}}
   
-  \newfontface\lato{Lato}[Path=fonts/, 
+    \newfontface\lato{Lato}[Path=fonts/, 
                               UprightFont=*-Regular]
-  \newcommand{\textlato}[1]{{\lato #1}}
+    \newcommand{\textlato}[1]{{\lato #1}}
   
-  \newfontface\ssp{SourceSansPro}[Path=fonts/, 
+    \newfontface\ssp{SourceSansPro}[Path=fonts/, 
                               UprightFont=*-Regular]
-  \newcommand{\textssp}[1]{{\ssp #1}}
+    \newcommand{\textssp}[1]{{\ssp #1}}
   
-  \newfontface\couriernew{Courier New}
-  \newcommand{\textcouriernew}[1]{{\couriernew #1}}
+    \newfontface\couriernew{Courier New}
+    \newcommand{\textcouriernew}[1]{{\couriernew #1}}
   
-  \newfontface\arial{Arial}
-  \newcommand{\textarial}[1]{{\arial #1}}
+    \newfontface\arial{Arial}
+    \newcommand{\textarial}[1]{{\arial #1}}
   
-  \newfontface\palatino{Palatino}
-  \newcommand{\textpalatino}[1]{{\palatino #1}}
+    \newfontface\palatino{Palatino}
+    \newcommand{\textpalatino}[1]{{\palatino #1}}
 
+  % FOR GRAPHICS tikz and pgfplots
   %\usepackage{pgfplots}                % math plotting
   %\pgfplotsset{compat=1.18}
 
@@ -85,38 +86,30 @@ header-includes:
   %\definecolor{ltorng}{HTML}{99ccff}
   %\definecolor{ltgrn}{HTML}{002db3}
 
-  %\usepackage{setspace}
   \usepackage{titling}
  
-  %\usepackage{etoolbox}  % programming for latex (I think)
-
   % testing 20240414 - margin methods - to adjust
   
-  \usepackage{layout}       % for margins setting (2024-04-14)   employ:"\layout"
-  % \usepackage[marginparwidth=40mm, marginparsep=10mm]{geometry}
-  
+  \usepackage{layout}       % for margins setting ->employ:"\layout"
   \usepackage{multicol}  
-  
   \usepackage{geometry} 
 
-  % Set asymmetric page margins
+  % Set asymmetric page margins (book formatting)
   \geometry{
   inner=0.75in,   % Inner margin
   outer=1.0in,    % Outer margin
   bottom=0.6in,   % Bottom margin
   top=0.6in,      % Bottom margin
-  includeheadfoot
-  }
+  includeheadfoot  }
 
-  
-  % \usepackage{lipsum}  % Generates filler text
+  %\usepackage{lipsum}         % Generates filler text
   
   % math fonts and coloring
   \usepackage{amsmath}
   \usepackage{amsthm}
-  \usepackage{amssymb}      % specific symbols
+  \usepackage{amssymb}        % specific symbols
   \usepackage{mathrsfs}
-  \usepackage{xcolor} % For coloring text
+  \usepackage{xcolor}         % For coloring text
   \usepackage{graphicx}
 
   \definecolor{impactblue}{RGB}{30, 144, 255}
@@ -176,10 +169,8 @@ header-includes:
 
   % Colorbox - Theorems, definitions, lemmas, proofs
 
-  \usepackage[most]{tcolorbox}          % does not included 'minted', 
-                                        % which has problems with R Markdown builds.
+  \usepackage[most]{tcolorbox}          % does not included 'minted' (issue with rmd) 
   \newtheorem{lem}{Lemma}		% from `amsthm'
-
   \newtheorem{pruf}{Proof}		% from `amsthm'
 
   \newtcbtheorem[number within=chapter]{a_thm}{Theorem}
@@ -238,8 +229,6 @@ header-includes:
   borderline west={1mm}{0pt}{red}
   }
 
-  %
-
   \pretitle{%
   \begin{flushleft} \LARGE
   \includegraphics[width=2cm,height=2cm]{pictures/IH2.jpg}
@@ -272,34 +261,24 @@ knitr::opts_chunk$set(
   fig.cap = "Default caption for all figures",  # Optional default caption
   fig.align = "center"
 )
-library(reticulate) # Python integration
+library(reticulate)           # Python integration
 # cat("\\small\n")
 ```
 
-<!-- Can Add listings if needed here- of the code listings and fiugures if indexed. -->
-<!-- \listoffigures -->
-<!-- \lstlistoflistings -->
+
 
 \
+
 \begin{versionhistory}
-  \vhEntry{0.0}{2024.10.25}{DP}{Created!}
-  \vhEntry{0.1}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
-  \vhEntry{0.3}{2024.10.26}{DP}{Buildout Chapter Frames}
-  \vhEntry{0.4}{2024.11.07}{DP}{Sigmoid Chapter}
+  \vhEntry{0.00.0}{2024.10.25}{DP}{Created!}
+  \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
+  \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
+  \vhEntry{0.04.0}{2024.11.07}{DP}{Sigmoid Chapter}
+  \vhEntry{0.04.5}{2024.11.08}{DP}{Code clean up - house keeping, typos}
 \end{versionhistory}
 \newpage
+
 \setcounter{table}{0}
-
-**GALLEY Sheet info - follows**\
-
-<!-- \layout -->
-
-<!-- \lipsum[1-2] % Dummy text -->
-
-**GALLEY Sheet info - ends**
-
-\newpage
-
 
 
 \frontmatter
@@ -377,11 +356,16 @@ As we reflect on these 24 equations, on to the 25th, one cannot ignore the human
 \newpage
 
 \vspace*{\fill}
+
+<!--- Def Block --->
 \begin{a_def_eq}{Gradient Descent}{def1} 
 
 \begin{align}
 \large{\theta_{j+1} = \theta_j - \alpha \nabla J(\theta_j)}
 \end{align}
+
+<!-- \label{sk_int} ...
+... \ref{sk_int} -->
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$\theta_j$] The current value of the \textbf{parameter vector} at iteration $j$, which represents the current estimate of the model parameters.
@@ -406,7 +390,7 @@ As we reflect on these 24 equations, on to the 25th, one cannot ignore the human
 
 \newpage
 
-## What is behind the equation {-}
+## What is behind the equation
 
 ## Structure of the Parameter Vector \(\theta\)
 
@@ -582,80 +566,6 @@ ggplot() +
 ```  
 \normalsize
 
-\newpage
-## testing Python Integration (temp section - to remove later)
-Create a variable `x` in the Python session:
-
-```{python}
-x = [1, 2, 3]
-```
-
-Access the Python variable `x` in an R code chunk:
-
-```{r}
-py$x
-```
-
-Create a new variable `y` in the Python session using R,
-and pass a data frame to `y`:
-
-```{r}
-py$y <- head(cars)
-```
-
-Print the variable `y` in Python:
-
-```{python}
-print(y)
-```
-
-\newpage 
-
-## Define Numbers in R
-
-Let's define the numbers we will use in both R and Python:
-
-```{r}
-# Define a vector of numbers in R
-define_numbers <- c(1, 2, 3, 4, 5)
-```
-
-## R Code Block
-
-This is a simple R code block that calculates the sum of 5 numbers:
-
-```{r}
-# R code to sum 5 numbers
-r_sum <- sum(define_numbers)
-print(paste("The sum of the numbers in R is:", r_sum))
-```
-
-
-
-## Python Code To Pass *
-```{r}
-py$n2 <- define_numbers
-```
-
-## Python Code Block
-This is a simple Python code block that calculates the sum of 5 numbers:
-
-```{python}
-# Python code to calculate the sum of numbers defined in R
-
-# Define a list of numbers
-numbers = [1, 2, 3, 4, 5]
-
-# Retrieve the numbers passed from R using reticulate's 'py' object
-total_sum = sum(numbers)
-total_sum2 = sum(n2)
-
-# Print the result
-print(f"The sum of the numbers 'total sum' is: {total_sum}")
-print(f"The sum of the numbers 'n2' is: {total_sum2}")
-```
-
-
 
 \newpage
 ## Linking Gradient Descent to Our Polynomial Example
@@ -668,7 +578,9 @@ The equation we used to explain gradient descent is:
 
 ### Step-by-Step Breakdown
 
-The fundamental idea behind gradient descent is to iteratively adjust the model's parameters, \(\theta\), in a direction that reduces the cost function, \(J(\theta)\). The parameter update is governed by the **gradient** of the cost function (or loss function), \(\nabla J(\theta)\). In the above equation:
+The fundamental idea behind gradient descent is to iteratively adjust the model's parameters, \(\theta\), in a direction that reduces the cost function, \(J(\theta)\). The parameter update is governed by the **gradient** of the cost function (or loss function), \(\nabla J(\theta)\). 
+
+In the above equation:
 
 - \(\theta_{j}\) represents the parameter(s) at step \(j\), and \(\theta_{j+1}\) is the updated parameter at step \(j+1\).
 - \(\alpha\) is the **learning rate**, which controls how large each step is in the descent.
@@ -769,11 +681,12 @@ Let me know which direction you’d like to explore, and I'll get started!
 \newpage
 
 \vspace*{\fill}
-\begin{a_def_eq}{Normal Distribution}{def1} 
+<!--- Def Block --->
+\begin{a_def_eq}{Normal Distribution}{def2} 
 
-$$
+\begin{align}
  f(x | \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left( - \frac{(x - \mu)^2}{2\sigma^2} \right)
-$$
+\end{align}
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$x$] The \textbf{random variable} for which the probability density function is being calculated. It represents the value within the distribution.
@@ -979,11 +892,12 @@ The normal distribution is not only a convenient assumption but also a useful to
 \newpage
 
 \vspace*{\fill}
-\begin{a_def_eq}{Z-Score}{def1} 
+<!--- Def Block --->
+\begin{a_def_eq}{Z-Score}{def3} 
 
-$$
+\begin{align}
 z = \frac{x - \mu}{\sigma}
-$$
+\end{align}
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$x$] The \textbf{random variable}, representing the value within the distribution that is being standardized.
@@ -1141,7 +1055,7 @@ This example showcases how the Z-score helps normalize data to a common scale, m
 
 
 \vspace*{\fill}
-\begin{a_def_eq}{Sigmoid Function}{def1} 
+\begin{a_def_eq}{Sigmoid Function}{def4} 
 
 $$
 \sigma(z) = \frac{1}{1 + e^{-z}}
@@ -1417,7 +1331,7 @@ This function smoothly scales inputs, but its range only extends from -1 to 1. I
         \includegraphics[width=\textwidth]{pictures/Sigmoids_comparisons.jpeg}
         \caption{Summary of Alternate Sigmoid Like Curves}
     \end{minipage}
-    \label{fig:normal-distribution-layout}
+    \label{fig:sigmoid-layout}
 \end{figure}
 
 Note: All functions are normalized in such a way that their slope at the origin is 1
@@ -1753,7 +1667,7 @@ $$
 # The Human Equation
 
 $$
-HUMAN^(inf)
+\textbf{HUMAN}
 $$
 
 
@@ -1763,1427 +1677,12 @@ $$
 
 **Importance in ML**: 
 
-
 \newpage
 
-END 25 EQ CONTENT
-END 25 EQ CONTENT
-END 25 EQ CONTENT
-END 25 EQ CONTENT
-END 25 EQ CONTENT
-
-\newpage
-
-
-<!--
-
-# Finite Fields
-We will make some entry level definitions that the reader should be basically aware of ... so take the time to browse.In mathematics, rings are algebraic structures that generalize fields: multiplication need not be commutative and multiplicative inverses need not exist. Informally, a ring is a set equipped with two binary operations satisfying properties analogous to those of addition and multiplication of integers. Ring elements may be numbers such as integers or complex numbers, but they may also be non-numerical objects such as polynomials, square matrices, functions, and power series.
-
-# Finite Fieldsii
-We will make some entry level definitions that the reader should be basically aware of ... so take the time to browse.In mathematics, rings are algebraic structures that generalize fields: multiplication need not be commutative and multiplicative inverses need not exist. Informally, a ring is a set equipped with two binary operations satisfying properties analogous to those of addition and multiplication of integers. Ring elements may be numbers such as integers or complex numbers, but they may also be non-numerical objects such as polynomials, square matrices, functions, and power series.
-
-
-## Rings & Fields
-In mathematics, rings are algebraic structures that generalize fields: multiplication need not be commutative and multiplicative inverses need not exist. Informally, a ring is a set equipped with two binary operations satisfying properties analogous to those of addition and multiplication of integers. Ring elements encompass a variety of forms: they can be numerical entities, such as integers or complex numbers, which adhere to standard arithmetic operations. However, their versatility extends beyond mere numbers, encompassing non-numerical objects as well. These include polynomials, where variables and coefficients interact through algebraic operations; square matrices, which combine linear transformations in multi-dimensional space; functions, particularly those that are real-valued or complex-valued; and power series, which represent functions as infinite sums of terms based on powers of a variable. This breadth of elements allows rings to model a complex array of algebraic structures.
-
-__Ring: The Generalist Club__
-
-* __Members (Elements):__ Rings can have a wide variety of members. They might be numbers like integers, or they could be more exotic things like polynomials or matrices.
-* __Two Main Activities (Operations):__ Rings have two key operations - addition and multiplication. Just like in any club, these operations have to follow certain rules (like being associative and having an additive identity).
-* __Addition Rules:__ In the Ring club, members can be added together, and there’s always a way to undo this addition (this is called having an additive inverse). Also, the order in which you add members doesn't matter (addition is commutative).
-* __Multiplication Flexibility:__ Multiplication in Rings is a bit more relaxed. It follows most of the rules of addition (like having an associative property and a multiplicative identity), but it doesn't have to be commutative (abelian) - so the order in which you multiply members can matter. Also, not every member needs to have a multiplicative inverse.
-* __Diverse Crowd:__ Rings can be quite diverse - some are neat and orderly (commutative rings), and some are a bit more chaotic.
-
-__Field: The Exclusive Club__
-
-* __Selective Membership and Stricter Rules:__ Fields are more exclusive than Rings. They still have the same two operations (addition and multiplication), but they're stricter about who gets in. In addition to all the rules of a Ring, a Field requires that multiplication be commutative - so the order of multiplying members doesn't matter.
-* __Everyone Shares:__ In a Field, every non-zero member must have a multiplicative inverse. This is like saying, in this club, everyone is willing to share equally.
-* __Uniformity:__ Because of these strict rules, Fields tend to be more uniform and orderly compared to Rings.
-* __Selective Membership__: Fields are more exclusive than Rings. They still have the same two operations (addition and multiplication), but they're stricter about who gets in.
-* __Uniformity__: Because of these strict rules, Fields tend to be more uniform and orderly compared to Rings.  
-
-__Key Differences between Rings and Fields:__
-
-* __Multiplication Commutativity__: Rings don’t require multiplication to be commutative; Fields do.
-* __Multiplicative Inverses__: In a Field, every non-zero element must have a multiplicative inverse; Rings don’t require this.
-
-In essence, while all Fields are Rings because of their shared foundational rules, not all Rings qualify as Fields due to the additional strict requirements of Fields.
-
-\newcommand{\abspos}[2]{\noindent\makebox[0pt][l]{\hspace*{#1}#2}}
-\abspos{3cm}{This text starts 3 cm from the left margin.}
-
-
-\begin{a_def}{A Ring}{def3} 
-In the context of our discussion, a "ring" in mathematics is an algebraic structure consisting of a set equipped with two binary operations, typically referred to as addition and multiplication, that generalize the arithmetic operations of addition and multiplication of integers.
-
-
-\textit{Addition Properties:}
-\begin{itemize}
-\item Closure: $\forall \{a, b\} \in \mathbf{R}$, the sum $a+b$ is also in $\mathbf{R}$.
-\item Associativity: $\forall \{a, b\} \in \mathbf{R}$, $(a+b)+c=a+(b+c)$.
-\item Commutativity: $\forall \{a, b\} \in \mathbf{R}$, $a+b=b+a$.
-\item Identity Element: $\forall \{a\} \in \mathbf{R}$, $\exists 0 \in \mathbf{R}$ such that $a+0=a$ 
-\item Additive Inverse: $\forall \{a\} \in \mathbf{R}$,  $\exists \{-a\} \in \mathbf{R}$ such that $a+$ $(-a)=0$.
-\end{itemize}
-
-\textit{Multiplication Properties:}
-\begin{itemize}
-\item Closure: $\forall \{a, b\} \in \mathbf{R}$, the product $a \times b$ is also in $\mathbf{R}$.
-\item Associativity: $\forall \{a, b, c\} \in \mathbf{R}$,$(a \times b) \times c=a \times(b \times c)$ 
-\end{itemize}
-
-\textit{Distributive Law:}
-\begin{itemize}
-\item Multiplication is distributive over addition, i.e., $a \times(b+c)=(a \times$ $b)+(a \times c)$ and $(a+b) \times c=(a \times c)+(b \times c)$ for all $a, b, c \in \mathbf{R}$.
-\end{itemize}
-
-\textit{Multiplication Not Necessarily Commutative:}
-\begin{itemize}
-\item Unlike fields, multiplication in a ring does not have to be commutative
-\end{itemize}
-
-\textit{Multiplicative Identity (Optional):}
-\begin{itemize}
-\item We designate "unital rings" as $1 \times a=a \times 1=a$ for all $a \in \mathbf{R}$. 
-\end{itemize}
-
-\end{a_def}
-
-
-Finite fields, also known as Galois fields, are an intriguing and important area of algebra. They encompass a set of mathematical structures that have finite numbers of elements and for which all the basic arithmetic operations (addition, subtraction, multiplication, and division) are defined and behave in certain regular ways.\
-
-\begin{a_def}{Finite Field}{def1} 
-A finite field, denoted as $\mathbf{F}_q$, is a field with a finite number of elements, where $q$ is the number of elements in the field. The value of $q$ must be a power of a prime number, typically expressed as $q=p^n$ for some prime number $p$ and positive integer $n$.
-\end{a_def}
-
-In a finite field, addition, subtraction, multiplication, and division (except by zero) are all well-defined operations, and they satisfy the usual properties of associativity, commutativity, and distributivity. Additionally, every element has an additive inverse and every non-zero element has a multiplicative inverse. And last but not least, arithmetic is performed modulo $p$.
-
-\newpage
-## Let's Understand $\mathbf{Z} / p\mathbf{Z} =\mathbf{F}_q$
-
-... shall we? The compact notation packs a lot of punch, lets know it when we see it. 
-
-__The key players are:__
-
-
-
-* __$\mathbf{F}_p$:__ Finite field of $p$ elements, $p$. A field with two operations (addition and multiplication) and the properties (commutativity, associativity, distributivity, existence of identity and inverses). In $\mathbf{F}_p$, arithmetic is performed modulo $p$.
-* __$\mathbf{Z} / p \mathbf{Z}$:__ This represents the set of integers modulo $p$, where $p$ is a prime number. This set forms a field because $p$ is prime, ensuring that every non-zero element has a multiplicative inverse modulo $p$.
-
-Both $\mathbf{Z} / p \mathbf{Z}$ and $\mathbf{F}_p$ are notation for the same mathematical object: Integers modulo 5 or the the field with $p$ prime elements.
-
-The notation $\mathbf{Z} / 5 \mathbf{Z}$ can indeed be a bit cryptic at first glance. Let's break it down to make it more understandable:
-
-__How to read: $\mathbf{Z} / 5 \mathbf{Z}$__
-
-* __$\mathbf{Z}$:__ This represents the set of all integers, both positive and negative, including zero.
-* The notation .../: In this context, the slash symbolizes "mod" or "modulo", which refers to the operation of finding the remainder when one number is divided by another. However, in algebraic structures like rings and fields, it's more about the quotient structure or the set of equivalence classes rather than just the operation.
-* __$5 \mathbf{Z}$:__ This represents the set of all integers that are multiples of 5 , i.e., $\{\ldots,-10,-5,0,5,10, \ldots\}$.
-
-Putting it together, $\mathbf{Z} / 5 \mathbf{Z}$ can be thought of as the set of integers partitioned into equivalence classes based on their remainder when divided by 5 . This is a way of formalizing the concept of "integers modulo 5."
-
-__Mnemonic and Understanding__
-
-To help remember and understand this notation, consider the following mnemonic:
-
-* Think of $\mathbf{Z}$ as your starting point, the entire set of integers.
-* The / symbol (read as "mod" or "modulo") introduces the idea of wrapping around after reaching a certain number, which in this case is 5 . It's like telling you to loop back after you reach the 5th step.
-* The $5 \mathbf{Z}$ at the end tells you the step size or what you're wrapping around by. In this case, it's telling you that integers are being grouped by their remainders when divided by 5 .
-
-__Simplified Reading__
-
-You can read $\mathbf{Z} / 5 \mathbf{Z}$ as "the integers modulo 5 " or "the set of equivalence classes of integers under addition modulo 5." This emphasizes that you're dealing with a system where integers are considered equivalent if they leave the same remainder when divided by 5 , effectively reducing the infinite set of integers to just five distinct entities: the remainders 0 through 4.
-
-__Significance of /__
-
-The slash / in this notation is significant because it indicates the creation of a quotient set or quotient ring in algebra. It's not merely division in the arithmetic sense but an operation that creates a new algebraic structure from an existing one by grouping elements into equivalence classes. These classes are defined by an equivalence relation, which, in the case of $\mathbf{Z} / 5 \mathbf{Z}$, is having the same remainder when divided by 5 .
-
-A quotient set, in a general sense, refers to the set of equivalence classes that result when a given set is partitioned by an equivalence relation. Each equivalence class groups together elements of the original set that are considered equivalent under the specified relation.
-
-In algebra, particularly in the context of ring theory, a quotient ring (also known as a factor ring) is a specific type of quotient set that is constructed by partitioning a ring with an ideal. An ideal is a subset of the ring that is closed under addition and under multiplication by any element of the ring. The quotient ring is then formed by creating equivalence classes of ring elements, where two elements are considered equivalent if their difference is in the ideal.
-
-\begin{a_def}{A Quotient Ring}{def_qotiantring}
-Formally, given a ring $R$ and an ideal $I$ within $R$, the quotient ring $R / I$ consists of equivalence classes of the form $a+I=\{a+i \mid i \in I\}$, where $a$ is an element of $R$. The operations of addition and multiplication in $R / I$ are defined by performing the corresponding operations in $R$ and then taking the equivalence class of the result. That is, for two elements $a+I$ and $b+I$ in $R / I$, their sum is $(a+b)+I$, and their product is $(a \cdot b)+I$.
-\end{a_def}
-
-In the specific case of $\mathbf{Z} / p \mathbf{Z}=\mathbf{F}_p$, where $p$ is a prime number, $R$ is the ring of integers $\mathbf{Z}, I$ is the ideal consisting of all multiples of $p$ (denoted $p \mathbf{Z}$ ), and any integer $a$ in $\mathbf{Z}$ forms an equivalence class $a+p \mathbf{Z}$ in $\mathbf{Z} / p \mathbf{Z}$. Here, the operations of addition and multiplication modulo $p$ reflect the addition and multiplication in the quotient ring, making $\mathbf{Z} / p \mathbf{Z}$ a field $\mathbf{F}_p$ with precisely $p$ elements, where arithmetic is conducted modulo $p$.
-
-
-### Example for $p=5$ 
-
-Showing it with numbers, let's take $p=5$. We can show $\mathbf{F}_5$ and $\mathbf{Z} / 5 \mathbf{Z}$, i.e. $\mathbf{Z} / p \mathbf{Z}$, $p$ is prime are the same by inspection of equivalent tokens from each table. 
-
-\begin{a_exmp}{$Example for $p=5$, \mathbf{Z} / 5 \mathbf{Z}$, }{def_explZ5_table}
-
-In these tables, you can see how addition and multiplication are performed in $\mathbf{F}_5$ and $\mathbf{Z} / 5 \mathbf{Z}$. Both addition and multiplication are closed operations within the set $\{0,1,2,3,4\}$, satisfying the requirements for a field, where each non-zero element has an additive and a multiplicative inverse within the set. This illustrates how $\mathbf{F}_5$ and $\mathbf{Z} / 5 \mathbf{Z}$ are structurally the same, providing a concrete example of their equivalence.\\
-
-
-\textbf{$p=5$ addition table:}\\
-\begin{center}
-\begin{tabular}{c|ccccc}
-+ & 0 & 1 & 2 & 3 & 4 \\
-\hline 0 & 0 & 1 & 2 & 3 & 4 \\
-1 & 1 & 2 & 3 & 4 & 0 \\
-2 & 2 & 3 & 4 & 0 & 1 \\
-3 & 3 & 4 & 0 & 1 & 2 \\
-4 & 4 & 0 & 1 & 2 & 3
-\end{tabular}
-\end{center}
-
-\textbf{$p=5$ multiplication table:}\\
-\begin{center}
-\begin{tabular}{c|ccccc}
-$\times$ & 0 & 1 & 2 & 3 & 4 \\
-\hline 0 & 0 & 0 & 0 & 0 & 0 \\
-1 & 0 & 1 & 2 & 3 & 4 \\
-2 & 0 & 2 & 4 & 1 & 3 \\
-3 & 0 & 3 & 1 & 4 & 2 \\
-4 & 0 & 4 & 3 & 2 & 1
-\end{tabular}
-\end{center}
-
-\end{a_exmp}
-
-\newpage
-
-## More About Finite Fields
-
-We start to focus on exploring GTM 7, albiet it starts out a little heavy, and is certainly assuming that one has a decent undergraduate training. Lets take it one step at a time and explore the concepts and build towards a deeper understanding. 
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-\text{1.1. }\textit{Finite fields}\
-
-Let $K$ be a field. The image of $\mathbf{Z}$ in $K$ is an integral domain, hence isomorphic to $\mathbf{Z}$ or to $\mathbf{Z} / p \mathbf{Z}$, where $p$ is prime; its field of fractions is isomorphic to $\mathbf{Q}$ or to $\mathbf{Z} / p \mathbf{Z}=\mathbf{F}_p$. In the first case, one says that $K$ is of characteristic zero; in the second case, that $K$ is of characteristic $p$.
-
-\end{adjustwidth}
-\color{black}
-
-The passage states that the image of $\mathbf{Z}$ (the ring of integers) in a field $K$ is an integral domain. This means that within the field $K$, the set of integers (or a structure isomorphic to it) behaves as an integral domain, following these properties. This is important for defining characteristics of the field $K$, such as its characteristic being zero or a prime number $p$.
-
-We being our dive into GTM 7 with a definition for integral domain.\ 
-\
-\begin{a_def}{Integral Domain}{def2} 
-An "integral domain" in the context of this passage refers to a specific type of algebraic structure within the field of abstract algebra. An integral domain is a commutative ring with a multiplicative identity (usually denoted as 1 or $\text{`e'}$) that has no zero divisors. A zero divisor in a ring is a non-zero element $a$ such that there exists another non-zero element $b$ in the ring for which $a \times b=0$.
-\tcblower
-\textit{Examples of Integral Domains:}
-\begin{itemize}
-\item The archetypical example is the ring $\mathbf{Z}$ of all integers.
-\item Every field is an integral domain. 
-\item For example, the field $\mathbf{R}$ of all real numbers is an integral domain.
-\item A $p$-adic integer is an infinite series of the form $a_0+a_1 p+a_2 p^2+a_3 p^3+\ldots$ where each $a_i$ is an integer with $0 \leq a_i<p$, and $p$ is a prime number. The ring of $p$-adic integers $\mathbf{Z}_p$ is an integral domain.
-\item The quotient ring $\mathbf{Z} / m \mathbf{Z}$ when $m$ is a composite number is NOT an integral domain. Indeed, choose a proper factorization $m=x y$ (meaning that $x$ and $y$ are not equal to 1 or $m)$ and as a result $x \not \equiv 0 \bmod \, m$ and $y \not \equiv 0 \bmod \, m$, but $x y \equiv 0 \bmod \, m$.
-\end{itemize}
-\end{a_def}
-
-In simpler terms, an integral domain has two key properties:
-
-__Commutativity of Multiplication:__ The product of any two elements in the ring remains the same regardless of their order. If $a$ and $b$ are elements of the ring, then $a \times b=$ $b \times a$.
-
-__No Zero Divisors:__ If the product of two non-zero elements of the ring is zero, then one of the elements must be zero. This property ensures a kind of 'integrity' in the multiplication operation within the ring.
-
-Perhaps what is actually more interesting than the definition integral domain is the idea surrounding the characteristic of $K$.\
-
-\begin{a_def}{Characteristic of the Field $K$}{def_charK} 
-\textbf{Characteristic Zero $(p=0)$:}\\
-If the field $K$ is of characteristic zero, it means there is no natural number $n$ for which $n \cdot 1=0$ in $K$ (where 1 is the multiplicative identity in $K$ ). In this case, the image of $\mathbf{Z}$ (the ring of integers) in $K$ is isomorphic to $\mathbf{Z}$ itself. This is because the usual arithmetic of integers is preserved in $K$.
-\tcblower
-\textbf{Characteristic $p$ (where $p$ is prime):}\\ 
-If $K$ has characteristic $p$, a prime number, it means that $p \cdot 1=0$ in $K$, and $p$ is the smallest positive integer for which this is true. In this scenario, the image of $\mathbf{Z}$ in $K$ is isomorphic to $\mathbf{Z} / p \mathbf{Z}$, a field of order $p$ (denoted as $\mathbf{F}_p$ ).
-\end{a_def}
-
-We inspect two cases for clarity: $\mathbf{Z} / 5 \mathbf{Z}$ and $\mathbf{Z} / 4 \mathbf{Z}$
-
-\begin{a_exmp}{$\mathbf{Z} / 5 \mathbf{Z}$, i.e. $\mathbf{Z} / p \mathbf{Z}$, $p$ is prime}{def_explZ5}
-Considering $\mathbf{Z} / 5 \mathbf{Z} = \mathbf{F}_5$, where $p=5$, a finite field of characteristic 5. which consists of the elements $\{0,1,2,3,4\}$. 
-This is a field, every non-zero element has a multiplicative inverse within the field, and hence it is closed under division (except by zero).
-Therefore, the field of fractions for $\mathbf{Z} / 5 \mathbf{Z}$ is the field itself.\\
-
-Let's illustrate the elements and their inverses in $\mathbf{F}_5$:
-\begin{itemize}
-\item Element \{0\}: Does not have an inverse (as division by zero is undefined).
-\item Element \{1\}: The inverse of 1 is 1 , since $1 \times 1=1$.
-\item Element \{2\}: The inverse of 2 is 3 , since $2 \times 3=6 \equiv 1 \, (\bmod \, 5)$.
-\item Element \{3\}: The inverse of 3 is 2 , since $3 \times 2=6 \equiv 1 \, (\bmod \, 5)$.
-\item Element \{4\}: The inverse of 4 is 4 , since $4 \times 4=16 \equiv 1 \, (\bmod \, 5)$.\\
-\end{itemize}
-
-In this field, you can perform division by any non-zero element. For example, to divide 2 by 3 in $\mathbf{F}_5$, you multiply 2 by the inverse of 3 , which is 2 (since $3 \times 2=1$ in $\mathbf{F}_5$ ). So, $2 \div 3=2 \times 2=4$ in $\mathbf{F}_5$.\\
-\newline
-Therefore, the field of fractions for $\mathbf{Z} / 5 \mathbf{Z}$ doesn't introduce any new elements or structure beyond what $\mathbf{Z} / 5 \mathbf{Z}$ already provide and is "complete" in terms of being able to handle division.
-\end{a_exmp}
-
-\begin{a_exmp}{$\mathbf{Z} / 4 \mathbf{Z}$, i.e. $\mathbf{Z} / m \mathbf{Z}$, $m$ is composite}{def_explZ4}
-Considering $\mathbf{Z} / 4 \mathbf{Z}$, where $m$ is not prime (specifically, $m=4$ ), the structure we are dealing with is not a field, but it is still a ring. This ring consists of the set of elements $\{0,1,2,3\}$.\\
-
-Illustrating the elements of $\mathbf{Z} / 4 \mathbf{Z}$:
-\begin{itemize}
-\item Element \{0\}:\\ 
-- Additive Identity: $0+a=a$ for any $a$ in the set.\\
-- Multiplicative Property: $0 \times a=0$ for any $a$ in the set.
-\item Element \{1\}:\\
-- Additive Inverse: The additive inverse of 1 is 3 , as $1+3=4 \equiv 0 \, (\bmod \, 4)$.\\
-- Multiplicative Identity: $1 \times a=a$ for any $a$ in the set.
-\item Element \{2\}:\\
-- No Additive Inverse within the set (as $2+a$ mod 4 is never 0 for any $a$ in $\{0,1,2,3\}$ ).\\
-- Multiplicative Property: $2 \times 2=4 \equiv 0\,  \, (\bmod \, 4)$, so 2 is a zero divisor.
-\item Element \{3\}:\\
-- Additive Inverse: The additive inverse of 3 is 1 , as $3+1=4 \equiv 0 \,  \, (\bmod \, 4)$.\\
-- Multiplicative Property: $3 \times 3=9 \equiv 1 \,  \, (\bmod \, 4)$, so 3 is its own multiplicative inverse.
-\end{itemize}
-
-
-Ring Properties:
-\begin{itemize}
-\item Addition and Multiplication Modulo 4: All operations (addition, subtraction, multiplication) are performed modulo 4.
-\item Non-Field Characteristics:
-\item No Multiplicative Inverse for 2: As shown, 2 does not have a multiplicative inverse, which is one reason why $\mathbf{Z} / 4 \mathbf{Z}$ is not a field.
-\item Zero Divisors: The presence of zero divisors (like the element 2 ) is another characteristic that differentiates this ring from a field.
-\end{itemize}
-
-\end{a_exmp}
-
-In $\mathbf{Z} / 4 \mathbf{Z}$, we see the unique properties of a ring that is not a field, particularly highlighted by the lack of multiplicative inverses for all non-zero elements and the presence of zero divisors. This ring offers a simple yet clear example of the more general and flexible structure of rings compared to fields.
-
-\newpage
-
-### Field vs. Ring Structure
-
-__When $p$ is Prime $(\mathbf{Z} / p \mathbf{Z})$:__
-
-* This structure is not only a ring but also a field. This is because a ring formed with a prime modulus has additional properties that qualify it as a field.
-* Every non-zero element has a multiplicative inverse within the ring. This means for every non-zero element $a$, there exists an element $b$ such that $a \times b \equiv 1 \, (\bmod \, p)$.
-* The multiplication operation is commutative, and there are no zero divisors. A zero divisor is an element $a$ such that $a \times b \equiv 0 \, (\bmod \, p)$ for some non-zero element $b$, which does not occur in this case.
-
-__When $m$ is Composite $(\mathbf{Z} / m \mathbf{Z})$:__
-
-* This structure is a ring but not a field. The presence of composite numbers introduces elements without multiplicative inverses and the existence of zero divisors.
-* Some non-zero elements do not have multiplicative inverses. For example, if $m=$ $a b$ with $a, b>1$, neither $a$ nor $b$ has an inverse in $\mathbf{Z} / m \mathbf{Z}$.
-* Zero divisors exist. For instance, in $\mathbf{Z} / m \mathbf{Z}$, both $a$ and $b$ are zero divisors because $a \times b \equiv 0 \, (\bmod \, \, m)$.
-
-__Arithmetic Properties of $(\mathbf{Z} / p \mathbf{Z})$:__
-
-* Addition, subtraction, and multiplication operations are closed and behave similarly to those operations in the standard integer ring, but with the added property that every non-zero element can be divided (i.e., has an inverse).
-
-The field structure supports a richer set of algebraic properties and is often used in areas where the ability to invert elements is crucial, (ex. cryptography, regression, etc)
-
-__Arithmetic in Rings with Composite Modulus $(\mathbf{Z} / m \mathbf{Z})$:__
-
-* While addition, subtraction, and multiplication operations are still closed, division is not always possible due to the lack of multiplicative inverses for some elements.
-* These rings find applications in modular arithmetic and number theory but have limitations in areas requiring field properties that preserve inverse, like certain types of error correction and cryptography.
-
-
-__Application and Theory__
-
-* Prime Modulus Fields: The field $\mathbf{Z} / p \mathbf{Z}$ has extensive applications in theoretical and applied mathematics, including cryptography, due to its field properties and the complexity of its structure.
-* Composite Modulus Rings: Rings like $\mathbf{Z} / m \mathbf{Z}$ are important in understanding modular arithmetic and number theory but are less applicable in areas that require field properties.
-
-
-### Some important aspects of the characterisitc if $K$, $\operatorname{char}(K)$ \label{lem1_sec}
-
-AS we return to GTM7 ... we find the following lemma presented for GTM 7 section 1.1, on finite fields: 
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-The characteristic of $K$ is denoted by $\operatorname{char}(K)$. If $\operatorname{char}(K)=p \neq 0, p$ is also the smallest integer $n>0$ such that $n \cdot 1=0$.
-\end{adjustwidth}
-\color{black}
-
-Clearly this means , then p is a prime number, and it is the smallest positive integer for which this property holds.\
-
-FIX THIS
-
-\begin{a_lemma}{The map resulting from $\operatorname{char}(K)=p$}{def_explZ4}
-
-From the intro of 1.1. Finite Fields GTM 7 the following bridging Lemma is preseneted
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-\,\\
-If $\operatorname{char}(K)=p$, the map $\sigma: x \mapsto x^p$ is an isomorphism of $K$ onto one of its subfields $K^p$.\\
-
-We have $\sigma(x y)=\sigma(x) \sigma(y)$. Moreover, the binomial coefficient $\binom{p}{k}$ is congruent to $0 \, (\bmod \, p)$ if $0<k<p$.\\ 
-
-From this it follows that
-$$
-\sigma(x+y)=\sigma(x)+\sigma(y)
-$$
-hence $\sigma$ is a homomorphism. Furthermore, $\sigma$ is clearly injective
-\end{adjustwidth}
-\color{black}
-
-\end{a_lemma}
-
-
-This passage is discussing a specific type of map in a field $K$ with a prime characteristic $p$. The map, denoted by $\sigma$, and its properties are crucial in understanding the structure of such fields.
-
-Let's break down the passage:
-
-__The Map $\sigma: x \mapsto x^p$:__
-
-* For a field $K$ where $\operatorname{char}(K)=p$ (a prime number), this map $\sigma$ takes any element $x$ in $K$ and maps it to $x^p$, the element raised to the power of $p$.
-* The claim is that $\sigma$ is an isomorphism onto one of its subfields, $K^p$. An isomorphism is a bijective map that preserves the structure (in this case, the algebraic operations of the field).
-
-__Properties of $\sigma$:__
-
-* Multiplicative Property: $\sigma(x y)=\sigma(x) \sigma(y)$. This means $(x y)^p=x^p y^p$. This property is true in any field, but it's particularly interesting in a field of prime characteristic because of the next point.
-* Additive Property: The additive property relies on the special characteristic of the binomial coefficients in a field of prime characteristic. For $0<k<p$, $\binom{p}{k} \equiv 0 \, (\bmod \, p)$.\ 
-This property is crucial because it leads to $\sigma(x+y)=\sigma(x)+\sigma(y)$, which means $(x+y)^p=x^p+y^p$ in $K$.\ 
-
-Normally, the binomial theorem would expand $(x+y)^p$ into a sum of terms involving $\binom{p}{k}$, but all these terms vanish modulo $p$ except when $k=0$ or $k=p$.
-
-__Homomorphism and Injectivity:__
-
-* Because $\sigma$ respects both addition and multiplication (as shown above), it is a homomorphism (a structure-preserving map).
-* The injectivity of $\sigma$ means that if $\sigma(x)=\sigma(y)$, then $x=y$. This is clear for $\sigma$ since, in a field, raising distinct non-zero elements to a positive integer power $p$ results in distinct elements, assuming $p$ is the characteristic of the field.
-
-\newpage 
-
-__The Map $\sigma: x \mapsto x^p$__
-
-1. Definition: The passage defines a map $\sigma$ which takes any element $x$ in the field $K$ and maps it to $x^p$, where $p$ is the prime characteristic of $K$. This operation is akin to raising each element in the field to the power of $p$.
-2. Properties: It states that $\sigma$ preserves both the multiplication and addition operations of the field in a specific manner. That is, $\sigma(x y)=\sigma(x) \sigma(y)$ for multiplication, and surprisingly, $\sigma(x+$ $y)=\sigma(x)+\sigma(y)$ for addition.
-
-__The Role of the Binomial Coefficient__
-
-1. Binomial Coefficient Modulo $p$ : The passage points out that for $0<k<p$, the binomial coefficient $\left(\begin{array}{l}p \\ k\end{array}\right)$ is congruent to $0 \bmod p$. This is a consequence of a property from number theory, which, when applied in this context, implies that when expanding $(x+y)^p$ using the binomial theorem, all terms except $x^p$ and $y^p$ vanish modulo $p$.
-
-__Implication for $\sigma$__
-
-1. Addition Preservation: Because of the specific behavior of the binomial coefficient modulo $p$, $\sigma(x+y)=(x+y)^p$ simplifies to $x^p+y^p=\sigma(x)+\sigma(y)$, demonstrating that $\sigma$ preserves addition. This property is crucial because it isn't immediately obvious that exponentiation would distribute over addition in this way.
-2. Homomorphism: The ability of $\sigma$ to preserve both addition and multiplication in $K$ qualifies it as a homomorphism-a map that respects the structure of the algebraic field it operates within. This means $\sigma$ maintains the "shape" of operations from $K$ to $K^p$, a subfield of $K$.
-3. Injectivity: Lastly, the passage states that $\sigma$ is "clearly injective," meaning that if $\sigma(x)=\sigma(y)$, then $x=y$. This injectiveness stems from the fact that $\sigma$ doesn't collapse distinct elements to the same output, which is a key property for an isomorphism (a bijective homomorphism).
-In summary, the passage outlines how, in fields of characteristic $p$, the map $\sigma$ that raises elements to the $p$-th power is an isomorphism onto a subfield of $K$. This is due to unique properties of exponentiation in the field and the modular behavior of binomial coefficients, highlighting deep and beautiful structures within finite fields.
-
-\newpage 
-
-\newpage
-
-## Characterisic $K$ of a Finite Field
-
-### Introduction to Characteristic of the Field $K$ via $f=\left[K: F_p\right]$ via a pivitol theorem
-
-\begin{a_thm}{Characteristic of the Field $K$, Polynomial Roots and $\mathbf{F}_q$:}{thm_charK} 
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-\,\\
-i) The characteristic of a finite field $K$ is a prime number $p \neq 0 ;$ if $f=\left[K: F_p\right]$, the number of elements of $K$ is $q=p^f$.\\
-
-ii) Let $p$ be a prime number and let $q=p^f(f \geqq 1)$ be a power of $p$. Let $\Omega$ be an algebraically closed field of characteristic $p$. There exists a unique subfield $\mathbf{F}_q$ of $\Omega$ which has $q$ elements. It is the set of roots of the polynomial $X^q-X$.\\
-
-iii) All finite fields with $q=p^f$ elements are isomorphic to $\mathbf{F}_q$.
-\end{adjustwidth}
-\color{black}
-
-\end{a_thm}
-
-This discussion outlines foundational aspects of the structure and existence of finite fields, also known as Galois fields. It emphasizes the classification, construction, and unique properties of these fields, which are pivotal in various areas of mathematics and applications in cryptography, coding theory, and finite geometry. Let's break down the key components:
-
-__General Overview__
-
-The theorem and construct under discussion essentially state that for every prime number $p$ and positive integer $f$, there exists a unique finite field (up to isomorphism) with $p^f$ elements. This field is denoted as $\mathbf{F}_q$, where $q=p^f$, and it can be characterized as the set of roots of the polynomial $X^q-X$ within an algebraically closed field of characteristic $p$. This foundational result establishes a clear and structured classification of all finite fields, highlighting their properties and the interrelations between them.
-
-__The notation of $\left[K: \mathbf{F}_p\right]$ needed for a clear understanding of the theorem__
-
-The notation $\left[K: \mathbf{F}_p\right]$ is used in the context of field theory, particularly in algebra, to denote the degree of the field extension $K$ over $\mathbf{F}_p$. Let's break down the syntax and its meaning:
-
-Reading the Notation:
-
-- $\left[K: \mathbf{F}_p\right]$ : This is read as "the degree of $K$ over $\mathbf{F}_p$ ".
-
-Meaning of the Notation:
-
-1. Field Extension: In the realm of algebra, a field extension $K$ over a field $\mathbf{F}_p$ indicates that $K$ is a field containing $\mathbf{F}_p$ as a subfield. This relationship implies that every element of $\mathbf{F}_p$ is also an element of $K$, and the operations of addition and multiplication in $\mathbf{F}_p$ are preserved within $K$.
-2. Degree of the Field Extension: The degree of the field extension, denoted $\left[K: \mathbf{F}_p\right]$, quantifies how "much larger" the field $K$ is compared to $\mathbf{F}_p$. Formally, it is the dimension of $K$ as a vector space over $\mathbf{F}_p$. This means if you can find a basis of $K$ consisting of elements from $K$ itself, where this basis is considered over the field $\mathbf{F}_p$, then the number of elements in this basis is $\left[K: \mathbf{F}_p\right]$.
-3. $\mathbf{F}_p$ : Here, $\mathbf{F}_p$ denotes the finite field with $p$ elements, where $p$ is a prime number. $\mathbf{F}_p$ can also be thought of as the integers modulo $p$, symbolized as $\mathbf{Z} / p \mathbf{Z}$, which forms a field with $p$ elements under addition and multiplication modulo $p$.
-
-The Notation as Defined:
-
-Therefore, $\left[K: \mathbf{F}_p\right]$ essentially describes the structure of $K$ in relation to $\mathbf{F}_p$, giving us a measure of the complexity or the "size" of $K$ in terms of the simpler, well-understood field $\mathbf{F}_p$. This concept is crucial for understanding the properties of $K$, including its algebraic operations and the behavior of its elements, in the context of field theory and its applications.
-
-__Breakdown of Each Section of the Theorem__
-
-i) Characteristic and Number of Elements
-
-\color{dblu}The characteristic of a finite field $K$ is a prime number $p$, and the number of elements in $K$ is $q=p^f$, where $f$ is the degree of the field extension $\left[K: \mathbf{F}_p\right]$.\color{black}\ 
-
-This establishes a direct relationship between the characteristic of the field, the degree of its extension, and its order (the total number of elements). This part defines the size of a finite field in terms of its characteristic and the degree of extension, providing a formula for calculating the total number of elements in the field.\
-
-
-ii) Existence and Uniqueness of $\mathbf{F}_q$
-
-\color{dblu}Given a prime $p$ and $q=p^f$, within any algebraically closed field $\Omega$ of characteristic $p$, there is a unique subfield $\mathbf{F}_q$ containing exactly $q$ elements.\color{black} 
-
-This subfield is defined as the set of all roots of $X^q-X$ in $\Omega$. This part states that for any given prime $p$ and exponent $f$, there is a uniquely defined finite field of order $q$ within an algebraically closed field, identified through the roots of a specific polynomial.
-
-iii) Isomorphism of Finite Fields with $q$ Elements
-
-\color{dblu}All finite fields with $q=p^f$ elements are isomorphic to $\mathbf{F}_q$.\color{black} 
-
-This means that any two finite fields of the same order are structurally the same, even if their representations might differ. This highlights the fundamental property that the structure of a finite field is determined solely by its number of elements, ensuring that any two finite fields of the same size are essentially the same field, expressed in potentially different ways.
-
-__Conclusion__
-
-In essence, these points collectively underscore a profound and elegant structure underlying finite fields: for every prime number $p$ and integer $f$, not only does a finite field of order $p^f$ exist, but it is unique up to isomorphism. 
-
-This isomorphism therefore gives a guarantee of functional structure across various fields $K$, and application of the finite field strucutural equivlence to other brnaches of mathematics. This theorem lays the groundwork for understanding the uniformity and predictability of the algebraic structure of finite fields, which is crucial for their application in various mathematical and practical contexts.
-
-
-\newpage
-### Proof to support the Characteristic of the Field $K$ via $f=\left[K: F_p\right]$
-
-__GTM7 Presents the proof of the theorem.__
-
-Proof for part i):
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-If $K$ is finite, it does not contain the field $\mathbf{Q}$. Hence its characteristic is a prime number $p$. If $f$ is the degree of the extension $K / F_p$, it is clear that $\operatorname{Card}(K)=p^f$, and i) follows.
-\end{adjustwidth}
-\color{black}
-
-The proof for part i) of the theorem provides a concise argument for why the characteristic of a finite field $K$ is a prime number $p$ and establishes a relationship between the number of elements in $K$ and $p$. Let's break down and understand this proof:
-
-Proof Commentary for Part i)
-
-Beginning Assumption
-The proof begins by acknowledging that if $K$ is a finite field, it cannot contain the field of rational numbers $\mathbf{Q}$. This is because $\mathbf{Q}$ is infinite, and including it in $K$ would imply $K$ is also infinite, which contradicts our assumption that $K$ is finite.
-
-Characteristic of a Finite Field
-From this initial point, the proof infers that $K$ must have a prime characteristic $p$. The characteristic of a field is the smallest positive number $n$ such that the sum of $n$ copies of the multiplicative identity (1) equals zero. In a finite field, this characteristic can't be a composite number since that would imply the existence of a smaller positive integer $n$ (a divisor of the composite characteristic), contradicting the definition of characteristic. Thus, the characteristic is necessarily prime.
-
-Degree of Extension and Field Size
-Next, the proof introduces $f$ as the degree of the field extension $K$ over $\mathbf{F}_p$, denoted as $f=$ $\left[K: \mathbf{F}_p\right]$. This degree $f$ represents the dimension of $K$ as a vector space over $\mathbf{F}_p$, meaning $K$ can be spanned by $f$ elements of a basis over $\mathbf{F}_p$.
-
-Given this setup, it logically follows that the cardinality (or the number of elements) of $K$, denoted as $\operatorname{Card}(K)$, is $p^f$. This is because, in a vector space of dimension $f$ over a field with $p$ elements, there are $p$ choices for each of the $f$ coordinates that define an element of $K$, leading to $p^f$ unique combinations or elements.
-
-Conclusion of Part i)
-Thus, part i) of the theorem is proved: The characteristic of a finite field $K$ is a prime number $p$, and if the degree of the extension of $K$ over $\mathbf{F}_p$ is $f$, then the number of elements of $K$ is exactly $p^f$. This foundational result establishes a direct link between the structure of a finite field $K$, its characteristic, and its cardinality, paving the way for the further exploration and understanding of finite fields.
-
-
-Proof for part ii):
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-On the other hand, if $\Omega$ is algebraically closed of characteristic $p$, the above lemma shows that the map $x \mapsto x^q$ (where $q=p^f, f \geqq 1$ ) is an automorphism of $\Omega$; indeed, this map is the $f$ - th iterate of the automorphism $\sigma: x \mapsto x^p$ (note that $\sigma$ is surjective since $\Omega$ is algebraically closed). Therefore, the elements $x \in \Omega$ invariant by $x \mapsto x^q$ form a subfield $\mathbf{F}_q$ of $\Omega$. The derivative of the polynomial $X^q-X$ is
-$$
-q X^{q-1}-1=p \cdot p^{f-1} X^{q-1}-1=-1
-$$
-and is not zero.\\ 
-\end{adjustwidth}
-
-\color{black}
-
-The proof for part ii) of the theorem explores the uniqueness and existence of a subfield $\mathbf{F}_q$ within an algebraically closed field $\Omega$ of characteristic $p$, where $q=p^f$ and $f \geq 1$. This part is crucial for establishing that finite fields of a given order not only exist but are uniquely determined within a larger algebraic structure. Let's dissect this proof to better understand its components:
-
-Proof Commentary for Part ii)
-
-Algebraically Closed Field of Characteristic $p$:
-
-The premise begins with $\Omega$, an algebraically closed field of characteristic $p$. Being algebraically closed means that every non-constant polynomial in $\Omega$ has a root in $\Omega$. The characteristic $p$ implies that the arithmetic in $\Omega$ operates under modulo $p$ rules.
-
-Automorphism by the Map $x \mapsto x^q$:
-
-The proof references a previous lemma, indicating that the map $x \mapsto x^q$ (with $q=p^f$ ) acts as an automorphism of $\Omega$. An automorphism is a bijective map from a field to itself that preserves the field's structure, meaning it respects both addition and multiplication operations.
-
-This map is described as the $f$-th iterate of another automorphism $\sigma: x \mapsto x^p$, suggesting that applying $\sigma f$ times (i.e., raising $x$ to the $p^{t h}$ power, $f$ times) yields $x^q$. The surjectivity (every element in $\Omega$ is mapped to by some element of $\Omega$ under this map) of $\sigma$ is guaranteed because $\Omega$ is algebraically closed, ensuring that for every element in $\Omega$, there exists a pre-image under $\sigma$.
-
-Subfield $\mathbf{F}_q$ Invariant Under $x \mapsto x^q$:
-
-The elements $x \in \Omega$ that remain unchanged (invariant) under the map $x \mapsto x^q$ naturally form a subfield, denoted as $\mathbf{F}_q$. These are the elements for which $x^q=x$, effectively making them the roots of the polynomial $X^q-X$.
-
-Derivative of $X^q-X$ and Its Significance:
-
-The derivative of $X^q-X$ is calculated as $q X^{q-1}-1$. Since $q=p^f$, and considering the characteristic $p$, the derivative simplifies to -1 (not zero). This is a critical observation because it implies that the polynomial $X^q-X$ has distinct roots; in a field, a non-zero derivative at a root of a polynomial indicates that the root is simple (not repeated).
-
-Conclusion of part ii) of the proof confirms the existence of a unique subfield $\mathbf{F}_q$ of $\Omega$ characterized by $q$ elements, all of which are the distinct roots of $X^q-X$. This directly ties to the uniqueness and existence criteria for finite fields of order $q$, reinforcing that within any algebraically closed field of characteristic $p$, there is a precisely defined finite field $\mathbf{F}_q$ with $p^f$ elements. This not only establishes the existence of such finite fields but also underscores their structural properties and relationships within the broader context of field theory.
-
-
-Proof for part iii):
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-This part follows from ii) and from the fact that all fields with $p^f$ elements can be embedded in $\Omega$ since $\Omega$ is algebraically closed.
-\end{adjustwidth}
-\color{black}
-
-The proof for part iii) succinctly concludes the theorem by leveraging the groundwork laid in part
-ii) and a fundamental property of algebraically closed fields. This section asserts that all finite fields with $p^f$ elements are isomorphic to $\mathbf{F}_q$, where $\mathbf{F}_q$ is the unique subfield of an algebraically closed field $\Omega$ with $q=p^f$ elements. Let's explore this conclusion in detail:
-
-Proof Commentary for Part iii)
-
-Connection to Part ii)
-
-Part iii) directly references the findings of part ii), which established the existence of a unique subfield $\mathbf{F}_q$ within any algebraically closed field $\Omega$ of characteristic $p$, defined by the roots of $X^q-X$. This subfield contains exactly $q=p^f$ elements, all distinct.
-
-Algebraically Closed Field Property
-
-A key aspect of this proof is the property of algebraically closed fields: they contain every possible algebraic extension within them. By definition, an algebraically closed field is one in which every non-constant polynomial has a root. This property extends to imply that any finite field of a given order can be seen as a subfield within any algebraically closed field of the same characteristic.
-
-Embedding Finite Fields into $\Omega$
-
-The proof mentions that all fields with $p^f$ elements can be embedded in $\Omega$, leveraging the fact that $\Omega$ is algebraically closed. To embed one field into another means that there exists an injective field homomorphism from the smaller field into the larger one. This homomorphism is a structurepreserving map, meaning it respects the operations (addition, multiplication) and relations (like distributivity) of the fields.
-
-In practical terms, this means any finite field of order $p^f$ can be "fitted" within $\Omega$ in such a way that its structure and operations are preserved and reflected within $\Omega$. Since $\mathbf{F}_q$ has been established as the unique subfield of $\Omega$ with $p^f$ elements, any other field of the same order must share its structure, due to the uniqueness property established in part ii).
-
-Conclusion
-Part iii) concludes that all finite fields with $p^f$ elements are essentially the same; they are all isomorphic to $\mathbf{F}_q$. This doesn't just mean they have the same number of elements, but rather, their algebraic structure is identical. The "sameness" is in terms of their operations, the behavior of their elements, and how those elements interact under field operations. This is a powerful statement about the uniformity and predictability of finite fields: despite the variety of ways they might be constructed or represented, at their core, they share a common, unifying algebraic structure.
-
-
-\newpage
-
-## Multiplicative group of a Finite Field
-
-### Defining the construct $\mathbf{F}_q^*$
-
-Continuing with GTM7 
-
-### The multiplicative group of a finite field
-
-Let $p$ be a prime number, let $f$ be an integer $\geqq 1$, and let $q=p^f$. This is enough to now state the Theorem of multiplicative finate field group. 
-
-\begin{a_thm}{The multiplicative group $\mathbf{F}_q^*$:}{thm_multgrp} 
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-\,\\
-The multiplicative group $\mathbf{F}_q^*$ of a finite field $\mathbf{F}_q$ is cyclic of order $q-1$.
-\end{adjustwidth}
-\color{black}
-
-\end{a_thm}
-
-__Understanding the Theorem__
-
-This theorem delves into the nature of the multiplicative group associated with a finite field $\mathbf{F}_q$, where $q=p^f, p$ is a prime number, and $f$ is an integer greater than or equal to 1 . The assertion is that the multiplicative group $\mathbf{F}_q^*$ is cyclic and has an order of $q-1$.
-
-Key Points:
-
-- Finite Field $\mathbf{F}_q$ : A field with a finite number of elements $q$, where $q=p^f$.
-- Multiplicative Group $\mathbf{F}_q^*$ : The set of all non-zero elements of $\mathbf{F}_q$ under the operation of multiplication. It excludes the element 0 because 0 does not have a multiplicative inverse.
-- Cyclic Group: A group that can be generated by a single element, termed a "generator". Every element of the group can be written as some power of this generator.
-- Order of the Group $\mathbf{F}_q^*$ : The number of elements in the group, which is $q-1$ for the multiplicative group of a finite field.
-
-Significance:
-
-The theorem's statement that $\mathbf{F}_q^*$ is cyclic of order $q-1$ is profound because it implies a uniform and predictable structure within the multiplicative group of finite fields. This cyclic nature facilitates the understanding and application of finite fields in various areas, including cryptography and error correction.
-
-Proof is given as: 
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-If $d$ is an integer $\geqq 1$, recall that $\phi(d)$ denotes the Euler $\phi$-function, i.e. the number of integers $x$ with $1 \leqq x \leqq d$ which are prime to $d$ (in other words, whose image in $\mathbf{Z} / d \mathbf{Z}$ is a generator of this group). It is clear that the number of generators of a cyclic group of order $d$ is $\phi(d)$.
-\end{adjustwidth}
-\color{black}
-
-__Understanding the Proof__
-
-The proof leverages the concept of the Euler $\phi$-function, which plays a critical role in number theory, especially in the context of cyclic groups.
-
-Euler $\phi$-Function:
-
-- Definition: For any integer $d \geq 1, \phi(d)$ counts the number of integers between 1 and $d$ that are coprime to $d$ (i.e., their greatest common divisor with $d$ is 1 ).
-- Relevance: These coprime numbers can be seen as generators of the cyclic group of order $d$ when considering the group $\mathbf{Z} / d \mathbf{Z}^{\star} = \mathbf{Z} / d \mathbf{Z}-\{0\}$ or $\mathbf{Z} / d \mathbf{Z} \backslash\{0\}$.
-
-Connection to the Theorem:
-
-The proof starts by recalling the property of the Euler $\phi$-function, then makes a crucial observation: the number of generators of a cyclic group of order $d$ is exactly $\phi(d)$. This ties back to the theorem by drawing on the intrinsic property of cyclic groups and their generators, indicating that for the multiplicative group of a finite field, there are precisely $\phi(q-1)$ generators.
-
-Commentary:
-
-This foundational property - that the multiplicative group of a finite field is cyclic - underscores the elegant symmetry and structure within finite fields. It has practical implications, for example, in the generation of primitive elements (generators) for cryptographic protocols, highlighting the deep interconnectedness between abstract algebra and applied mathematics. The use of the Euler $\phi$-function in the proof bridges these areas, offering insight into the number of possible generators and thus into the structure of the multiplicative group itself.
-
-
-\newpage
-
-### Multiplicative finite group and the Euler $\phi(d)$ function
-
-We Have lemma 1 from GTM 7 which introduces the Euler $\phi(d)$ function. We introduce the function and the speak to the significance of the lemma. 
-
-\begin{a_lemma}{Divisors $d$ of $n$ and the Euler function $\phi(d)$}{def_lemma1}
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-
-Lemma 1. If $n$ is an integer $\geqq 1$, then $n=\sum_{d \mid n} \phi(d)$. (Recall that the notation $d \mid n$ means that $d$ divides $n$ ).
-
-
-\end{adjustwidth}
-\color{black}
-\end{a_lemma}
-
-__Euler's Totient Function $(\phi(d))$__
-
-Euler's totient function, denoted as $\phi(d)$, counts the positive integers up to $d$ that are relatively prime to $d$, meaning they share no common factors with $d$ other than 1 . The function $\phi(d)$ is crucial in number theory, particularly in the fields of cryptography and modular arithmetic, due to its role in the Euler-Fermat theorem and its implications for the multiplicative group of integers modulo $n$.
-
-Let's construct a table to illustrate the values of $\phi(d)$ for $d=1$ to 10:
-
-\begin{center}
-\begin{tabular}{|l|l|l|}
-\hline$d$ & Relative Primes to $d$ & $\phi(d)$ \\
-\hline 1 & $\{1\}$ & 1 \\
-\hline 2 & $\{1\}$ & 1 \\
-\hline 3 & $\{1,2\}$ & 2 \\
-\hline 4 & $\{1,3\}$ & 2 \\
-\hline 5 & $\{1,2,3,4\}$ & 4 \\
-\hline 6 & $\{1,5\}$ & 2 \\
-\hline 7 & $\{1,2,3,4,5,6\}$ & 6 \\
-\hline 8 & $\{1,3,5,7\}$ & 4 \\
-\hline 9 & $\{1,2,4,5,7,8\}$ & 6 \\
-\hline 10 & $\{1,3,7,9\}$ & 4 \\
-\hline
-\end{tabular}
-\end{center}
-
-This table demonstrates $\phi(d)$ for each $d$ from 1 to 10 , showing the count of integers that are relatively prime to $d$.
-
-
-The meaning of lemma 
-
-__Meaning and Significance of the Lemma__
-
-Lemma Statement
-
-The lemma $n=\sum_{d \mid n} \phi(d)$ states that any positive integer $n$ can be expressed as the sum of the values of Euler's totient function $\phi(d)$ over all positive divisors $d$ of $n$.
-
-Meaning
-
-- Divisors of $n$ : For a given $n$, the notation $d \mid n$ signifies all $d$ that divide $n$ without leaving a remainder.
-- Summation of $\phi(d)$ : The lemma articulates a fundamental property of $\phi$, indicating that when you sum $\phi(d)$ for all divisors $d$ of $n$, you get $n$ itself. This is a remarkable identity showing how the distribution of relatively prime numbers to the divisors of $n$ collectively covers the whole set from 1 to $n$.
-
-Significance
-
-- Partitioning of Integers: The lemma essentially partitions the set of integers from 1 to $n$ into disjoint sets, each corresponding to a divisor of $n$. The size of each set is given by $\phi(d)$, and the lemma shows that the totality of these partitions equals $n$.
-- Cyclic Groups: This lemma underscores the structure of cyclic groups, particularly the multiplicative group of integers modulo $n$. It hints at the underlying uniformity and symmetry in these groups, which are pivotal in many areas of mathematics and applications like cryptography.
-- Theoretical Foundation: It provides a foundational theorem in number theory, connecting the structure of numbers, their divisors, and the concept of relative primality in a concise, elegant way. This not only deepens our understanding of number theoretic functions like $\phi$ but also supports various proofs and theorems concerning the arithmetic properties of integers.
-
-In summary, this lemma illuminates a fundamental and beautiful aspect of the distribution of relatively prime numbers and their relationship to the divisors of an integer $n$, reflecting the profound interconnectedness observed in number theory.
-
-
-__Proof of the lemma:__
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-
-If $d$ divides $n$, let $C_d$ be the unique subgroup of $Z / n Z$ of order $d$, and let $\Phi_d$ be the set of generators of $C_d$. Since all elements of $Z / n Z$ generate one of the $C_d$, the group $\mathbf{Z} / n \mathbf{Z}$ is the disjoint union of the $\Phi_d$ and we have
-
-$$
-n=\operatorname{Card}(\mathbf{Z} / n \mathbf{Z})=\sum_{d \mid n} \operatorname{Card}\left(\Phi_d\right)=\sum_{d \mid n} \phi(d) .
-$$
-
-\end{adjustwidth}
-\color{black}
-
-
-The proof of the lemma articulates an elegant structure underlying the relationship between Euler's totient function $(\phi(d)$ ) and the divisors of a given integer $n$. Here's a breakdown to aid understanding:
-
-Core Concepts of the Proof
-
-1. Subgroups $C_d$ of $\mathbf{Z} / n \mathbf{Z}$:
-
-- For each divisor $d$ of $n$, there exists a unique subgroup $C_d$ within the quotient group $\mathbf{Z} / n \mathbf{Z}$ that has exactly $d$ elements. The quotient group $\mathbf{Z} / n \mathbf{Z}$ consists of equivalence classes of integers modulo $n$, and a subgroup $C_d$ of order $d$ contains elements that together form a smaller, closed group under addition modulo $n$.
-
-2. Set of Generators $\Phi_d$:
-
-- The set $\Phi_d$ consists of all elements within $C_d$ that can generate $C_d$ through their powers. In other words, each element of $\Phi_d$ is a generator of the subgroup $C_d$, capable of producing all elements of $C_d$ through repeated addition (since we're dealing in a group under addition modulo $n$ ). The cardinality of $\Phi_d$-that is, the number of such generators-is given by $\phi(d)$, Euler's totient function, reflecting how many elements are relatively prime to $d$.
-
-3. Disjoint Union of $\Phi_d$:
-- The entire group $\mathbf{Z} / n \mathbf{Z}$ can be seen as a disjoint union of all the sets $\Phi_d$, for each divisor $d$ of $n$. This means that every element of $\mathbf{Z} / n \mathbf{Z}$ belongs to exactly one of the $\Phi_d$ sets. This disjoint nature is crucial because it prevents overlap, ensuring that each element of $\mathbf{Z} / n \mathbf{Z}$ is accounted for exactly once when summing up the cardinalities of all $\Phi_d$.
-
-Understanding the Proof
-
-The proof proceeds by showing that since $\mathbf{Z} / n \mathbf{Z}$ can be fully represented by the union of all $\Phi_d$ sets, and since each $\Phi_d$ accurately captures the generative essence of a subgroup $C_d$ through its generators, the total number of elements in $\mathbf{Z} / n \mathbf{Z}$, which is $n$, is equal to the sum of the cardinalities of all $\Phi_d$. Symbolically, this is expressed as $n=\sum_{d \mid n} \operatorname{Card}\left(\Phi_d\right)$, which aligns with the sum of $\phi(d)$ for all divisors $d$ of $n$.
-
-Significance of the Proof
-
-This proof beautifully ties together several abstract algebraic concepts, including the structure of quotient groups, the notion of subgroups and generators, and Euler's totient function, to illuminate a fundamental property of numbers. It showcases the deep and intrinsic symmetry in the algebraic structure of $\mathbf{Z} / n \mathbf{Z}$, emphasizing how each element of this group contributes to a unified whole, partitioned neatly by the divisors of $n$. This not only underscores the lemma but also provides insight into the arithmetic and combinatorial richness hidden within the structure of integers modulo $n$.
-
-
-\newpage
-
-Lemma 2 is provided by GTM 7
-
-\begin{a_lemma}{Dimension $d$ of cycllic group $H$}{def_lemma2}
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-
-Lemma 2.-Let $H$ be a finite group of order $n$. Suppose that, for all divisors $d$ of $n$, the set of $x \in H$ such that $x^d=1$ has at most $d$ elements. Then $H$ is cyclic.
-
-\end{adjustwidth}
-\color{black}
-\end{a_lemma}
-
-
-__Explanation of the Lemma__
-
-Lemma 2 articulates a significant criterion for a finite group to be cyclic, focusing on the behavior of its elements with respect to the group's order.
-
-Lemma Statement:
-
-- Given: A finite group $H$ of order $n$.
-- Condition: For every divisor $d$ of $n$, the number of elements $x$ in $H$ that satisfy $x^d=1$ is at most $d$.
-- Conclusion: $H$ is cyclic.
-
-Meaning:
-
-- Order of Group: The order of a group is the total number of its elements.
-- Cyclic Group: A group is cyclic if there exists at least one element (called a generator) such that repeated application of the group operation on this element generates every element in the group.
-- Condition on Elements: The condition given in the lemma examines elements $x$ in $H$ that become the identity element (denoted as 1 , the element that acts as a neutral element in the group operation) when raised to the power $d$, where $d$ divides $n$. The statement that there are "at most $d$ " such elements for each divisor $d$ is crucial. It implies a specific structural constraint on the group, indirectly indicating a uniform distribution of these elements across possible orders $d$.
-
-__Importance of the Outcome__
-
-The lemma's outcome has profound implications in group theory and its applications:
-
-Establishing Cyclic Nature:
-
-- Uniqueness and Simplicity: Showing that a group is cyclic simplifies its study significantly because the structure and properties of cyclic groups are well-understood. A cyclic group is determined entirely by its order, making it predictable and easy to work with.
-- Generators: If a group is cyclic, identifying its generators (elements that can produce every other element in the group through the group operation) becomes a key focus. This has direct applications in areas like cryptography, where the difficulty of certain computations (e.g., discrete logarithms) in cyclic groups underpins security assumptions.
-
-Structural Insight:
-
-- Constraint Satisfaction: The lemma effectively uses a constraint on the powers of elements in the group to deduce its overall structure. This insight allows mathematicians to infer the cyclic nature of groups under certain conditions, providing a powerful tool for classifying and analyzing groups.
-- Relation to Euler's Totient Function: The lemma indirectly relates to Euler's totient function $(\phi)$ discussed earlier, as $\phi(d)$ counts the number of integers less than $d$ that are relatively prime to $d$. This is analogous to considering elements of a group that satisfy specific conditions, offering a bridge between abstract group theory and concrete arithmetic functions.
-
-Applications:
-
-- Cryptographic Systems: In cryptography, the cyclic nature of groups used for key generation and exchange algorithms (like RSA, Diffie-Hellman) ensures that operations are both secure and computationally feasible. The lemma provides foundational understanding that aids in the selection and analysis of such groups.
-- Algebraic Structure Analysis: More broadly, understanding whether a group is cyclic helps in exploring its algebraic structure, including subgroups, homomorphisms, and quotient groups. This can influence studies in algebraic topology, number theory, and combinatorial designs.
-
-__Proof and commentary from GTM 7__
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-Let $d$ be a divisor of $n$. If there exists $x \in H$ of order $d$, the subgroup $(x)=\left\{1, x, \ldots, x^{d-1}\right\}$ generated by $x$ is cyclic of order $d$; in view of the hypothesis, all elements $y \in H$ such that $y^d=1$ belong to $(x)$. In particular, all elements of $H$ of order $d$ are generators of $(x)$ and these are in number $\phi(d)$. Hence, the number of elements of $H$ of order $d$ is 0 or $\phi(d)$. If it were zero for a value of $d$, the formula $n=\sum_{d \mid n} \phi(d)$ would show that the number of elements in $H$ is < $n$, contrary to hypothesis. In particular, there exists an element $x \in H$ of order $n$ and $H$ coincides with the cyclic group $(x)$.
-\end{adjustwidth}
-\color{black}
-
-__Significance of the Proof's Approach__
-
-The proof leverages a strategic approach that interlinks group theory's elemental properties with number theory, specifically through Euler's totient function $(\phi)$. Here's how it accomplishes this:
-
-Deductive Reasoning:
-
-- The proof starts with a fundamental group theory premise: if there exists an element $x$ in $H$ of a certain order $d$, then the subgroup generated by $x$ is cyclic of order $d$. It then connects this premise with the given hypothesis that for every divisor $d$ of $n$, the set of elements in $H$ satisfying $x^d=1$ is at most $d$, drawing a path to conclude that $H$ is cyclic.
-
-Application of Hypothesis:
-
-- By applying the hypothesis within the structure of a finite group $H$, the proof makes a crucial observation: every element in $H$ that satisfies $y^d=1$ must belong to the subgroup generated by $x$, indicating a very tight control over how elements of certain orders distribute within $H$.
-
-Utilization of $\phi(d)$ :
-
-- It connects the dots by using Euler's totient function to count the elements of order $d$, arguing that their count must align with $\phi(d)$ unless it's zero, which is shown to be impossible given the contradiction it would lead to with the well-established identity $n=\sum_{d \mid n} \phi(d)$.
-
-__Overall Lemma, Proof, and Its Significance__
-
-Overall Lemma:
-
-The lemma posits a criterion for a group $H$ of order $n$ to be cyclic, based on a condition about the elements within $H$ relative to their orders. It essentially says that if the group strictly adheres to the maximum possible numbers of elements of any given order (as dictated by $\phi(d)$ ), then the group must be cyclic.
-
-Proof's Approach:
-
-- Comprehensive Coverage: The proof methodically addresses every possible order $d$ that divides $n$, ensuring the argument covers the entire group structure.
-- Contradiction: It cleverly uses a contradiction-pointing out that if there were any order $d$ for which no elements exist, the group's size would not match $n$, which is impossible.
-- Existence of a Generator: The argument culminates in demonstrating the existence of an element of order $n$, ensuring $H$ is cyclic and generated by this element.
-
-Significance:
-
-- Theoretical Clarity: This lemma and its proof offer a clear and robust criterion for determining the cyclic nature of a group. This enriches the theory by providing a concrete method to identify such groups, which is foundational in the study of algebraic structures.
-- Practical Implications: Knowing a group is cyclic has significant implications, especially in cryptography, where the security of many protocols relies on the properties of cyclic groups. The proof provides a basis for verifying the cyclic property, which in turn informs the selection of group parameters in cryptographic schemes.
-- Interdisciplinary Connectivity: By intertwining elements of number theory $(\phi(d)$ and its properties) with group theory, the proof showcases the deep connections between different branches of mathematics. This not only underscores the elegance of mathematical theory but also highlights the versatility of these concepts across various applications.
-
-In essence, the lemma and its proof illuminate a fundamental aspect of group theory, offering both a theoretical lens to understand the structure of finite groups and a practical tool for applying these insights in fields where the cyclic nature of groups is paramount.
-
-\newpage
-
-## Generalities of Finite Fields (from GTM 7 Ch 1 pt 1)
-
-The section overview is provided for thought here  
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-
-Theorem 2 follows from lemma 2 applied to $H=\mathbf{F}_q^*$ and $n=q-1$; it is indeed obvious that the equation $x^d=1$, which has degree $d$, has at most $d$ solutions in $\mathbf{F}_q$.
-
-Remark. The above proof shows more generally that all finite subgroups of the multiplicative group of a field are cyclic.
-
-\end{adjustwidth}
-\color{black}
-
-The summary provided for Chapter 1, Part 1 of GTM 7 on Generalities of Finite Fields encapsulates some profound observations about the structure of finite fields and their multiplicative groups. Here's a breakdown of the key points and their significance:
-
-Understanding the Summary
-
-- Theorem 2 and Lemma 2: Theorem 2's assertion that the multiplicative group $\mathbf{F}_q^*$ of a finite field $\mathbf{F}_q$ is cyclic (of order $q-1$ ) is underpinned by Lemma 2. Lemma 2 establishes a criterion for a group being cyclic: if for every divisor $d$ of the group's order $n$, there are at most $d$ solutions to $x^d=1$ within the group, then the group is cyclic. Applied to $H=\mathbf{F}_q^*$, where $n=q-1$, this lemma directly leads to the conclusion of Theorem 2.
-- Equation $x^d=1$: The equation $x^d=1$ represents the set of elements in $\mathbf{F}_q$ that, when raised to the power of $d$, yield the multiplicative identity (1). The fact that this equation has at most $d$ solutions in $\mathbf{F}_q$ is crucial for proving the cyclic nature of $\mathbf{F}_q^*$. It aligns with the lemma by showing that the number of elements satisfying the equation does not exceed the number of possible divisors, thereby satisfying the criterion for $\mathbf{F}_q^*$ being cyclic.
-
-Significance
-
-- Cyclic Nature of Multiplicative Groups: The proof underscores a fundamental property of finite fields: their multiplicative groups are always cyclic. This cyclic nature is pivotal for various applications in mathematics and computer science, particularly in cryptography, where the security of many systems relies on properties of cyclic groups, such as the difficulty of computing discrete logarithms.
-- Universality of the Result: The remark extends the conclusion of the proof beyond just the finite field in question, stating more generally that all finite subgroups of the multiplicative group of any field are cyclic. This broadens the applicability of the theorem and highlights a universal property of field theory, enhancing our understanding of the algebraic structure of fields.
-- Implications for Algebra and Cryptography: The cyclic property of multiplicative groups in finite fields has deep implications for algebra, providing a structured framework for exploring polynomial equations, field extensions, and algebraic number theory. In cryptography, the cyclic groups facilitate the construction of secure communication protocols, digital signatures, and encryption algorithms.
-
-Conclusion
-
-The summary from GTM 7's Chapter 1, Part 1, encapsulates a profound theorem regarding the structure of finite fields and establishes a foundational aspect of their multiplicative groups. The cyclic nature of these groups not only enriches the field of algebra with a deeper understanding of field theory but also underpins critical applications in cryptography and beyond. This theorem, along with its underlying lemma, highlights the elegance and power of algebraic structures and their pervasive influence across various domains of mathematics and computer science.
-
-
-\newpage
-
-## Equations over a Finite Field
-
-### Introduction
-Equations over finite fields form the cornerstone of many algebraic structures and applications, bridging foundational concepts with advanced topics in algebra. This chapter delves into polynomial equations and their properties within the realm of finite fields, laying the groundwork for understanding more complex algebraic phenomena.
-
-Polynomial Equations
-
-Polynomial equations over finite fields extend the notion of polynomials into a domain where arithmetic operations are performed modulo a prime number or a power of a prime. This section introduces key concepts and structures associated with polynomial equations in this context.
-
-Definition and Examples
-
-A polynomial equation over a finite field $\mathbf{F}_q$ can be expressed as:
-\[ f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0 = 0 \]
-where $a_i \in \mathbf{F}_q$ for all $i$ and $n$ is a non-negative integer.
-
-
-\subsection{Polynomial Rings and Quotient Rings}
-The set of all polynomials with coefficients in $\mathbf{F}_q$ forms a polynomial ring, denoted $\mathbf{F}_q[x]$. Quotient rings of polynomial rings play a crucial role in understanding the structure of solutions to polynomial equations over finite fields.
-
-\textbf{Example 2.} The quotient ring $\mathbf{F}_5[x] / \langle x^2 + x + 1 \rangle$ illustrates how polynomial rings and their quotients are constructed and analyzed within finite fields.
-
-The concept of a quotient ring, especially in the context of polynomial rings over finite fields, is pivotal for understanding algebraic structures and solving polynomial equations. Let's dive deeper into this concept and provide an illustrative example.
-
-Quotient Ring Explanation
-
-A quotient ring $\mathbf{F}_q[x] /\langle f(x)\rangle$ is formed by dividing the polynomial ring $\mathbf{F}_q[x]$ by the ideal generated by a polynomial $f(x)$ within $\mathbf{F}_q[x]$. Here's a breakdown of the concepts involved:
-
-- Polynomial Ring $\mathbf{F}_q[x]$ : This is the set of all polynomials with coefficients in a finite field $\mathbf{F}_q$. The operations are polynomial addition and multiplication, performed modulo $q$ for the coefficients.
-- Ideal $\langle f(x)\rangle$ : An ideal generated by a polynomial $f(x)$ in $\mathbf{F}_q[x]$ consists of all polynomials that can be expressed as $f(x) \cdot g(x)$, where $g(x)$ is any polynomial in $\mathbf{F}_q[x]$. It's a subset of $\mathbf{F}_q[x]$ that absorbs multiplication by elements from $\mathbf{F}_q[x]$.
-- Quotient Ring Construction: The quotient ring $\mathbf{F}_q[x] /\langle f(x)\rangle$ consists of equivalence classes of polynomials from $\mathbf{F}_q[x]$. Two polynomials $a(x)$ and $b(x)$ are considered equivalent if their difference $a(x)-b(x)$ is in the ideal $\langle f(x)\rangle$, meaning it's divisible by $f(x)$.
-
-Example and Table of Quotient Ring Elements
-Example 2: For $\mathbf{F}_5[x] /\left\langle x^2+x+1\right\rangle$, we consider the polynomial ring over $\mathbf{F}_5$ and the ideal generated by $x^2+x+1$. The elements of the quotient ring can be represented as equivalence classes of polynomials, where each class contains polynomials that differ by a multiple of $x^2+$ $x+1$.
-
-To illustrate, let's consider polynomials of degree less than 2 as representatives of the quotient ring elements, since any polynomial in $\mathbf{F}_5[x]$ can be reduced modulo $x^2+x+1$ to a polynomial of degree less than 2.
-
-Here's a table showing some elements of $\mathbf{F}_5[x] /\left\langle x^2+x+1\right\rangle$ :
-\begin{center}
-\begin{tabular}{|c|c|}
-\hline Representative & Equivalence Class Notation \\
-\hline 0 & {$[0]$} \\
-1 & {$[1]$} \\
-$x$ & {$[x]$} \\
-$1+x$ & {$[1+x]$} \\
-$1+2 x$ & {$[1+2 x]$} \\
-$2+3 x$ & {$[2+3 x]$} \\
-$\vdots$ & $\vdots$ \\
-$4+4 x$ & {$[4+4 x]$} \\
-\hline
-\end{tabular}
-\end{center}
-
-Each row shows a polynomial and its corresponding equivalence class notation. The notation $[a+b x]$ indicates the set of all polynomials that are equivalent to $a+b x$ modulo the ideal $\left\langle x^2+x+1\right\rangle$. For instance, $[2+3 x]$ represents all polynomials that, when divided by $x^2+x+$ 1 , leave a remainder of $2+3 x$.
-
-This table provides a concise way to visualize elements of the quotient ring $\mathbf{F}_5[x] /\left\langle x^2+x+1\right\rangle$. Each equivalence class represents a unique solution set to polynomial equations within this algebraic structure, highlighting the quotient ring's role in simplifying and solving such equations over finite fields.
-
-
-
-
-\subsection{Roots and Factorization}
-Solving polynomial equations over finite fields involves finding the roots of polynomials and understanding their factorization properties, which differ significantly from those in real or complex settings.
-
-\subsection{Finding Roots}
-The roots of a polynomial in a finite field $\mathbf{F}_q$ are the elements of $\mathbf{F}_q$ that satisfy the polynomial equation. Due to the finite nature of $\mathbf{F}_q$, algorithms for finding roots may leverage the field's structure for efficiency.
-
-\textbf{Example 1a.} Consider the polynomial $f(x) = x^2 + x + 1$ over $\mathbf{F}_5$. The solutions to $f(x) = 0$ can be found by evaluating $f(x)$ for all elements in $\mathbf{F}_5$.
-
-The table below displays the evaluation of the polynomial $f(x)=x^2+x+1$ over $\mathbf{F}_5$ for each element within the finite field. It's important to note that we're looking for which values of $x$ make $f(x) \equiv 0 \bmod 5$.
-
-\begin{center}
-\begin{tabular}{|c|c|}
-\hline Element in $\mathbf{F}_5$ & $f(x)=x^2+x+1 \bmod 5$ \\
-\hline 0 & 1 \\
-1 & 3 \\
-2 & 2 \\
-3 & 3 \\
-4 & 1 \\
-\hline
-\end{tabular}
-\end{center}
-
-From the table, it is observed that $f(x)$ does not equate to 0 for any element $x$ in $\mathbf{F}_5$, indicating that the polynomial $f(x)=x^2+x+1$ has no roots in the finite field $\mathbf{F}_5$. [2]
-
-\textbf{Example 1b.}
-Consider the polynomial $f(x)=x^2-1$ over $\mathbf{F}_5$. The solutions to $f(x)=0$ are found by evaluating $f(x)$ for all elements in $\mathbf{F}_5$.
-
-The table below displays the evaluation of the polynomial $f(x)=x^2-1$ over $\mathbf{F}_5$ for each element within the finite field. It's crucial to identify which values of $x$ make $f(x) \equiv 0 \bmod 5$.
-\begin{center}
-\begin{tabular}{|c|c|}
-\hline Element in $\mathbf{F}_5$ & $f(x)=x^2-1 \bmod 5$ \\
-\hline 0 & 4 \\
-1 & 0 \\
-2 & 3 \\
-3 & 3 \\
-4 & 0 \\
-\hline
-\end{tabular}
-\end{center}
-
-This demonstrates that the polynomial $f(x)=x^2-1$ has roots in $\mathbf{F}_5$, specifically for $x=1$ and $x=4$.
-
-
-\textbf{Example 3.} In $\mathbf{F}_7$, the polynomial $f(x) = x^3 + 3x + 6$ has roots that can be systematically identified through evaluation or more advanced algorithms.
-
-\subsection{Uniqueness of Factorization}
-Polynomials over finite fields enjoy unique factorization, analogous to the Fundamental Theorem of Arithmetic for integers. This property ensures that any polynomial can be decomposed into irreducible factors in a unique way, up to ordering.
-
-\textbf{Example 4.} Factorization of $x^2 + 1$ in $\mathbf{F}_5[x]$ demonstrates the unique decomposition into irreducible factors in this finite field.
-
-Conclusion
-
-Understanding polynomial equations and their structures over finite fields lays the foundation for their applications in coding theory, cryptography, and beyond. This chapter has introduced the basics of polynomial equations, their roots, and factorization properties, setting the stage for exploring their algebraic and computational implications.
-
-
-
-\newpage
-
-
-
-### Power Sums
-Considering Equations over a finite field, let $q$ be a power of a prime number $p$, and let $K$ be a field with $q$ elements.
-
-GTM 7 Lemma 2.1. Power sums
-
-\begin{a_lemma}{Power sums of polynomials like $S\left(X^u\right)=\sum_{x \in K} x^u$ }{def_lemma2}
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-Lemma.-Let $u$ be an integer $\geqq 0$. The sum $S\left(X^u\right)=\sum_{x \in K} x^u$ is equal to -1 if $u$ is $\geqq 1$ and divisible by $q-1$; it is equal to 0 otherwise.
-(We agree that $x^u=1$ if $u=0$ even if $x=0$.)
-
-\end{adjustwidth}
-\color{black}
-\end{a_lemma}
-
-This lemma from GTM 7 deals with the concept of power sums in the context of a finite field $K$ with $q$ elements, where $q$ is a power of a prime $p$. The lemma specifies the value of the sum $S\left(X^u\right)=\sum_{x \in K} x^u$, depending on the nature of $u$, the exponent applied to each element of $K$ in the sum.
-
-Meaning of the Lemma
-
-The lemma states two key points regarding the sum $S\left(X^u\right)$:
-
-- When $u \geq 1$ and Divisible by $q-1$ : If $u$ is a positive integer and is divisible by $q-1$, the sum $S\left(X^u\right)$ of the $u$-th powers of all elements in $K$ is -1 . This implies that, except for the zero element, the sum of the $u$-th powers of all other elements in $K$ balances out to -1 when $u$ is a multiple of $q-1$.
-
-- In All Other Cases: For any other value of $u$, whether it's not divisible by $q-1$ or $u=0$, the sum $S\left(X^u\right)$ equals 0 . This includes the scenario where $u=0$, for which $x^u=1$ for all $x \neq 0$ in $K$, and the sum considers the zero element's contribution as 1 , making the total sum 0 due to the field's additive properties.
-
-Significance of the Lemma
-
-Characterization of Finite Fields: This lemma highlights a fundamental property of finite fields related to the distribution of their elements' powers. It provides a clear pattern of how elements in a finite field, when raised to certain powers, sum up within the field structure, showcasing the symmetric and cyclic nature of finite fields.
-
-Application in Cryptography and Coding Theory: Understanding the behavior of power sums in finite fields is crucial for designing cryptographic algorithms and error-correcting codes. For instance, the lemma can be used to analyze the distribution of non-linear combinations of field elements, which is important for assessing the security of cryptographic schemes and the error detection/correction capability of coding systems.
-
-Roots of Unity: The lemma indirectly touches on the concept of roots of unity in finite fields. When $u$ is divisible by $q-1$, each element $x$ to the power $u$ reflects the behavior of roots of unity, which are elements that, when raised to a certain power, result in 1 . This property is pivotal in polynomial factorization, discrete logarithm problems, and Fourier transforms over finite fields.
-
-Simplifying Polynomial Equations: In solving polynomial equations over finite fields, this lemma can be used to simplify expressions and equations involving sums of powers of field elements, making it easier to find solutions or prove properties about the equations.
-
-Overall, this lemma encapsulates a crucial aspect of the arithmetic within finite fields and underscores the elegance and structure inherent in these algebraic systems. Its implications stretch across theoretical and applied mathematics, solidifying the foundational role of finite fields in modern computational theory.
-
-PROOFS of the lemma
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-
-If $u=0$, all the terms of the sum are equal to 1 ; hence $S\left(X^u\right)=q .1=0$ because $K$ is of characteristic $p$.
-
-If $u$ is $\geqq 1$ and divisible by $q-1$, we have $0^u=0$ and $x^u=1$ if $x \neq 0$. Hence $S\left(X^u\right)=(q-1) \cdot 1=-1$.
-
-Finally, if $u$ is $\geqq 1$ and not divisible by $q-1$, the fact that $K^*$ is cyclic of order $q-1\left(\right.$ th. 2 ) shows that there exists $y \in K^*$ such that $y^u \neq 1$. One has:
-$$
-S\left(X^u\right)=\sum_{x \in K^*} x^u=\sum_{x \in K^*} y^u x^u=y^u S\left(X^u\right)
-$$
-and $\left(1-y^u\right) S\left(X^u\right)=0$ which implies that $S\left(X^u\right)=0$.
-(Variant-Use the fact that, if $d \geqq 2$ is prime to $p$, the sum of the $d$ - th roots of unity is zero.)
-
-\end{adjustwidth}
-\color{black}
-
-The proofs supporting Lemma 2.1 from GTM 7 offer mathematical justification for the sum of powers in a finite field $K$, elucidating under which conditions this sum equals 0 , -1 , or remains unchanged. Let's delve into each case presented in the proofs, provide an example for clarity, and discuss their significance.
-
-Explanation of the Proofs
-
-Case $u=0$:
-
-- Explanation: For $u=0$, every term in the sum $S\left(X^0\right)$ equals 1 , including the term for $x=0$. Since there are $q$ elements in $K$, and $K$ has characteristic $p$, the sum totals to $q$, which is 0 in $K$ because $q$ is the order of the field, and hence congruent to 0 modulo $p$.
-- Example: $\ln \mathbf{F}_5$, consider $S\left(X^0\right)=5 \cdot 1=5$, which equals 0 in $\mathbf{F}_5$ since $5 \bmod 5=0$.
-
-
-Case $u \geq 1$ and Divisible by $q-1$ :
-
-- Explanation: If $u$ is divisible by $q-1$, then for $x \neq 0, x^u=1$ since $x^u$ simulates one full cycle of the multiplicative group, returning to 1 . The sum then essentially counts $q-1$ times 1 plus $0^u$, summing to -1 because $q-1$ is equivalent to -1 in $K$.
-- Example: $\ln \mathbf{F}_5$, for $u=4$ (since $5-1=4$ ), $S\left(X^4\right)=4 \cdot 1+0^4=4$, which equals -1 in $\mathbf{F}_5$.
-
-Case $u \geq 1$ and Not Divisible by $q-1$:
-
-- Explanation: This case uses the cyclicity of $K^*$ (the multiplicative group of $K$ excluding 0 ). If $u$ isn't divisible by $q-1$, then there exists an element $y$ in $K^*$ for which $y^u \neq 1$. By multiplying each term of $S\left(X^u\right)$ by $y^u$ and noting that this doesn't change the sum (due to the distribution of powers over $K^*$ ), but also implies that $S\left(X^u\right)$ must be 0 , as the factor $1-y^u$ is not 0 .
-- Example: $\ln \mathbf{F}_7$, for $u=3$, assume $y=3$. Then, $3^3 \neq 1$ in $\mathbf{F}_7$, and we have $S\left(X^3\right)=3^3$. $S\left(X^3\right)$, implying $S\left(X^3\right)=0$ since $1-3^3$ is non-zero and $S\left(X^3\right)$ can only be 0 .
-
-Significance of the Proofs and Lemma
-
-The proofs and the lemma provide a profound insight into the behavior of power sums within finite fields. They highlight the inherent structure and symmetry of finite fields, particularly through the cyclicity of their multiplicative groups and how it influences the sum of powers of elements. This has several implications:
-
-- Polynomial Equations: The lemma aids in the understanding of solutions to polynomial equations over finite fields by providing a method to simplify expressions involving sums of powers.
-- Cryptography and Coding Theory: The properties elucidated by the lemma are foundational in designing cryptosystems and error-correcting codes, where the manipulation and analysis of finite fields play a crucial role.
-- Theoretical Mathematics: It enriches the field of algebra with concrete examples of how finite field theory operates, offering insight into the distribution and properties of field elements.
-
-Overall, this lemma, along with its supporting proofs, underlines the elegance of finite fields and their algebraic structures, contributing significantly to both theoretical and applied mathematics discussions, including the broader conversation on equations over finite fields as covered in GTM 7.
-
-
-### Exploring with some examples of Power Sums
-
-To explore the Lemma in GTM 7 further through examples, let's consider two cases involving finite fields $\mathbf{F}_p$ where $p$ is a prime number.
-
-__Simplistic Example with $\mathbf{F}_3$:__
-
-Let's take $q=p^f=3$ and explore the sum $S(X^u)=\sum_{x \in \mathbf{F}_3} x^u$ for different values of $u$. 
-
-For $u=0$, every term equals 1, and since there are 3 elements in $\mathbf{F}_3$, $S(X^0)=3 \cdot 1=0$ in $\mathbf{F}_3$. 
-
-For $u=1$ (not divisible by $2=q-1$), and $u=2$ (divisible by $q-1$), applying the lemma's principles, we can compute $S(X^1)$ and $S(X^2)$, finding that $S(X^1)=0$ and $S(X^2)=-1$ in $\mathbf{F}_3$.
-
-Let's create a table showcasing the calculations of $S\left(X^u\right)$ in $\mathbf{F}_3$ for $u=0, u=1$, and $u=2$, following the lemma's principles. This will help illustrate how the lemma is applied in these specific cases within the finite field $\mathbf{F}_3$.
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline Value of $u$ & $S\left(X^u\right)$ Calculation & $S\left(X^u\right)$ in $\mathbf{F}_3$ \\
-\hline 0 & $1+1+1$ & 0 \\
-1 & $0^1+1^1+2^1$ & 0 \\
-2 & $0^2+1^2+2^2$ & -1 \\
-\hline
-\end{tabular}
-\end{center}
-
-This table succinctly demonstrates the computation and results of $S\left(X^u\right)$ for different $u$ values in $\mathbf{F}_3$, directly applying the conditions outlined in the lemma for understanding sums of powers in finite fields.
-
-__More Involved Example with $\mathbf{F}_{5}$:__
-
-Consider $q=5$ and evaluate $S(X^u)=\sum_{x \in \mathbf{F}{5}} x^u$ for $u=0$, $u=1$, $u=4$ (divisible by $4=q-1$), and another $u$ not divisible by $4$. For $u=0$, $S(X^0)=5=0$ in $\mathbf{F}{5}$. 
-
-For $u=4$, which is divisible by $q-1$, $S(X^4)=-1$. When $u=1$ or any $u$ not divisible by $q-1$, we expect $S(X^u)=0$, according to the lemma.
-
-Let's create a table to showcase the calculations of $S\left(X^u\right)$ for $\mathbf{F}_5$ for the given values of $u$, directly applying the lemma's guidelines for the sum of powers in a finite field.
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline Value of $u$ & $S\left(X^u\right)$ Calculation & $S\left(X^u\right)$ in $\mathbf{F}_5$ \\
-\hline 0 & $1+1+1+1+1$ & 0 \\
-1 & $0^1+1^1+2^1+3^1+4^1$ & 0 \\
-4 & $0^4+1^4+2^4+3^4+4^4$ & -1 \\
-Other $u$ not divisible by 4 & Example: $u=2$ & 0 \\
-\hline
-\end{tabular}
-\end{center}
-
-This table illustrates how $S\left(X^u\right)$ is computed for different $u$ values within the finite field $\mathbf{F}_5$, employing the lemma to understand the behavior of sums of powers.
-
-
-Summary of examples
-
-These examples illustrate the lemma's application in practical scenarios, demonstrating how sums of powers in finite fields can be predicted based on the divisibility of the exponent by $q-1$. This lemma not only deepens understanding of the structure within finite fields but also aids in the analysis of polynomial functions over these fields, with potential applications in cryptography, coding theory, and algebraic geometry.
-
-
-\newpage
-
-### Chevally-Warning
-
-In number theory, the Chevalley-Warning theorem implies that certain polynomial equations in sufficiently many variables over a finite field have solutions. It was proved by Ewald Warning (1935) and a slightly weaker form of the theorem, known as Chevalley's theorem, was proved by Chevalley (1935). Chevalley's theorem implied Artin's and Dickson's conjecture that finite fields are quasi-algebraically closed fields (Artin 1982, page x).
-
-The Chevalley-Warning theorem is a theorem in number theory that states that certain polynomial equations in sufficiently many variables over a finite field have solutions.
-Variables:
-
-\begin{center}
-\begin{tabular}{l|l|}
-\hline Variable & Meaning \\
-\hline $\mathrm{n}$ & Number of variables \\
-\hline $\mathrm{r}$ & Number of polynomials \\
-\hline $\mathrm{d}_{j}$ & Total degree of the polynomial $f_{j}$ \\
-\hline $\mathrm{f}_{j}$ & Polynomials \\
-\hline $\mathbf{F}$ & Finite field \\
-\hline $\mathrm{p}$ & Characteristic of the finite field \\
-\hline $\mathrm{a}_{j}$ & Coefficients of the polynomials \\
-\hline
-\end{tabular}
-\end{center}
-
-Summary:
-The Chevalley-Warning theorem states that the number of common solutions to a system of polynomial equations in a finite field is divisible by the characteristic of the field. Chevalley's theorem is an immediate consequence of the Chevalley-Warning theorem.
-Additional Information:
-- Warning's second theorem states that if the system of polynomial equations has the trivial solution, then it has at least $q^{\wedge}\{n-d\}$ solutions where $q$ is the size of the finite field and $\mathrm{d}:=\mathrm{d} \_1+\backslash$ cdots+d_r.
-- Both theorems are best possible in the sense that, given any $n$, the list $f_{-} j=x_{-} j, j=1$, $\backslash$ ldots, $\mathrm{n}$ has total degree $\mathrm{n}$ and only the trivial solution.
-
-
-Statement of the theorems
-[ edit]
-Let $\mathbf{F}$ be a finite field and $\left\{f_j\right\}_{j=1}^r \subseteq \mathbf{F}\left[X_1, \ldots, X_n\right]$ be a set of polynomials such that the number of variables satisfies
-$$
-n>\sum_{j=1}^r d_j
-$$
-where $d_j$ is the total degree of $f_j$. The theorems are statements about the solutions of the following system of polynomial equations
-$$
-f_j\left(x_1, \ldots, x_n\right)=0 \quad \text { for } j=1, \ldots, r \text {. }
-$$
-
-- The Chevalley-Warning theorem states that the number of common solutions $\left(a_1, \ldots, a_n\right) \in \mathbf{F}^n$ is divisible by the characteristic $p$ of $\mathbf{F}$. 
-- Or, in other words, the cardinality of the vanishing set of $\left\{f_j\right\}_{j=1}^r$ is 0 modulo $p$.
-- The Chevalley theorem states that if the system has the trivial solution $(0, \ldots, 0) \in \mathbf{F}^n$, that is, if the polynomials have no constant terms, then the system also has a non-trivial solution $\left(a_1, \ldots, a_n\right) \in \mathbf{F}^n \backslash\{(0, \ldots, 0)\}$.
-
-Chevalley's theorem is an immediate consequence of the Chevalley-Warning theorem since $p$ is at least 2.
-Both theorems are best possible in the sense that, given any $n$, the list $f_j=x_j, j=1, \ldots, n$ has total degree $n$ and only the trivial solution. Alternatively, using just one polynomial, we can take $f_1$ to be the degree $n$ polynomial given by the norm of $x_1 a_1+\ldots+x_n a_n$ where the elements a form a basis of the finite field of order $p^n$.
-
-Warning proved another theorem, known as Warning's second theorem, which states that if the system of polynomial equations has the trivial solution, then it has at least $q^{n-d}$ solutions where $q$ is the size of the finite field and $d:=d_1+\cdots+d_r$. Chevalley's theorem also follows directly from this.
-
-
-
-\newpage 
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-
-body GTM7 blue text
-
-\end{adjustwidth}
-\color{black}
-
-
-\newpage 
-
-__BLANK PAGE__
-
-\newpage 
-
-__BLANK PAGE__
-
-\newpage 
-
-# BINOMIALS: a calculation perspecitve 
-
-### Illustration of the cases of $n=4$ and $n=5$
-
-
-For the binomial $(x+y)^n$, where $n$ is the power of the biomial, the expansion may be written in the form:
-\begin{align}
-(x+y)^n=\sum_{k=0}^n\binom{n}{k} x^{n-k} y^k
-\end{align}
-
-The \emph{binomial coefficients} may be calculated as follows for $n$ and $k$ as integers.
-\begin{align}
-\binom{n}{k} = \frac{n!}{k!(n - k)!},  \quad \text{often denoted:} \quad {}^{n}C_{k} \quad \text{or} \quad C_{n}^k 
-\end{align}
-
-With the equation \((x+y)^n = \sum_{k=0}^n \binom{n}{k} x^{n-k} y^k\) representing the binomial expansion of \((x+y)^n\), the expansion of the binomial expression \((x+y)^n\) can be obtained by summing up terms with appropriate coefficients and powers of \(x\) and \(y\).\ 
-
-Assuming that $n$ is a prime $p$, the key identity we must adhere to is:
-$$
-p \cdot 1_R=0_R
-$$
-where $1_R$ and $0_R$ are the multiplicative and additive identities respectively. 
- 
-Now, when $0<k<p$ (that is, when $k$ is neither 0 nor $p$ ), the factorials in the denominator of $\binom{p}{k}$ do not have any factors of $p$ (since both $k$ and $p-k$ are less than $p$ ), but the numerator $p$! does. This means:
-$$
-{\binom{p}{k}}_{0<k<p}=\frac{p!}{k !(p-k) !}=\frac{p \cdot (p-1)!}{k !(p-k) !} \equiv 0 \,\, (\bmod) p
-$$
-
-The key outcome can be seen in the following table:\
-
-```{r echo = FALSE}
-# Define the function for binomial coefficient
-binomial_coefficient <- function(n, k) {
-  if (k == 0 || k == n) { return(1)
-  } else if (k > n) { 
-    return(0)
-  } else {
-    numerator <- prod((n - k + 1):n) 
-    denominator <- prod(1:k) 
-    return(numerator / denominator)
-  } }
-
-# Initialize an empty data frame with specified columns
-results_df <- data.frame(n = integer(), k = integer(), coefficient = numeric(), coefficient_mod_n = numeric())
-
-# Calculate and store the results in the data frame
-for (n in 4:5) {
-  for (k in 1:(n-1)) {
-    coefficient <- binomial_coefficient(n, k)
-    mod_coef <- coefficient %% n
-    results_df <- rbind(results_df, data.frame(n = n, k = k, coefficient = coefficient, coefficient_mod_n = mod_coef))
-  }
-}
-
-# table of values to a kable table
-# "$\binom{n}{k}$", "$\binom{n}{k} \bmod n$"
-library(knitr)
-library(kableExtra)
-
-# kable table: booktabs makes pretty table, linesep="" makes no 5 line spacing, \\ & escape=F is needed in latex passed to kable
-kbl(results_df, align=rep('c', 4), booktabs = TRUE, linesep = "",
-                    col.names = c("n", "k", "$\\binom{n}{k}$", "$\\binom{n}{k} \\bmod n$"),
-                    caption = "Table of Binomial Coefficients",
-                    escape = FALSE) %>%
-kable_styling(latex_options = "hold_position")
-```
-
-In the context of a ring of characteristic $p$, this means that these coefficients are $0_R$, and thus do not contribute to the sum.
-
-Hence, the only surviving terms in the binomial expansion are those with $k=0$ and $k=p$, which gives:
-$$
-(x+y)^p=x^p+y^p
-$$
-
-This is why the additivity property holds in rings of characteristic $p$ is prime. The binomial coefficients that would typically give cross terms involving both $a$ and $b$ vanish in this context.
-
-\
-\
-We will examine this a bit more closely for our specific case of $n=4$ and $n=5$. 
-
-\
-__For $n=5$, the expansion of $(x+y)^5$ in the field $\mathbf{Z} / 5 \mathbf{Z}$ is:__
-$$
-(x+y)^5=\binom{5}{0}x^5 + \binom{5}{1}x^4 y + \binom{5}{2}x^3 y^2 + \binom{5}{3}x^2 y^3 + \binom{5}{4}x y^4 + \binom{5}{5}y^5
-$$
-
-So then $k=\{0,1, \ldots, 5\}$ are $\{1,5,10,10,5,1\}$. In $\mathbf{Z} / 5 \mathbf{Z}$, with modulo 5 we see:
-\begin{align*}
-\binom{5}{1} \equiv 5 \equiv 0 \,\, &(mod) \, 5\\
-\binom{5}{2} \equiv 10 \equiv 0 \,\, &(mod) \, 5\\
-\binom{5}{3} \equiv 10 \equiv 0 \,\, &(mod) \, 5\\
-\binom{5}{4} \equiv 5 \equiv 0 \,\, &(mod) \, 5
-\end{align*}
-Thus, in $\mathbf{Z} / 5 \mathbf{Z}$, the expansion of the polynomial $(x+y)^5$ simplifies significantly to $x^5+y^5$:
-$$
-\begin{aligned}
-(x+y)^5 & =1 \cdot x^5+0 \cdot x^4 y+0 \cdot x^3 y^2+0 \cdot x^2 y^3+0 \cdot x y^4+1 \cdot y^5 \\
-& =x^5+y^5
-\end{aligned}
-$$
-\newpage 
-
-__For $n=4$, the expansion of $(x+y)^4$ in the ring $\mathbf{Z} / 4 \mathbf{Z}$ is:__
-$$
-(x+y)^4=\binom{4}{0}x^4 + \binom{4}{1}x^3 y + \binom{4}{2}x^2 y^2 + \binom{4}{3}x y^3 + \binom{4}{4}x y^4
-$$
-So then $k=\{0,1, \ldots, 4\}$ are $\{1,4,6,4,1\}$. In $\mathbf{Z} / 4 \mathbf{Z}$, with modulo 4 we see:
-\begin{align*}
-\binom{4}{1} \equiv 4 \equiv 0 \,\, &(mod) \, 4\\
-\binom{4}{2} \equiv 6 \equiv 2 \,\, &(mod) \, 4\\
-\binom{4}{3} \equiv 4 \equiv 0 \,\, &(mod) \, 4
-\end{align*}
-Thus, in $\mathbf{Z} / 4 \mathbf{Z}$, the expansion of the polynomial $(x+y)^4$ is:
-$$
-\begin{aligned}
-(x+y)^4 &=1 \cdot x^4+0 \cdot x^3 y+2 \cdot x^2 y^2+0 \cdot x y^3+1 \cdot y^4 \\
-&=x^4+2x^2y^2+y^4
-\end{aligned}
-$$
-
-\newpage
-
-### The subfield $\mathbf{F}_q$
-
-We now return to GTM 7 and explore the general definitions around extensions and subfields.
-
-\begin{a_thm}{GTM 7 (Theorem 1.) $f$, the degree of extension of $K/\mathbf{F}_p$}{def2}
-
-\color{dblu}
-i) The characteristic of a finite field $K$ is a prime number $p \neq 0$; if $f=\left[K: \mathbf{F}_p\right]$, the number of elements of $K$ is $q=p^f$.
-
-ii) Let $p$ be a prime number and let $q=p^f(f \geqq 1)$ be a power of $p$. Let $\Omega$ be an algebraically closed field of characteristic $p$. There exists a unique subfield $\mathbf{F}_q$ of $\Omega$ which has $q$ elements. It is the set of roots of the polynomial $X^q-X$.
-
-iii) All finite fields with $q=p^f$ elements are isomorphic to $\mathbf{F}_q$.
-\color{black}
-
-\end{a_thm}
-
-Her was talk about that $K$ is built upon a simpler field with $p$ elements, but extended in a way that increases its size.
-
-There exists $\mathbf{F}_q \subset \Omega$
-
-If $K$ is finite, it does not contain the field $\mathbf{Q}$. Hence its characteristic is a prime number $p$. If $f$ is the degree of the extension $K / \mathbf{F}_p$, it is clear that $\operatorname{Card}(K)=p^f$, and i) follows.
-
-On the other hand, if $\Omega$ is algebraically closed of characteristic $p$, the above lemma (Lemma \ref{lem:lemma1}, section \ref{lem1_sec}) shows that the map $x \mapsto x^q$ (where $q=p^f, f \geqq 1$ ) is an automorphism of $\Omega$; indeed, this map is the $f$ - th iterate of the automorphism $\sigma: x \mapsto x^p$ (note that $\sigma$ is surjective since $\Omega$ is algebraically closed). Therefore, the elements $x \in \Omega$ invariant by $x \mapsto x^q$ form a subfield $\mathbf{F}_q$ of $\Omega$. The derivative of the polynomial 
-
-$X^q-X$ is
-$$
-q X^{q-1}-1=p \cdot p^{f-1} X^{q-1}-1=-1
-$$
-
-
-
-
-\color{dblu}
-\begin{adjustwidth}{2.0em}{0pt}
-\end{adjustwidth}
-\color{black}
-
-
-\newpage
-
-$$
-\binom{p^f}{k} vs \binom{p}{k}
-$$
-
-
-
-The key outcome can be seen in the following table:\
-
-```{r echo = FALSE}
-# Define the function for binomial coefficient
-binomial_coefficient <- function(n, k) {
-  if (k == 0 || k == n) { return(1)
-  } else if (k > n) { 
-    return(0)
-  } else {
-    numerator <- prod((n - k + 1):n) 
-    denominator <- prod(1:k) 
-    return(numerator / denominator)
-  } }
-
-# Initialize an empty data frame with specified columns
-results_df <- data.frame(n = integer(), k = integer(), coefficient = numeric(), coefficient_mod_n = numeric())
-
-# Calculate and store the results in the data frame
-for (n in 8:9) {
-  for (k in 1:(n-1)) {
-    coefficient <- binomial_coefficient(n, k)
-    mod_coef <- coefficient %% n
-    results_df <- rbind(results_df, data.frame(n = n, k = k, coefficient = coefficient, coefficient_mod_n = mod_coef))
-  }
-}
-
-# table of values to a kable table
-# "$\binom{n}{k}$", "$\binom{n}{k} \bmod n$"
-library(knitr)
-library(kableExtra)
-
-# kable table: booktabs makes pretty table, linesep="" makes no 5 line spacing, \\ & escape=F is needed in latex passed to kable
-kbl(results_df, align=rep('c', 4), booktabs = TRUE, linesep = "",
-                    col.names = c("n", "k", "$\\binom{n}{k}$", "$\\binom{n}{k} \\bmod n$"),
-                    caption = "Table of Binomial Coefficients",
-                    escape = FALSE) %>%
-kable_styling(latex_options = "hold_position")
-```
-
-In the context of a ring of characteristic $p$, this means that these coefficients are $0_R$, and thus do not contribute to the sum.
-
-\newpage
-
-### Some notes regarding the convention of $\mathbf{F}_q$ and $\mathbf{F}_q^n$
-
-The notation $\mathbf{F}_q^n$ and $\mathbf{F}_q$ refer to different mathematical structures related to finite fields, and understanding their distinction is important:
-
-$\mathbf{F}_q$ : This represents a finite field consisting of $q$ elements. A field is a set equipped with two operations, addition and multiplication, that satisfy certain algebraic properties like commutativity, associativity, distributivity, and the existence of additive and multiplicative inverses (except for the additive identity). The subscript $q$ typically denotes the number of elements in the field, which is always a power of a prime number. For example, $\mathbf{F}_5$ would be a field with 5 elements, usually taken to be the integers $\{0, 1, 2, 3, 4 \}$ with addition and multiplication performed modulo 5 .
-
-$\mathbf{F}_q^n:$ This refers to an $n$-dimensional vector space over the finite field $\mathbf{F}_q$. Specifically, it consists of all $n$-tuples (or vectors) where each component of the tuple is an element from $\mathbf{F}_q$. The operations of vector addition and scalar multiplication (where scalars are elements of $\mathbf{F}_q$ ) obey the usual vector space axioms. For example, if $n=$ 3 and $q=2$, then $\mathbf{F}_2^3$ would consist of all 3-tuples where each element is either 0 or 1 , like $\{ (0,0,0),(0,0,1),(0,1,0), \ldots,(1,1,1) \}$.
-
--->
-
-\newpage 
 
 \backmatter
 
-# Epilogue - DO BETTER IN WRITING THIS {.unnumbered .epilogue}
+# Epilogue - Guidance and Test Materials
 
 ## Applying Musk Rules to Writing Your Book on the "25 Key Equations in Machine Learning" {.unnumbered}
 
@@ -3236,6 +1735,99 @@ The Musk Rules encourage challenging the purpose of everything you're including,
 How do these recommendations feel in the context of your goals for this book? Would you like help refining a specific section or strategy for moving faster?
 
 
+
+\newpage
+
+## TEMP _ R code - Python code - test area 
+
+## testing Python Integration (temp section - to remove later)
+Create a variable `x` in the Python session:
+
+```{python}
+x = [1, 2, 3]
+```
+
+Access the Python variable `x` in an R code chunk:
+
+```{r}
+py$x
+```
+
+Create a new variable `y` in the Python session using R,
+and pass a data frame to `y`:
+
+```{r}
+py$y <- head(cars)
+```
+
+Print the variable `y` in Python:
+
+```{python}
+print(y)
+```
+
+\newpage 
+
+## Define Numbers in R
+
+Let's define the numbers we will use in both R and Python:
+
+```{r}
+# Define a vector of numbers in R
+define_numbers <- c(1, 2, 3, 4, 5)
+```
+
+## R Code Block
+
+This is a simple R code block that calculates the sum of 5 numbers:
+
+```{r}
+# R code to sum 5 numbers
+r_sum <- sum(define_numbers)
+print(paste("The sum of the numbers in R is:", r_sum))
+```
+
+
+
+## Python Code To Pass *
+```{r}
+py$n2 <- define_numbers
+```
+
+## Python Code Block
+This is a simple Python code block that calculates the sum of 5 numbers:
+
+```{python}
+# Python code to calculate the sum of numbers defined in R
+
+# Define a list of numbers
+numbers = [1, 2, 3, 4, 5]
+
+# Retrieve the numbers passed from R using reticulate's 'py' object
+total_sum = sum(numbers)
+total_sum2 = sum(n2)
+
+# Print the result
+print(f"The sum of the numbers 'total sum' is: {total_sum}")
+print(f"The sum of the numbers 'n2' is: {total_sum2}")
+```
+
+\newpage
+
+<!-- Can Add listings if needed here- of the code listings and figures if indexed. -->
+\listoffigures
+\lstlistoflistings
+
+\newpage
+# Galley Sheet {-}
+
+## **GALLEY Sheet info**
+
+\layout
+
+<!-- \lipsum[1-2] -->
+
+## **GALLEY Sheet info - ends**
 
 \newpage
 

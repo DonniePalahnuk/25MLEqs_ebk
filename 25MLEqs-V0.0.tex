@@ -97,29 +97,6 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
-  \fi
-  % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \newcommand{\docTitle}{25 ML Fundamental Equations}
 
 \raggedbottom                         % ensures no page fill
@@ -128,35 +105,37 @@
 \newcounter{chonlycounter}
 \renewcommand{\thechonlycounter}{\thechapter}
 
-% setup some special branding fonts
-\usepackage{fontspec}
-\usepackage{textcomp}
-\newfontface\poppins{Poppins}[Path=fonts/, 
+% setup some special branding fonts 
+% (this is only used at start of document - for product names )
+  \usepackage{fontspec}
+  \usepackage{textcomp}
+  \newfontface\poppins{Poppins}[Path=fonts/, 
                             UprightFont=*-Regular, 
                             BoldFont=*-Bold]
-\newcommand{\textpoppins}[1]{{\poppins #1}}
+  \newcommand{\textpoppins}[1]{{\poppins #1}}
 
-\newfontface\fluxreg{FluxRegular}[Path=fonts/, 
+  \newfontface\fluxreg{FluxRegular}[Path=fonts/, 
                             UprightFont=*.otf]
-\newcommand{\textfluxreg}[1]{{\fluxreg #1}}
+  \newcommand{\textfluxreg}[1]{{\fluxreg #1}}
 
-\newfontface\lato{Lato}[Path=fonts/, 
+  \newfontface\lato{Lato}[Path=fonts/, 
                             UprightFont=*-Regular]
-\newcommand{\textlato}[1]{{\lato #1}}
+  \newcommand{\textlato}[1]{{\lato #1}}
 
-\newfontface\ssp{SourceSansPro}[Path=fonts/, 
+  \newfontface\ssp{SourceSansPro}[Path=fonts/, 
                             UprightFont=*-Regular]
-\newcommand{\textssp}[1]{{\ssp #1}}
+  \newcommand{\textssp}[1]{{\ssp #1}}
 
-\newfontface\couriernew{Courier New}
-\newcommand{\textcouriernew}[1]{{\couriernew #1}}
+  \newfontface\couriernew{Courier New}
+  \newcommand{\textcouriernew}[1]{{\couriernew #1}}
 
-\newfontface\arial{Arial}
-\newcommand{\textarial}[1]{{\arial #1}}
+  \newfontface\arial{Arial}
+  \newcommand{\textarial}[1]{{\arial #1}}
 
-\newfontface\palatino{Palatino}
-\newcommand{\textpalatino}[1]{{\palatino #1}}
+  \newfontface\palatino{Palatino}
+  \newcommand{\textpalatino}[1]{{\palatino #1}}
 
+% FOR GRAPHICS tikz and pgfplots
 %\usepackage{pgfplots}                % math plotting
 %\pgfplotsset{compat=1.18}
 
@@ -177,38 +156,30 @@
 %\definecolor{ltorng}{HTML}{99ccff}
 %\definecolor{ltgrn}{HTML}{002db3}
 
-%\usepackage{setspace}
 \usepackage{titling}
-
-%\usepackage{etoolbox}  % programming for latex (I think)
 
 % testing 20240414 - margin methods - to adjust
 
-\usepackage{layout}       % for margins setting (2024-04-14)   employ:"\layout"
-% \usepackage[marginparwidth=40mm, marginparsep=10mm]{geometry}
-
+\usepackage{layout}       % for margins setting ->employ:"\layout"
 \usepackage{multicol}  
-
 \usepackage{geometry} 
 
-% Set asymmetric page margins
+% Set asymmetric page margins (book formatting)
 \geometry{
 inner=0.75in,   % Inner margin
 outer=1.0in,    % Outer margin
 bottom=0.6in,   % Bottom margin
 top=0.6in,      % Bottom margin
-includeheadfoot
-}
+includeheadfoot  }
 
-
-% \usepackage{lipsum}  % Generates filler text
+%\usepackage{lipsum}         % Generates filler text
 
 % math fonts and coloring
 \usepackage{amsmath}
 \usepackage{amsthm}
-\usepackage{amssymb}      % specific symbols
+\usepackage{amssymb}        % specific symbols
 \usepackage{mathrsfs}
-\usepackage{xcolor} % For coloring text
+\usepackage{xcolor}         % For coloring text
 \usepackage{graphicx}
 
 \definecolor{impactblue}{RGB}{30, 144, 255}
@@ -268,10 +239,8 @@ includeheadfoot
 
 % Colorbox - Theorems, definitions, lemmas, proofs
 
-\usepackage[most]{tcolorbox}          % does not included 'minted', 
-                                      % which has problems with R Markdown builds.
+\usepackage[most]{tcolorbox}          % does not included 'minted' (issue with rmd) 
 \newtheorem{lem}{Lemma}		% from `amsthm'
-
 \newtheorem{pruf}{Proof}		% from `amsthm'
 
 \newtcbtheorem[number within=chapter]{a_thm}{Theorem}
@@ -330,8 +299,6 @@ before skip=10pt,after skip=10pt,
 borderline west={1mm}{0pt}{red}
 }
 
-%
-
 \pretitle{%
 \begin{flushleft} \LARGE
 \includegraphics[width=2cm,height=2cm]{pictures/IH2.jpg}
@@ -351,20 +318,6 @@ borderline west={1mm}{0pt}{red}
 \cfoot[]{}
 
 
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -373,7 +326,7 @@ borderline west={1mm}{0pt}{red}
 \urlstyle{same}
 \hypersetup{
   pdftitle={25 Key Equations in Machine Learning},
-  pdfauthor={Toohru Iwanami},
+  pdfauthor={Donald Palahnuk},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
@@ -385,7 +338,7 @@ borderline west={1mm}{0pt}{red}
 }
 \makeatother
 \subtitle{\textit{Insight Hatch Machine Leanring Reviews - Vol 1}}
-\author{Toohru Iwanami}
+\author{Donald Palahnuk}
 \date{\vhCurrentDate\\
 version \vhCurrentVersion\\
 \strut \\
@@ -405,19 +358,15 @@ InsightHatch: ``25MLEqs''\\
 \hfill\break
 
 \begin{versionhistory}
-  \vhEntry{0.0}{2024.10.25}{DP}{Created!}
-  \vhEntry{0.1}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
-  \vhEntry{0.3}{2024.10.26}{DP}{Buildout Chapter Frames}
-  \vhEntry{0.4}{2024.11.07}{DP}{Sigmoid Chapter}
+  \vhEntry{0.00.0}{2024.10.25}{DP}{Created!}
+  \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
+  \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
+  \vhEntry{0.04.0}{2024.11.07}{DP}{Sigmoid Chapter}
+  \vhEntry{0.04.5}{2024.11.08}{DP}{Code clean up - house keeping, typos}
 \end{versionhistory}
 \newpage
+
 \setcounter{table}{0}
-
-\textbf{GALLEY Sheet info - follows}\\
-
-\textbf{GALLEY Sheet info - ends}
-
-\newpage
 
 \frontmatter
 
@@ -634,11 +583,15 @@ unveil, one that's been with us all along.
 \newpage
 
 \vspace*{\fill}
+
 \begin{a_def_eq}{Gradient Descent}{def1} 
 
 \begin{align}
 \large{\theta_{j+1} = \theta_j - \alpha \nabla J(\theta_j)}
 \end{align}
+
+<!-- \label{sk_int} ...
+... \ref{sk_int} -->
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$\theta_j$] The current value of the \textbf{parameter vector} at iteration $j$, which represents the current estimate of the model parameters.
@@ -976,128 +929,6 @@ R for illustration.
 
 \newpage
 
-\hypertarget{testing-python-integration-temp-section---to-remove-later}{%
-\section{testing Python Integration (temp section - to remove
-later)}\label{testing-python-integration-temp-section---to-remove-later}}
-
-Create a variable \texttt{x} in the Python session:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-Access the Python variable \texttt{x} in an R code chunk:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{py}\SpecialCharTok{$}\NormalTok{x}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 1 2 3
-\end{verbatim}
-
-Create a new variable \texttt{y} in the Python session using R, and pass
-a data frame to \texttt{y}:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{py}\SpecialCharTok{$}\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(cars)}
-\end{Highlighting}
-\end{Shaded}
-
-Print the variable \texttt{y} in Python:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\BuiltInTok{print}\NormalTok{(y)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## {'speed': [4.0, 4.0, 7.0, 7.0, 8.0, 9.0], 'dist': [2.0, 10.0, 4.0, 22.0, 16.0, 10.0]}
-\end{verbatim}
-
-\newpage
-
-\hypertarget{define-numbers-in-r}{%
-\section{Define Numbers in R}\label{define-numbers-in-r}}
-
-Let's define the numbers we will use in both R and Python:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Define a vector of numbers in R}
-\NormalTok{define\_numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{r-code-block}{%
-\section{R Code Block}\label{r-code-block}}
-
-This is a simple R code block that calculates the sum of 5 numbers:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# R code to sum 5 numbers}
-\NormalTok{r\_sum }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(define\_numbers)}
-\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"The sum of the numbers in R is:"}\NormalTok{, r\_sum))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "The sum of the numbers in R is: 15"
-\end{verbatim}
-
-\hypertarget{python-code-to-pass}{%
-\section{Python Code To Pass *}\label{python-code-to-pass}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{py}\SpecialCharTok{$}\NormalTok{n2 }\OtherTok{\textless{}{-}}\NormalTok{ define\_numbers}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{python-code-block}{%
-\section{Python Code Block}\label{python-code-block}}
-
-This is a simple Python code block that calculates the sum of 5 numbers:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Python code to calculate the sum of numbers defined in R}
-
-\CommentTok{\# Define a list of numbers}
-\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
-
-\CommentTok{\# Retrieve the numbers passed from R using reticulate\textquotesingle{}s \textquotesingle{}py\textquotesingle{} object}
-\NormalTok{total\_sum }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(numbers)}
-\NormalTok{total\_sum2 }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(n2)}
-
-\CommentTok{\# Print the result}
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"The sum of the numbers \textquotesingle{}total sum\textquotesingle{} is: }\SpecialCharTok{\{}\NormalTok{total\_sum}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## The sum of the numbers 'total sum' is: 15
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"The sum of the numbers \textquotesingle{}n2\textquotesingle{} is: }\SpecialCharTok{\{}\NormalTok{total\_sum2}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## The sum of the numbers 'n2' is: 15.0
-\end{verbatim}
-
-\newpage
-
 \hypertarget{linking-gradient-descent-to-our-polynomial-example}{%
 \section{Linking Gradient Descent to Our Polynomial
 Example}\label{linking-gradient-descent-to-our-polynomial-example}}
@@ -1115,7 +946,9 @@ The fundamental idea behind gradient descent is to iteratively adjust
 the model's parameters, \(\theta\), in a direction that reduces the cost
 function, \(J(\theta)\). The parameter update is governed by the
 \textbf{gradient} of the cost function (or loss function),
-\(\nabla J(\theta)\). In the above equation:
+\(\nabla J(\theta)\).
+
+In the above equation:
 
 \begin{itemize}
 \tightlist
@@ -1263,11 +1096,12 @@ I'll get started!
 \newpage
 
 \vspace*{\fill}
-\begin{a_def_eq}{Normal Distribution}{def1} 
 
-$$
+\begin{a_def_eq}{Normal Distribution}{def2} 
+
+\begin{align}
  f(x | \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left( - \frac{(x - \mu)^2}{2\sigma^2} \right)
-$$
+\end{align}
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$x$] The \textbf{random variable} for which the probability density function is being calculated. It represents the value within the distribution.
@@ -1681,11 +1515,12 @@ Chapter}\label{suggested-additional-content-for-the-chapter}}
 \newpage
 
 \vspace*{\fill}
-\begin{a_def_eq}{Z-Score}{def1} 
 
-$$
+\begin{a_def_eq}{Z-Score}{def3} 
+
+\begin{align}
 z = \frac{x - \mu}{\sigma}
-$$
+\end{align}
 
 \begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
     \item[$x$] The \textbf{random variable}, representing the value within the distribution that is being standardized.
@@ -1960,7 +1795,7 @@ outliers in the dataset.
 \newpage
 
 \vspace*{\fill}
-\begin{a_def_eq}{Sigmoid Function}{def1} 
+\begin{a_def_eq}{Sigmoid Function}{def4} 
 
 $$
 \sigma(z) = \frac{1}{1 + e^{-z}}
@@ -2424,7 +2259,7 @@ transition around zero is preferred.
         \includegraphics[width=\textwidth]{pictures/Sigmoids_comparisons.jpeg}
         \caption{Summary of Alternate Sigmoid Like Curves}
     \end{minipage}
-    \label{fig:normal-distribution-layout}
+    \label{fig:sigmoid-layout}
 \end{figure}
 
 Note: All functions are normalized in such a way that their slope at the
@@ -2881,7 +2716,7 @@ regularization terms.
 \chapter{The Human Equation}\label{the-human-equation}}
 
 \[
-HUMAN^(inf)
+\textbf{HUMAN}
 \]
 
 \textbf{Introduction}:
@@ -2892,19 +2727,11 @@ HUMAN^(inf)
 
 \newpage
 
-END 25 EQ CONTENT END 25 EQ CONTENT END 25 EQ CONTENT END 25 EQ CONTENT
-END 25 EQ CONTENT
-
-\newpage
-
-\newpage
-
 \backmatter
 
-\hypertarget{epilogue---do-better-in-writing-this}{%
-\chapter*{Epilogue - DO BETTER IN WRITING
-THIS}\label{epilogue---do-better-in-writing-this}}
-\addcontentsline{toc}{chapter}{Epilogue - DO BETTER IN WRITING THIS}
+\hypertarget{epilogue---guidance-and-test-materials}{%
+\chapter{Epilogue - Guidance and Test
+Materials}\label{epilogue---guidance-and-test-materials}}
 
 \hypertarget{applying-musk-rules-to-writing-your-book-on-the-25-key-equations-in-machine-learning}{%
 \section*{Applying Musk Rules to Writing Your Book on the ``25 Key
@@ -3135,25 +2962,155 @@ moving faster?
 
 \newpage
 
+\hypertarget{temp-_-r-code---python-code---test-area}{%
+\section{TEMP \_ R code - Python code - test
+area}\label{temp-_-r-code---python-code---test-area}}
+
+\hypertarget{testing-python-integration-temp-section---to-remove-later}{%
+\section{testing Python Integration (temp section - to remove
+later)}\label{testing-python-integration-temp-section---to-remove-later}}
+
+Create a variable \texttt{x} in the Python session:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Access the Python variable \texttt{x} in an R code chunk:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{py}\SpecialCharTok{$}\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+Create a new variable \texttt{y} in the Python session using R, and pass
+a data frame to \texttt{y}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{py}\SpecialCharTok{$}\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(cars)}
+\end{Highlighting}
+\end{Shaded}
+
+Print the variable \texttt{y} in Python:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## {'speed': [4.0, 4.0, 7.0, 7.0, 8.0, 9.0], 'dist': [2.0, 10.0, 4.0, 22.0, 16.0, 10.0]}
+\end{verbatim}
+
+\newpage
+
+\hypertarget{define-numbers-in-r}{%
+\section{Define Numbers in R}\label{define-numbers-in-r}}
+
+Let's define the numbers we will use in both R and Python:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Define a vector of numbers in R}
+\NormalTok{define\_numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{r-code-block}{%
+\section{R Code Block}\label{r-code-block}}
+
+This is a simple R code block that calculates the sum of 5 numbers:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# R code to sum 5 numbers}
+\NormalTok{r\_sum }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(define\_numbers)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"The sum of the numbers in R is:"}\NormalTok{, r\_sum))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The sum of the numbers in R is: 15"
+\end{verbatim}
+
+\hypertarget{python-code-to-pass}{%
+\section{Python Code To Pass *}\label{python-code-to-pass}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{py}\SpecialCharTok{$}\NormalTok{n2 }\OtherTok{\textless{}{-}}\NormalTok{ define\_numbers}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{python-code-block}{%
+\section{Python Code Block}\label{python-code-block}}
+
+This is a simple Python code block that calculates the sum of 5 numbers:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Python code to calculate the sum of numbers defined in R}
+
+\CommentTok{\# Define a list of numbers}
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+
+\CommentTok{\# Retrieve the numbers passed from R using reticulate\textquotesingle{}s \textquotesingle{}py\textquotesingle{} object}
+\NormalTok{total\_sum }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(numbers)}
+\NormalTok{total\_sum2 }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(n2)}
+
+\CommentTok{\# Print the result}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"The sum of the numbers \textquotesingle{}total sum\textquotesingle{} is: }\SpecialCharTok{\{}\NormalTok{total\_sum}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The sum of the numbers 'total sum' is: 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"The sum of the numbers \textquotesingle{}n2\textquotesingle{} is: }\SpecialCharTok{\{}\NormalTok{total\_sum2}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The sum of the numbers 'n2' is: 15.0
+\end{verbatim}
+
+\newpage
+
+\listoffigures
+\lstlistoflistings
+
+\newpage
+
+\hypertarget{galley-sheet}{%
+\chapter*{Galley Sheet}\label{galley-sheet}}
+\addcontentsline{toc}{chapter}{Galley Sheet}
+
+\hypertarget{galley-sheet-info}{%
+\section{\texorpdfstring{\textbf{GALLEY Sheet
+info}}{GALLEY Sheet info}}\label{galley-sheet-info}}
+
+\layout
+
+\hypertarget{galley-sheet-info---ends}{%
+\section{\texorpdfstring{\textbf{GALLEY Sheet info -
+ends}}{GALLEY Sheet info - ends}}\label{galley-sheet-info---ends}}
+
+\newpage
+
 \hypertarget{references}{%
-\chapter*{References}\label{references}}
-\addcontentsline{toc}{chapter}{References}
-
-\hypertarget{refs}{}
-\begin{CSLReferences}{0}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-serre_course_1973}{}}%
-\CSLLeftMargin{1. }%
-\CSLRightInline{\textbf{Serre J-P}. \emph{A course in arithmetic}. New
-York: Springer-Verlag; 1973.}
-
-\leavevmode\vadjust pre{\hypertarget{ref-mullen_finite_2007}{}}%
-\CSLLeftMargin{2. }%
-\CSLRightInline{\textbf{Mullen GL}, \textbf{Mummert C}. \emph{Finite
-fields and applications}. Providence, R.I. : {[}University Park, Pa.{]}:
-American Mathematical Society ; Mathematics Advanced Study Semesters;
-2007.}
-
-\end{CSLReferences}
+\chapter{References}\label{references}}
 
 \backmatter
 \end{document}
