@@ -1441,29 +1441,25 @@ This equation is used when you want to understand the **linear relationship** be
    - The first equation (Pearson's correlation) measures the strength of a **linear relationship**, normalized by the variance in both variables.
    - The second equation is more general but is not commonly used as a standard for measuring correlation. It may appear in specific contexts, such as **cosine similarity** when the data is already standardized or when normalization is not necessary.
 
----
+### Final point summary Pearson vs normed at mean
 
-### Conclusion:
-
-- **The first equation** \ref{r_peasron} is the **Pearson correlation coefficient**, the standard method for measuring linear relationships, normalized by the standard deviations of both variables.
+- **The first equation** \ref{r_pearson} is the **Pearson correlation coefficient**, the standard method for measuring linear relationships, normalized by the standard deviations of both variables.
 - **The second equation** \ref{r_mu} is a raw form that compares the products of the variables and is **not typically used** for Pearson's correlation, as it lacks normalization. It could be seen as a raw form of a **cosine similarity** (for vector comparison) or some other variant of correlation, but it's not generally used for typical correlation measurements.
 
 
 
-
-
-## 5.3 Historical Context
+## Historical Context
 
 The concept of correlation was first developed by Sir Francis Galton in the 19th century. Galton’s work laid the foundation for the field of regression analysis and correlational statistics. The Pearson correlation, developed by Karl Pearson in 1896, is the most widely used form of correlation in modern statistics.
 
-## 5.4 Understanding the Notation
+## Understanding the Notation
 
 The formula for Pearson's correlation coefficient involves the concept of covariance, which measures how much two variables change together. The denominator in the formula standardizes the covariance by dividing by the product of the standard deviations of \( x \) and \( y \).
 
 - **Covariance**: Measures the degree to which two variables move together.
 - **Standard Deviation**: Measures the spread of a variable around its mean.
 
-## 5.5 Applications in Machine Learning
+## Applications in Machine Learning
 
 In machine learning, correlation is used to:
 - Identify relationships between input features and target variables,
@@ -1472,7 +1468,7 @@ In machine learning, correlation is used to:
 
 For instance, if two features are highly correlated, one may be removed from the model to simplify it without losing predictive power.
 
-## 5.6 Correlation in R
+## Correlation in R
 
 To compute the correlation coefficient in R, you can use the built-in `cor()` function:
 
@@ -1488,6 +1484,62 @@ cat(y)
 cat(correlation)
 ```
 \normalsize
+
+
+\newpage
+## Scatter Plots with Linear Overlays
+
+In this extension of the correlation chapter, we will demonstrate how to visualize the relationship between two variables using scatter plots and add a linear regression line to the plots. We will use two different sets of scatter data for illustration.
+
+### Example 1: Scatter Data with Linear Overlay, $N_{pdf}(\mu, \sigma)$
+
+$$
+N_{pdf}(\mu,\sigma) = N_{pdf}(\mu=1,\sigma=1)
+$$
+
+
+\scriptsize
+```{r example1}
+# Example 1: Create scatter data
+set.seed(42)  # For reproducibility
+
+# Generate example data
+x1 <- rnorm(100, mean = 5, sd = 2)  # 100 random data points from a normal distribution
+y1 <- 3 + 2 * x1 + rnorm(100, mean = 0, sd = 1)  # Linear relationship with some noise
+
+# Plotting the scatter plot with a linear regression line
+plot(x1, y1, main = "Scatter Plot with Linear Overlay Ex1",
+     xlab = "X1", ylab = "Y1", pch = 19, col = "blue")
+abline(lm(y1 ~ x1), col = "red", lwd = 2)  # Add linear regression line
+
+# Calculate Pearson's correlation coefficient
+r1 <- cor(x1, y1)
+cat("Pearson's Correlation for Example 1: ", r1, "\n")
+```
+\normalsize
+
+### Example 1: Scatter Data with Linear Overlay and some noise
+
+\scriptsize
+```{r example2}
+# Example 2: Create another set of scatter data
+set.seed(24)  # For reproducibility
+
+# Generate another set of example data
+x2 <- rnorm(100, mean = 10, sd = 5)  # 100 random data points from a different normal distribution
+y2 <- 1 + 0.5 * x2 + rnorm(100, mean = 0, sd = 2)  # Another linear relationship with noise
+
+# Plotting the scatter plot with a linear regression line
+plot(x2, y2, main = "Scatter Plot with Linear Overlay Ex2",
+     xlab = "X2", ylab = "Y2", pch = 19, col = "green")
+abline(lm(y2 ~ x2), col = "purple", lwd = 2)  # Add linear regression line
+
+# Calculate Pearson's correlation coefficient
+r2 <- cor(x2, y2)
+cat("Pearson's Correlation for Example 2: ", r2, "\n")
+```
+
+
 
 \newpage
 

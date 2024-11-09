@@ -2451,15 +2451,14 @@ Interpretation:}\label{difference-in-interpretation}}
   \end{itemize}
 \end{enumerate}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\hypertarget{conclusion}{%
-\subsection{Conclusion:}\label{conclusion}}
+\hypertarget{final-point-summary-pearson-vs-normed-at-mean}{%
+\subsection{Final point summary Pearson vs normed at
+mean}\label{final-point-summary-pearson-vs-normed-at-mean}}
 
 \begin{itemize}
 \tightlist
 \item
-  \textbf{The first equation} \ref{r_peasron} is the \textbf{Pearson
+  \textbf{The first equation} \ref{r_pearson} is the \textbf{Pearson
   correlation coefficient}, the standard method for measuring linear
   relationships, normalized by the standard deviations of both
   variables.
@@ -2473,7 +2472,7 @@ Interpretation:}\label{difference-in-interpretation}}
 \end{itemize}
 
 \hypertarget{historical-context-1}{%
-\section{5.3 Historical Context}\label{historical-context-1}}
+\section{Historical Context}\label{historical-context-1}}
 
 The concept of correlation was first developed by Sir Francis Galton in
 the 19th century. Galton's work laid the foundation for the field of
@@ -2482,8 +2481,7 @@ correlation, developed by Karl Pearson in 1896, is the most widely used
 form of correlation in modern statistics.
 
 \hypertarget{understanding-the-notation}{%
-\section{5.4 Understanding the
-Notation}\label{understanding-the-notation}}
+\section{Understanding the Notation}\label{understanding-the-notation}}
 
 The formula for Pearson's correlation coefficient involves the concept
 of covariance, which measures how much two variables change together.
@@ -2501,7 +2499,7 @@ by the product of the standard deviations of \(x\) and \(y\).
 \end{itemize}
 
 \hypertarget{applications-in-machine-learning-2}{%
-\section{5.5 Applications in Machine
+\section{Applications in Machine
 Learning}\label{applications-in-machine-learning-2}}
 
 In machine learning, correlation is used to: - Identify relationships
@@ -2514,7 +2512,7 @@ For instance, if two features are highly correlated, one may be removed
 from the model to simplify it without losing predictive power.
 
 \hypertarget{correlation-in-r}{%
-\section{5.6 Correlation in R}\label{correlation-in-r}}
+\section{Correlation in R}\label{correlation-in-r}}
 
 To compute the correlation coefficient in R, you can use the built-in
 \texttt{cor()} function:
@@ -2557,6 +2555,109 @@ To compute the correlation coefficient in R, you can use the built-in
 \end{verbatim}
 
 \normalsize
+
+\newpage
+
+\hypertarget{scatter-plots-with-linear-overlays}{%
+\section{Scatter Plots with Linear
+Overlays}\label{scatter-plots-with-linear-overlays}}
+
+In this extension of the correlation chapter, we will demonstrate how to
+visualize the relationship between two variables using scatter plots and
+add a linear regression line to the plots. We will use two different
+sets of scatter data for illustration.
+
+\hypertarget{example-1-scatter-data-with-linear-overlay-n_pdfmu-sigma}{%
+\subsection{\texorpdfstring{Example 1: Scatter Data with Linear Overlay,
+\(N_{pdf}(\mu, \sigma)\)}{Example 1: Scatter Data with Linear Overlay, N\_\{pdf\}(\textbackslash mu, \textbackslash sigma)}}\label{example-1-scatter-data-with-linear-overlay-n_pdfmu-sigma}}
+
+\[
+N_{pdf}(\mu,\sigma) = N_{pdf}(\mu=1,\sigma=1)
+\]
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example 1: Create scatter data}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)  }\CommentTok{\# For reproducibility}
+
+\CommentTok{\# Generate example data}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{5}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{)  }\CommentTok{\# 100 random data points from a normal distribution}
+\NormalTok{y1 }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{+} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ x1 }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)  }\CommentTok{\# Linear relationship with some noise}
+
+\CommentTok{\# Plotting the scatter plot with a linear regression line}
+\FunctionTok{plot}\NormalTok{(x1, y1, }\AttributeTok{main =} \StringTok{"Scatter Plot with Linear Overlay Ex1"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"X1"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Y1"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{lm}\NormalTok{(y1 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1), }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)  }\CommentTok{\# Add linear regression line}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.0_files/figure-latex/example1-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:example1}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate Pearson\textquotesingle{}s correlation coefficient}
+\NormalTok{r1 }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(x1, y1)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Pearson\textquotesingle{}s Correlation for Example 1: "}\NormalTok{, r1, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Pearson's Correlation for Example 1:  0.9775592
+\end{verbatim}
+
+\normalsize
+
+\hypertarget{example-1-scatter-data-with-linear-overlay-and-some-noise}{%
+\subsection{Example 1: Scatter Data with Linear Overlay and some
+noise}\label{example-1-scatter-data-with-linear-overlay-and-some-noise}}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example 2: Create another set of scatter data}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{24}\NormalTok{)  }\CommentTok{\# For reproducibility}
+
+\CommentTok{\# Generate another set of example data}
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{10}\NormalTok{, }\AttributeTok{sd =} \DecValTok{5}\NormalTok{)  }\CommentTok{\# 100 random data points from a different normal distribution}
+\NormalTok{y2 }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{+} \FloatTok{0.5} \SpecialCharTok{*}\NormalTok{ x2 }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{)  }\CommentTok{\# Another linear relationship with noise}
+
+\CommentTok{\# Plotting the scatter plot with a linear regression line}
+\FunctionTok{plot}\NormalTok{(x2, y2, }\AttributeTok{main =} \StringTok{"Scatter Plot with Linear Overlay Ex2"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"X2"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Y2"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{lm}\NormalTok{(y2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x2), }\AttributeTok{col =} \StringTok{"purple"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)  }\CommentTok{\# Add linear regression line}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.0_files/figure-latex/example2-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:example2}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate Pearson\textquotesingle{}s correlation coefficient}
+\NormalTok{r2 }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(x2, y2)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Pearson\textquotesingle{}s Correlation for Example 2: "}\NormalTok{, r2, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Pearson's Correlation for Example 2:  0.783414
+\end{verbatim}
 
 \newpage
 
@@ -3209,8 +3310,8 @@ Practice:}\label{moving-faster-in-practice}}
   the better you can refine and make the book truly impactful.
 \end{itemize}
 
-\hypertarget{conclusion-1}{%
-\subsection*{Conclusion:}\label{conclusion-1}}
+\hypertarget{conclusion}{%
+\subsection*{Conclusion:}\label{conclusion}}
 \addcontentsline{toc}{subsection}{Conclusion:}
 
 The Musk Rules encourage challenging the purpose of everything you're
