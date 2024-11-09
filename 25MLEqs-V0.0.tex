@@ -362,6 +362,7 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
   \vhEntry{0.04.0}{2024.11.07}{DP}{Sigmoid Chapter}
   \vhEntry{0.04.1}{2024.11.08}{DP}{Code clean up - house keeping, typos}
+  \vhEntry{0.05.0}{2024.11.10}{DP}{Correlation Chapter}
 \end{versionhistory}
 \newpage
 
@@ -2260,15 +2261,46 @@ origin is 1
 
 \newpage
 
-\newpage
-
 \hypertarget{correlation}{%
 \chapter{Correlation}\label{correlation}}
 
-\[
-\text{Correlation} = \frac{\text{Cov}(X, Y)}{\text{Std}(X) \cdot \text{Std}(Y)}
-\]
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $\text{Correlation} = \frac{\text{Cov}(X, Y)}{\text{Std}(X) \cdot \text{Std}(Y)}$}
+\end{center}
 
+\hfill\break
+
+\begin{figure*}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-5-correlation.jpeg}
+    \caption*{\Large $x_i$ and $y_i$ are linearly related}
+  \end{center}
+\end{figure*}
+
+\newpage
+
+\vspace*{\fill}
+\begin{a_def_eq}{Correlation}{def5} 
+
+\begin{align}\label{r_XY}
+\text{Correlation} = \frac{\text{Cov}(X, Y)}{\text{Std}(X) \cdot \text{Std}(Y)}\\
+\end{align}
+\begin{align}\label{r_pearson}
+r = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}
+\end{align}
+
+\begin{description}[align=left, labelwidth=2.2cm, labelsep=0em, leftmargin=2.2cm]
+    \item[$\text{Cov}(X, Y)$] The \textbf{covariance} between vectors \( X \) and \( Y \), which measures the degree to which the two variables (or vectors) vary together.
+    \item[$\text{Std}(V)$] The \textbf{standard deviation of vector \( V \)}, which measures the spread of the elements of \( Y \)  around each mean.
+    \item[$\bar{x}$] The \textbf{mean of variable \( X \)}, calculated as \( \frac{1}{n} \sum x_i \), where \( n \) is the number of data points.
+    \item[$\bar{y}$] The \textbf{mean of variable \( Y \)}, calculated as \( \frac{1}{n} \sum y_i \), where \( n \) is the number of data points.
+    \item[$x_i$] The \textbf{individual data point} in the variable \( X \), where \( i \) indexes each observation in the dataset.
+    \item[$y_i$] The \textbf{individual data point} in the variable \( Y \), where \( i \) indexes each observation in the dataset.
+\end{description}
+
+\end{a_def_eq}
+
+\hfill\break
 \textbf{Introduction}: Correlation measures the strength and direction
 of the linear relationship between two variables.
 
@@ -2282,7 +2314,249 @@ variable. Strongly correlated features can be used for better
 predictions, whereas uncorrelated features can be removed to simplify
 models.
 
+\vspace*{\fill}
+
+\newpage
+
+\hypertarget{what-is-behind-the-equation-4}{%
+\section{What is Behind the
+Equation}\label{what-is-behind-the-equation-4}}
+
+Correlation is a statistical measure that describes the strength and
+direction of a relationship between two variables. The most common
+measure of correlation is Pearson's correlation coefficient, denoted as
+\(r\), which ranges from -1 to 1. A positive value indicates a direct
+relationship, while a negative value indicates an inverse relationship.
+A value of 0 implies no linear relationship.
+
+The equation for Pearson's correlation r coefficient \ref{r_pearson} can
+be compared to the normalized version \ref{r_mu}:
+
+\begin{align}\label{r_mu}
+r_{\mu} \frac{\sum \left(x_i y_i\right)}{\sqrt{\sum x_i^2 \sum y_i^2}}
+\end{align}
+
+Where: - \(x_i\) and \(y_i\) are individual data points of variables
+\(x\) and \(y\), - \(\bar{x}\) and \(\bar{y}\) are the means of
+variables \(x\) and \(y\), respectively.
+
+\begin{itemize}
+\item
+  \textbf{Variables}: The two variables, \(x\) and \(y\), whose
+  relationship we are measuring. These could be anything from economic
+  indicators to user behaviors.
+\item
+  \textbf{Data Points}: Each pair of values \((x_i, y_i)\) represents an
+  observation.
+\item
+  \textbf{Means}: The mean values of \(x\) and \(y\) are used to
+  standardize the data by subtracting them from each data point, which
+  helps in normalizing the relationship.
+\item
+  \(x_i\) and \(y_i\) are individual data points for the two variables
+  \(X\) and \(Y\).
+\item
+  \(\bar{x}\) and \(\bar{y}\) are the means (averages) of the respective
+  variables.
+\item
+  \textbf{Numerator}: The numerator is the \textbf{covariance} between
+  \(X\) and \(Y\), which measures how the two variables vary together.
+\item
+  \textbf{Denominator}: The denominator is the product of the
+  \textbf{standard deviations} of \(X\) and \(Y\), which normalizes the
+  covariance and ensures that the correlation coefficient lies between
+  -1 and 1.
+\end{itemize}
+
+The Pearson correlation measures the strength and direction of the
+\textbf{linear relationship} between two variables. This is the most
+commonly used form of correlation.
+
+\hypertarget{use-case}{%
+\subsubsection{Use case:}\label{use-case}}
+
+This equation is used when you want to understand the \textbf{linear
+relationship} between two continuous variables and is the formula used
+by the \texttt{cor()} function in R with the default method
+(\texttt{method\ =\ "pearson"}).
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{difference-in-interpretation}{%
+\subsubsection{Difference in
+Interpretation:}\label{difference-in-interpretation}}
+
+\begin{itemize}
+\tightlist
+\item
+  The pearson equation \ref{r_pearson} measures \textbf{how deviations
+  from the mean of each variable are related}, i.e., it normalizes by
+  the standard deviations of each variable.
+\item
+  The second equation \ref{r_mu} compares the raw products of the
+  variables, but it does \textbf{not center} the data by subtracting the
+  means. This makes the second equation more sensitive to the scales and
+  magnitudes of the variables, which is why it's often less preferred
+  for calculating correlation in its standard sense.
+\end{itemize}
+
+\hypertarget{key-differences}{%
+\subsection{Key Differences:}\label{key-differences}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Normalization}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The first equation involves centering the data by subtracting the
+    means, which is important to account for the relationship of the
+    variables in terms of deviations from their respective averages.
+  \item
+    The second equation does not involve centering the data. It uses the
+    raw values of \(x_i\) and \(y_i\), making it sensitive to the
+    overall scale and magnitude of the data.
+  \end{itemize}
+\item
+  \textbf{Covariance vs Raw Product}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The first equation is essentially computing a normalized
+    \textbf{covariance} (divided by the product of the standard
+    deviations of \(X\) and \(Y\)).
+  \item
+    The second equation uses the \textbf{raw product} of the variables,
+    which lacks the standardization and may lead to different numerical
+    results.
+  \end{itemize}
+\item
+  \textbf{Interpretation}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The first equation (Pearson's correlation) measures the strength of
+    a \textbf{linear relationship}, normalized by the variance in both
+    variables.
+  \item
+    The second equation is more general but is not commonly used as a
+    standard for measuring correlation. It may appear in specific
+    contexts, such as \textbf{cosine similarity} when the data is
+    already standardized or when normalization is not necessary.
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{conclusion}{%
+\subsection{Conclusion:}\label{conclusion}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{The first equation} \ref{r_peasron} is the \textbf{Pearson
+  correlation coefficient}, the standard method for measuring linear
+  relationships, normalized by the standard deviations of both
+  variables.
+\item
+  \textbf{The second equation} \ref{r_mu} is a raw form that compares
+  the products of the variables and is \textbf{not typically used} for
+  Pearson's correlation, as it lacks normalization. It could be seen as
+  a raw form of a \textbf{cosine similarity} (for vector comparison) or
+  some other variant of correlation, but it's not generally used for
+  typical correlation measurements.
+\end{itemize}
+
+\hypertarget{historical-context-1}{%
+\section{5.3 Historical Context}\label{historical-context-1}}
+
+The concept of correlation was first developed by Sir Francis Galton in
+the 19th century. Galton's work laid the foundation for the field of
+regression analysis and correlational statistics. The Pearson
+correlation, developed by Karl Pearson in 1896, is the most widely used
+form of correlation in modern statistics.
+
+\hypertarget{understanding-the-notation}{%
+\section{5.4 Understanding the
+Notation}\label{understanding-the-notation}}
+
+The formula for Pearson's correlation coefficient involves the concept
+of covariance, which measures how much two variables change together.
+The denominator in the formula standardizes the covariance by dividing
+by the product of the standard deviations of \(x\) and \(y\).
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Covariance}: Measures the degree to which two variables move
+  together.
+\item
+  \textbf{Standard Deviation}: Measures the spread of a variable around
+  its mean.
+\end{itemize}
+
+\hypertarget{applications-in-machine-learning-2}{%
+\section{5.5 Applications in Machine
+Learning}\label{applications-in-machine-learning-2}}
+
+In machine learning, correlation is used to: - Identify relationships
+between input features and target variables, - Check for
+multicollinearity, where highly correlated features might skew results,
+- Perform feature selection, as correlated features may provide
+redundant information.
+
+For instance, if two features are highly correlated, one may be removed
+from the model to simplify it without losing predictive power.
+
+\hypertarget{correlation-in-r}{%
+\section{5.6 Correlation in R}\label{correlation-in-r}}
+
+To compute the correlation coefficient in R, you can use the built-in
+\texttt{cor()} function:
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example R code to compute Pearson\textquotesingle{}s correlation coefficient}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{correlation }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(x, y)}
+\CommentTok{\# print\{correlation\}}
+\FunctionTok{cat}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1 2 3 4 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 5 4 3 2 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(correlation)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -1
+\end{verbatim}
+
+\normalsize
 
 \newpage
 
@@ -2935,8 +3209,8 @@ Practice:}\label{moving-faster-in-practice}}
   the better you can refine and make the book truly impactful.
 \end{itemize}
 
-\hypertarget{conclusion}{%
-\subsection*{Conclusion:}\label{conclusion}}
+\hypertarget{conclusion-1}{%
+\subsection*{Conclusion:}\label{conclusion-1}}
 \addcontentsline{toc}{subsection}{Conclusion:}
 
 The Musk Rules encourage challenging the purpose of everything you're
