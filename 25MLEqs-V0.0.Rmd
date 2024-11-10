@@ -1599,6 +1599,8 @@ cat("Pearson's Correlation for Example 2: ", r2, "\n")
 
 ## What is Behind the Equation
 
+### Cosine Similarity Technically speaking
+
 Cosine similarity \ref{cosine_sim_full} measures the cosine of the angle between two vectors \( \mathbf{A} \) and \( \mathbf{B} \) in a multi-dimensional space. The equation for cosine similarity is given by:
 
 Where:
@@ -1630,6 +1632,56 @@ Cosine similarity ranges from -1 to 1:
 
 - **Cosine of the Angle**: The cosine of the angle between the vectors is the core of cosine similarity. If the vectors are pointing in the same direction, the cosine value will be 1, indicating high similarity.
 
+
+### Cosine Similarity Mathematically speaking
+
+Mathematically, the cosine similarity between two vectors \( \mathbf{A} \) and \( \mathbf{B} \) is given by:
+
+$$
+\text{similarity}(\mathbf{A}, \mathbf{B}) = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}
+$$
+
+Where:
+- \( \mathbf{A} \cdot \mathbf{B} \) is the dot product of vectors \( \mathbf{A} \) and \( \mathbf{B} \),
+- \( \|\mathbf{A}\| \) and \( \|\mathbf{B}\| \) are the norms (magnitudes) of the vectors.
+
+Now, considering linear separability, for two classes of data to be linearly separable, the vectors corresponding to those classes should be **distinct** in terms of their direction. This can be formalized as follows:
+
+- If the vectors for the two classes are aligned (i.e., pointing in the same direction), their cosine similarity will be close to **1**, indicating that the classes are **highly similar** and not linearly separable.
+  
+- If the vectors are **orthogonal**, their cosine similarity will be **0**, implying that they are **completely different** and hence easily separable by a linear classifier.
+
+To represent this mathematically, if we have two vectors \( \mathbf{A}_1 \) and \( \mathbf{A}_2 \) representing the two classes, the cosine similarity between them can be used as follows:
+
+$$
+\mathbf{A}_1 \cdot \mathbf{A}_2 = \|\mathbf{A}_1\| \|\mathbf{A}_2\| \cos(\theta)
+$$
+
+Where:
+- \( \theta \) is the angle between the two vectors.
+
+If the vectors are **orthogonal** (i.e., \( \theta = 90^\circ \)), then:
+
+$$
+\cos(90^\circ) = 0 \quad \Rightarrow \quad \mathbf{A}_1 \cdot \mathbf{A}_2 = 0
+$$
+
+This means that the cosine similarity is 0, and the two classes are perfectly separable using a linear classifier.
+
+For the vectors to be **linearly separable**, a good condition is that the cosine similarity between the class vectors should be **low** or **zero**. If the cosine similarity is high (close to 1), it means that the vectors are pointing in similar directions, and the classes might not be easily separable by a linear boundary.
+
+__In summary:__
+**In summary:**
+
+- **Cosine similarity close to 1**: Vectors are pointing in the same direction, classes are **not separable**.
+- **Cosine similarity close to 0**: Vectors are orthogonal, classes are **easily separable**.
+
+This is crucial for algorithms like **SVMs** and **Logistic Regression**, which rely on the geometric properties of the data for finding the decision boundary.
+
+
+
+
+\newpage
 
 ## Historical Context
 
@@ -1705,6 +1757,7 @@ Cosine similarity essentially measures the cosine of the angle between two vecto
 - Negative Similarity: A negative cosine similarity indicates that the vectors are pointing in opposite directions (i.e., the angle is greater than $90^{\circ}$ but less than $180^{\circ}$ ).
 - Unit Vectors: If the vectors $A$ and $B$ are normalized to unit vectors (i.e., $\|A\|=\|B\|=1$ ), then cosine similarity becomes equivalent to the dot product $A \cdot B$. This property makes cosine similarity a normalized version of the dot product, and it's particularly useful in highdimensional spaces like text data, where magnitude can vary widely across documents.
 
+
 ### Cosine Similarity and the Inner Product:
 
 Cosine similarity is directly related to the inner product (or dot product) of vectors. 
@@ -1722,8 +1775,79 @@ $$
 
 This identity shows that the cosine similarity can be interpreted in terms of the squared Euclidean distance between the vectors. High cosine similarity means low Euclidean distance, and vice versa. This provides a duality between these two commonly used measures of similarity in machine learning.
 
-### Cosine Similarity and Linear Separability:
-- In the context of machine learning, cosine similarity plays a significant role in determining how linearly separable two classes of data are. If two classes have vectors that point in the same direction, their cosine similarity will be high. If they are orthogonal (completely different), their similarity will be 0, which often indicates that the classes are easily separable using linear classifiers like Logistic Regression or Support Vector Machines (SVM).
+\newpage 
+
+## Cosine Similarity and Linear Separability
+
+Let's begin by recalling the formulation of linear separability from the matrix formulation and connecting it to cosine similarity:
+1. Linear Separability Condition: For a set of data points $\mathbf{x}_i$ with labels $y_i$, the condition for linear separability is:
+
+$$
+y_i\left(\mathbf{w}^T \mathbf{x}_i+b\right)>0, \quad \forall i=1,2, \ldots, n
+$$
+
+
+This condition means that all data points are correctly classified by the hyperplane, which is determined by w and $b$.
+2. Cosine Similarity and Separation: The cosine similarity between two vectors $\mathbf{x}_i$ and $\mathbf{w}$ (where w is the normal vector to the hyperplane) is given by:
+
+$$
+\operatorname{similarity}\left(\mathbf{x}_i, \mathbf{w}\right)=\frac{\mathbf{w}^T \mathbf{x}_{\mathbf{i}}}{\|\mathbf{w}\|\left\|\mathbf{x}_i\right\|}
+$$
+
+- When cosine similarity is high (close to 1 ), the vector $\mathbf{x}_i$ is pointing in a similar direction to $\mathbf{w}$, and the data point $\mathbf{x}_i$ is not well separated from other points in the feature space.
+- When cosine similarity is low (close to 0 ), the vectors are orthogonal, indicating that the points from different classes are well-separated, and the decision boundary (hyperplane) is more likely to be effective at separating the two classes.
+- Linear Separability and Margin Maximization: In Support Vector Machines (SVM), the goal is to find the optimal hyperplane that maximizes the margin between the two classes. The margin is the perpendicular distance from the closest data points (the support vectors) to the hyperplane. The SVM optimization problem is formulated as:
+
+$$
+\text { Maximize } \frac{2}{\|\mathbf{w}\|}
+$$
+
+
+Subject to the constraint:
+
+$$
+y_i\left(\mathbf{w}^T \mathbf{x}_i+b\right) \geq 1, \quad \forall i
+$$
+
+
+This ensures that the data points are classified correctly with the maximum margin, which is geometrically related to the angle between the weight vector $\mathbf{w}$ and the data points $\mathbf{x}_i$.
+
+### How Cosine Similarity Relates to the Margin in SVM:
+The margin in SVM is inversely proportional to the magnitude of the weight vector w. A larger margin corresponds to a lower value of \|w ||. Since cosine similarity measures the alignment between the vectors, it directly relates to the angle between the weight vector $\mathbf{w}$ and the data vectors $\mathbf{x}_i$ :
+
+- A large cosine similarity means the vectors are pointing in the same direction, making it harder for the classifier to separate the classes with a hyperplane.
+- A low cosine similarity (especially close to 0 ) means the vectors are more orthogonal, making the data points more separable.
+
+### Full Mathematical Representa tion Connecting Linear Separability and Cosine Similarity:
+
+To summarize the relationship between cosine similarity and linear separability, we have:
+
+1. Cosine similarity between the weight vector $\mathbf{w}$ and each data point $\mathbf{x}_i$:
+
+$$
+\operatorname{similarity}\left(\mathbf{x}_i, \mathbf{w}\right)=\frac{\mathbf{w}^T \mathbf{x}_i}{\|\mathbf{w}\|\left\|\mathbf{x}_i\right\|}
+$$
+
+2. For linear separability, the data points must satisfy the condition:
+
+$$
+y_i\left(\mathbf{w}^T \mathbf{x}_i+b\right)>0, \quad \forall i=1,2, \ldots, n
+$$
+
+3. The margin between the classes is maximized when the cosine similarity between the weight vector $\mathbf{w}$ and the data points $\mathbf{x}_i$ is low (i.e., the vectors are orthogonal):
+
+$$
+\text { Maximize margin: } \frac{2}{\|\mathbf{w}\|}
+$$
+
+
+This leads to a large margin when cosine similarity is small, ensuring that the data points are easily separable by the hyperplane.
+
+Thus, the cosine similarity between the weight vector $\mathbf{w}$ and the data points $\mathbf{x}_i$ plays a key role in determining the separability of the data. When cosine similarity is low, it indicates that the data is well separated and linearly separable.
+
+
+\newpage
+
 
 ### Cosine Similarity with Sparse Vectors:
 - One interesting property of cosine similarity is its robustness in high-dimensional, sparse data (such as text data). In sparse high-dimensional spaces, many of the components of the vectors are zero, and the cosine similarity reduces to comparing the non-zero entries of the vectors. This makes it very useful in scenarios like text analysis or recommendation systems, where documents or items are represented by high-dimensional sparse vectors, and many entries in these vectors are zero.
@@ -1758,6 +1882,25 @@ This identity shows that the cosine similarity can be interpreted in terms of th
 - Cosine similarity also plays a role in some machine learning models, especially those used for regularization. For instance, in sparse representations (such as Lasso regression or feature selection in text), cosine similarity can be used to measure how closely related a feature is to another, helping in the regularization process by identifying similar features or words.
 
 
+
+
+
+## Relation to Spherical Geometry:
+
+Cosine similarity is deeply connected to spherical geometry. In fact, it is the spherical distance (or the angular distance) between two points on the unit sphere. The closer two vectors are in the direction they point, the smaller the angle between them, and therefore, the higher the cosine similarity.
+- This connection becomes evident when vectors are normalized (as unit vectors) and placed on the surface of a unit sphere. In this setting, the cosine of the angle between the vectors directly gives the cosine of the spherical angle between them, which is central in many algorithms that perform clustering and classification based on angles, such as kmeans clustering on normalized data.
+
+## Cosine Similarity and Kernel Methods:
+
+Cosine similarity can also be seen as a kernel function in the context of machine learning. In the context of support vector machines (SVMs) and other kernel-based learning methods, cosine similarity can serve as a linear kernel for high-dimensional vector spaces.
+- The linear kernel in SVM is essentially equivalent to calculating the cosine similarity between data points when the data is centered and normalized. Thus, it provides a way to map the data into a high-dimensional space without explicitly calculating the dot product in that space.
+
+
+## Cosine Similarity and Information Retrieval:
+
+In information retrieval (IR), cosine similarity is used to compare the vector representations of documents. The documents are typically represented in terms of their TF-IDF (Term Frequency-Inverse Document Frequency) vectors, and cosine similarity is used to measure how similar a query is to a document.
+- In this context, cosine similarity measures the angular distance between the query vector and document vectors. Despite differences in the document lengths, the cosine similarity focuses on the relative frequency of words, making it especially useful for content based recommendation systems and document clustering.
+
 ## Cosine Similarity and the Norms of Vectors:
 
 Cosine similarity is inherently related to vector norms. In particular, Euclidean distance (L.2 norm) is closely tied to cosine similarity, but cosine similarity itself is not a norm in the traditional sense. Let's break this down:
@@ -1787,7 +1930,7 @@ Cosine similarity itself is not a norm, but it is closely related to the concept
 
 Cosine similarity does not satisfy the triangle inequality or the other properties needed to qualify as a norm. Therefore, cosine similarity is not a norm. Instead, it's a measure of similarity between vectors that is normalized to account for the lengths of the vectors, so that only the angle between them influences the result.
 
-## Can Cosine Similarity be Used as a Norm?
+## Can Cosine Similarity vs What can be used as a Norm?
 
 Cosine similarity itself cannot be used as a norm, because, as mentioned, it doesn't satisfy the necessary properties of a norm. However, cosine distance, which is defined as:
 
@@ -1815,24 +1958,6 @@ $$
 $$
 
 - Although the L $\infty$ norm measures the largest element in the vector, it doesn't directly impact cosine similarity, but it's worth noting that the interaction between cosine similarity and other norms can become relevant in scenarios such as image retrieval or clustering, where the components of the vectors may represent pixel intensities or other quantities.
-
-
-
-## Relation to Spherical Geometry:
-
-Cosine similarity is deeply connected to spherical geometry. In fact, it is the spherical distance (or the angular distance) between two points on the unit sphere. The closer two vectors are in the direction they point, the smaller the angle between them, and therefore, the higher the cosine similarity.
-- This connection becomes evident when vectors are normalized (as unit vectors) and placed on the surface of a unit sphere. In this setting, the cosine of the angle between the vectors directly gives the cosine of the spherical angle between them, which is central in many algorithms that perform clustering and classification based on angles, such as kmeans clustering on normalized data.
-
-## Cosine Similarity and Kernel Methods:
-
-Cosine similarity can also be seen as a kernel function in the context of machine learning. In the context of support vector machines (SVMs) and other kernel-based learning methods, cosine similarity can serve as a linear kernel for high-dimensional vector spaces.
-- The linear kernel in SVM is essentially equivalent to calculating the cosine similarity between data points when the data is centered and normalized. Thus, it provides a way to map the data into a high-dimensional space without explicitly calculating the dot product in that space.
-
-
-## Cosine Similarity and Information Retrieval:
-
-In information retrieval (IR), cosine similarity is used to compare the vector representations of documents. The documents are typically represented in terms of their TF-IDF (Term Frequency-Inverse Document Frequency) vectors, and cosine similarity is used to measure how similar a query is to a document.
-- In this context, cosine similarity measures the angular distance between the query vector and document vectors. Despite differences in the document lengths, the cosine similarity focuses on the relative frequency of words, making it especially useful for content based recommendation systems and document clustering.
 
 
 ## Cosine Distance:
@@ -1905,8 +2030,53 @@ in some specialized contexts, especially those involving unit vectors on the uni
 
 
 
-- eof RambBLIGNS 
 
+\newpage
+
+## Triangle inequality for cosine similarity
+
+The ordinary triangle inequality for angles (i.e., arc lengths on a unit hypersphere) gives us that
+
+$$
+|\angle A C-\angle C B| \leq \angle A B \leq \angle A C+\angle C B .
+$$
+
+
+Because the cosine function decreases as an angle in $[0, \pi]$ radians increases, the sense of these inequalities is reversed when we take the cosine of each value:
+
+$$
+\cos (\angle A C-\angle C B) \geq \cos (\angle A B) \geq \cos (\angle A C+\angle C B) .
+$$
+
+
+Using the cosine addition and subtraction formulas, these two inequalities can be written in terms of the original cosines,
+
+$$
+\begin{aligned}
+& \cos (A, C) \cdot \cos (C, B)+\sqrt{\left(1-\cos (A, C)^2\right) \cdot\left(1-\cos (C, B)^2\right)} \geq \cos (A, B) \\
+& \cos (A, B) \geq \cos (A, C) \cdot \cos (C, B)-\sqrt{\left(1-\cos (A, C)^2\right) \cdot\left(1-\cos (C, B)^2\right)}
+\end{aligned}
+$$
+
+
+This form of the triangle inequality can be used to bound the minimum and maximum similarity of two objects A and B if the similarities to a reference object C is already known. This is used for example in metric data indexing, but has also been used to accelerate spherical $k$-means clustering the same way the Euclidean triangle inequality has been used to accelerate regular k-means.
+
+### Soft cosine measure
+A soft cosine or ("soft" similarity) between two vectors considers similarities between pairs of features. The traditional cosine similarity considers the vector space model (VSM) features as independent or completely different, while the soft cosine measure proposes considering the similarity of features in VSM, which help generalize the concept of cosine (and soft cosine) as well as the idea of (soft) similarity.
+
+For example, in the field of natural language processing (NLP) the similarity among features is quite intuitive. Features such as words, $n$-grams, or syntactic $n$-grams  can be quite similar, though formally they are considered as different features in the VSM. For example, words "play" and "game" are different words and thus mapped to different points in VSM; yet they are semantically related. In case of $n$-grams or syntactic $n$-grams, Levenshtein distance can be applied (in fact, Levenshtein distance can be applied to words as well).
+
+For calculating soft cosine, the matrix $\mathbf{s}$ is used to indicate similarity between features. It can be calculated through Levenshtein distance, WordNet similarity, or other similarity measures. Then we just multiply by this matrix.
+Given two $N$-dimension vectors $a$ and $b$, the soft cosine similarity is calculated as follows:
+
+$$
+\operatorname{soft} \_^{\operatorname{cosine}}(a, b)=\frac{\sum_{i, j}^N s_{i j} a_i b_j}{\sqrt{\sum_{i, j}^N s_{i j} a_i a_j} \sqrt{\sum_{i, j}^N s_{i j} b_i b_j}},
+$$
+
+where $s_{i j}=\operatorname{similarity}\left(\right.$ feature $_i$, feature $_j$ ).
+If there is no similarity between features ( $s_{i i}=1, s_{i j}=0$ for $i \neq j$ ), the given equation is equivalent to the conventional cosine similarity formula.
+
+The time complexity of this measure is quadratic, which makes it applicable to real-world tasks. Note that the complexity can be reduced to subquadratic. An efficient implementation of such soft cosine similarity is included in the Gensim open source library.
 
 
 \newpage
@@ -2026,6 +2196,65 @@ $$
 **Importance in ML**: Naive Bayes is used for classification tasks, especially in text classification and spam detection. Its simplicity and efficiency make it a popular choice for high-dimensional datasets.
 
 ---
+
+## Bayes' Introduction and Construction
+
+We want to talk specifically of Bayes' first. 
+
+**diagram** ... will put the false positive one here. 
+
+## Bayes start building
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \draw[thick,->] (0,0) -- (1,1);
+    \draw[thick,->] (0,0) -- (1,-1);
+\end{tikzpicture}
+
+## Grad of Bayes tikz1 
+
+```{=latex}
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \draw[thick,->] (0,0) -- (1,1);
+    \draw[thick,->] (0,0) -- (1,-1);
+\end{tikzpicture}
+\
+
+sep here 
+\
+
+\begin{tikzpicture}
+
+% Define 3D coordinates for the vectors
+\coordinate (A) at (1, 2, 3);  % Vector A (1, 2, 3)
+\coordinate (B) at (4, 5, 6);  % Vector B (4, 5, 6)
+\coordinate (O) at (0, 0, 0);  % Origin (0, 0, 0)
+
+% Draw the vectors as lines
+\draw[->, thick, blue] (O) -- (A) node[midway, below] {$\mathbf{A}$};
+\draw[->, thick, red] (O) -- (B) node[midway, above] {$\mathbf{B}$};
+
+% Add axis labels
+\draw[->] (O) -- (5, 0, 0) node[right] {X};
+\draw[->] (O) -- (0, 5, 0) node[above] {Y};
+\draw[->] (O) -- (0, 0, 5) node[above] {Z};
+
+\end{tikzpicture}
+\
+
+sep here 2 
+\
+
+
+
+
+
+\caption{A simple TikZ diagram.}
+\end{figure}
+```
+
 
 \newpage
 
@@ -2320,6 +2549,78 @@ $$
 
 
 \backmatter
+
+# Appendix
+
+## Matrix Formulation for Linear Separability {-}
+
+To check for linear separability, we can use a matrix formulation that involves the following:
+
+1. Data Matrix: Let $X$ be the matrix of feature vectors, where each row corresponds to a data point. The size of $X$ will be $n \times d$, where $n$ is the number of data points and $d$ is the number of features.
+2. Label Vector: Let $y$ be the vector of labels, where each entry represents the class label of a data point (typically +1 or -1 for binary classification). The size of y will be $n \times 1$.
+3. Linearly Separable Condition: The data points are linearly separable if there exists a vector w and a bias term $b$ such that:
+
+$$
+\mathbf{y}_i\left(\mathbf{w}^T \mathbf{x}_{\mathrm{i}}+b\right)>0, \quad \forall i=1,2, \ldots, n
+$$
+
+
+This condition means that all data points from one class are on one side of the hyperplane and all data points from the other class are on the opposite side.
+
+Matrix Representation of Linear Separability
+In matrix form, we can express the linear separability condition as:
+
+$$
+\mathrm{y} \cdot(X \mathbf{w}+b \mathbf{1})>0
+$$
+
+
+Where:
+- $X$ is the data matrix of size $n \times d$,
+- $\quad \mathrm{y}$ is the label vector of size $n \times 1$,
+- $\mathbf{w}$ is the weight vector of size $d \times 1$,
+- $b$ is the bias term, and
+- 1 is a vector of ones of size $n \times 1$.
+
+SVM's Role in Linear Separability
+For SVM specifically, the goal is to maximize the margin between the two classes while ensuring that the classes remain linearly separable. The margin is the distance between the closest points from each class (known as support vectors) to the hyperplane. SVM tries to find the hyperplane that maximizes this margin, ensuring that the data is not only separable but also well-separated by the hyperplane.
+
+Mathematically, this is represented as:
+
+$$
+\text { Maximize } \frac{2}{\|\mathbf{w}\|}
+$$
+
+
+Subject to the constraints:
+
+$$
+y_i\left(\mathbf{w}^T \mathbf{x}_i+b\right) \geq 1, \quad \forall i
+$$
+
+
+Where:
+- $y_i$ is the class label for the $i$-th point (either +1 or -1 ),
+- $\mathbf{x}_i$ is the feature vector for the $i$-th data point,
+- w is the weight vector,
+- $b$ is the bias term.
+
+This ensures that the points are classified correctly with the maximum margin.
+
+
+Conclusion: Matrix Formulation
+To summarize, linear separability in machine learning is about finding a hyperplane that can separate the classes of data in feature space. This is often formulated mathematically as:
+
+$$
+\mathbf{y} \cdot(X \mathbf{w}+b 1)>0
+$$
+
+
+For a binary classification problem, a classifier like SVM finds the optimal hyperplane that separates the classes with the largest margin, ensuring that the data is linearly separable.
+
+
+\newpage 
+
 
 # Epilogue - Guidance and Test Materials
 
