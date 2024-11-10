@@ -139,9 +139,14 @@
 %\usepackage{pgfplots}                % math plotting
 %\pgfplotsset{compat=1.18}
 
+\usepackage{rotating}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
 \usepackage{tikz}                    % tikz megatool
 \usepackage{tikz-3dplot}
-\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta,shapes,backgrounds}
 
 %\usepackage{fvextra}                 % special linebreaking 
 %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
@@ -3899,6 +3904,7 @@ R:
 \end{Shaded}
 
 \normalsize
+\newpage
 
 \hypertarget{tikz-output---cosine-similarity}{%
 \subsection{Tikz Output - cosine
@@ -3950,495 +3956,1459 @@ Construction}\label{bayes-introduction-and-construction}}
 
 We want to talk specifically of Bayes' first.
 
-\textbf{diagram} \ldots{} will put the false positive one here.
+\hypertarget{introduction-to-bayesian-theory}{%
+\section{Introduction to Bayesian
+Theory}\label{introduction-to-bayesian-theory}}
+
+\hypertarget{introduction-the-traditional-formulation-of-bayes-theory}{%
+\subsection{Introduction the traditional formulation of Bayes'
+theory}\label{introduction-the-traditional-formulation-of-bayes-theory}}
+
+Bayes' Theorem is a powerful mathematical tool used in probability
+theory to calculate conditional probabilities. It is named after
+Reverend Thomas Bayes and articulates a fundamental relationship between
+the conditional probabilities of two events.
+
+The basic concept revolves around updating our initial beliefs or
+estimates (prior probabilities) in light of new evidence or information
+(likelihood) to arrive at a revised belief (posterior probability). This
+process is particularly useful in various fields such as statistics,
+machine learning, and data analysis, where making predictions based on
+incomplete information is common.
+
+\hypertarget{the-traditional-bayes-formula}{%
+\subsection{The traditional Bayes
+formula}\label{the-traditional-bayes-formula}}
+
+\textbf{The theorem is usually expressed as:}
+
+\[
+\operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)}{\operatorname{P}(B)}
+\]
+
+Where:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\operatorname{P}(A\! \mid\! B)\) is the posterior probability. It
+  represents the probability of event \(A\) occurring given that \(B\)
+  has occurred.
+\item
+  \(\operatorname{P}(B\! \mid\! A)\) is the likelihood. It represents
+  the probability of observing event \(B\) given that \(A\) is true.
+\item
+  \(\operatorname{P}(A)\) is the prior probability of \(A\). It
+  represents the initial belief before considering the new evidence
+  \(B\).
+\item
+  \(\operatorname{P}(B)\) is the marginal probability of \(B\). It
+  represents the total probability of observing \(B\) under all possible
+  circumstances.
+\end{itemize}
+
+\textbf{Understanding the components:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Prior Probability \((\operatorname{P}(A))\) : This is your initial
+  belief about the probability of an event before any additional
+  information is considered. For instance, if you are trying to
+  determine the probability that a randomly chosen person is left-handed
+  \((A)\), your prior might be the overall percentage of left-handed
+  people in the population.
+\item
+  Likelihood \((\operatorname{P}(B \mid A)\) ): This reflects how
+  probable the evidence \((B)\) is, assuming the hypothesis \((A)\) is
+  true. For example, if a diagnostic test is known to detect a disease
+  \(95 \%\) of the time when the disease is present, then
+  \(\operatorname{P}(B \mid A)=0.95\).
+\item
+  Marginal Probability \((\operatorname{P}(B))\) : This is the total
+  probability of observing the evidence ( \(B\) ) under all possible
+  circumstances. It's often calculated as the sum of probabilities for
+  all possible values of
+  \(A: \operatorname{P}(B)=\operatorname{P}(B \mid A) \cdot \operatorname{P}(A)+\operatorname{P}(B \mid \neg A) \cdot \operatorname{P}(\neg A)\),
+  where \(\neg A\) represents the complement of \(A\).
+\item
+  Posterior Probability \((\operatorname{P}(A \mid B))\) : This is what
+  you're solving for. It's your updated belief about the probability of
+  \(A\) after taking into account the new evidence \(B\).
+\end{enumerate}
+
+\hypertarget{rational-considerations-of-the-meaning-of-the-bayes-formula}{%
+\subsection{Rational Considerations of the meaning of the Bayes'
+formula}\label{rational-considerations-of-the-meaning-of-the-bayes-formula}}
+
+We define some key terms for our discussion here:
+
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{cl} 
+Term: & Conotation: \\
+\hline
+$P(A\! \mid \! B)$ & Posterior \\
+$P(A)$ & Prior \\
+$P(B\! \mid \!A)$ & Likelihood \\
+$P(B)$ & Evidence
+\end{tabular}
+\caption{Terms and conotations}
+\label{fig:conotations}
+\end{figure}
+
+Consider the probability of a hypothesis given the evidence: \[
+P(H\! \mid\! E) \\
+\]
+
+\[
+P\left(\begin{array}{c}\text { Hypothesis } \\ \text { given } \\ \text { the evidence }\end{array}\right)
+\]
+
+The key to tying this all together is to understand the following key
+expression:
+
+\[
+\text {Posterior} = \text {Likelihood} \cdot \frac{\text { Prior }}{\text { Evidence }}
+\]
+
+Which is mathematically represented as:
+
+\[
+P(A\! \mid\! B)=P(B\! \mid\! A) \frac{P(A)}{P(B)}
+\]
+
+\begin{tikzpicture}
+    % Nodes for A and B
+    \node (B) at (0,0) {$B$};
+    \node (A) at (2,0) {$A$};
+
+    % Draw the arrow from B to A
+    \draw[->,thick] (B) to[bend left] (A);
+
+    % Add the question mark above the arrow
+    \node at (1,0.7) {?};
+    
+\end{tikzpicture}
+
+\hypertarget{classical-bayes-word-problem-example-red-ace-example}{%
+\subsection{Classical Bayes' word problem example (``Red Ace
+Example'')}\label{classical-bayes-word-problem-example-red-ace-example}}
+
+Imagine you have a deck of cards, and you want to know the probability
+that a card is an ace given that it's a red card. Here, the event A is
+``the card is an ace,'' and B is ``the card is red.''
+
+\begin{itemize}
+\tightlist
+\item
+  The prior probability \(\operatorname{P}(A)\) is \(4 / 52\) since
+  there are 4 aces in a 52 -card deck.
+\item
+  The likelihood \(\operatorname{P}(B \mid A)\) is \(1 / 2\) because
+  half of the aces are red.
+\item
+  The marginal probability \(\operatorname{P}(B)\) is \(26 / 52\) since
+  there are 26 red cards in the deck.
+\end{itemize}
+
+Plugging these values into Bayes' Theorem:
+
+So, the probability that a card is an ace given that it's red is
+\(1 / 13\).
+
+Bayes' Theorem thus provides a robust framework for updating beliefs and
+making informed decisions based on new data. It's a cornerstone of
+statistical inference and finds applications in various fields, from
+spam filtering in emails to disease diagnosis in medicine
+
+\hypertarget{considering-the-classic-example-and-why-we-can-do-better}{%
+\subsection{Considering the ``Classic Example'' and why we can do
+better}\label{considering-the-classic-example-and-why-we-can-do-better}}
+
+To candidly address the challenges inherent in understanding probability
+spaces and the diverse applications of Bayes' Theorem, it is essential
+to delve beyond the surface of typical examples. By doing so, we aim to
+unravel the deeper intricacies of Bayes' formula. Our objective here is
+not just to reiterate the theorem but to derive a series of identities
+and explore the concept of probability metric spaces.
+
+By fostering a profound comprehension from foundational principles and
+underlying identities, we intend to cultivate a structured approach to
+employing Bayes' Theorem in various scenarios. This is particularly
+vital in contexts where the traditional formulation of Bayes' may not be
+the most appropriate or insightful application. Through this
+exploration, we aspire to formulate more nuanced and, ostensibly, more
+compelling scenarios that demonstrate the versatility and power of
+Bayes' Theorem.
+
+In this journey, we will dissect the theorem, examining each component
+and its role in shaping the overall framework. We'll explore how prior
+beliefs are updated with new evidence, and how this process is
+influenced by the underlying probability structures. By doing so, we aim
+to provide readers with a toolkit for thinking critically about
+probability and making more informed decisions in the face of
+uncertainty.
+
+Ultimately, this exploration is not just about understanding a
+mathematical formula; it's about embracing a new way of thinking. It's
+about shifting our perspective from seeing Bayes' Theorem as a mere tool
+to appreciating it as a fundamental principle that underpins a vast
+array of applications---from scientific research to everyday
+decision-making.
+
+\newpage
+
+\hypertarget{fundamental-bayes-probability-space}{%
+\section{Fundamental Bayes' Probability
+Space}\label{fundamental-bayes-probability-space}}
+
+We begin by showing the probability space via a Venn diagram
+visualization.
+
+\hypertarget{probability-space-venn-diagram-for-traditional-bayesian}{%
+\subsection{Probability Space Venn Diagram for traditional
+Bayesian}\label{probability-space-venn-diagram-for-traditional-bayesian}}
+
+TIKZ Goes here
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.25]
+    % Shade the field of the box pale yellow
+    \fill[yellow!5] (-2,-2) rectangle (3,2);
+    \draw (-2,-2) rectangle (3,2);
+
+    % Shade the A circle light pink and B Circle light blue
+    \fill[pink!50] (0,0) circle (1);
+    \fill[blue!15] (1,0) circle (1);
+
+    % Draw the circles for A and B
+    \draw (0,0) circle (1);
+    \draw (1,0) circle (1);
+
+    \node at (-0.5,0) {$A$};
+    \node at (1.5,0) {$B$};
+    
+    % Shade the intersection light purple
+    \begin{scope}
+        \clip (0,0) circle (1);
+        \fill[purple!30] (1,0) circle (1);
+    \end{scope}
+
+    % Labels
+    \node at (0.5,1.5) {$A \cap B$};
+    \node at (-0.9,-1.5) {$\sim\!A \, \cap \sim\!B$};
+
+    % Draw the arrow pointing to A intersect B
+    % \draw[-{Latex[length=2mm]}] (0.5,1.25) -- (0.5,0.1);
+    
+    % Add the Omega symbol below the right lower side of the main box
+    \node at (3.3,-1.80) {$\Omega$};
+    
+    
+\end{tikzpicture}
+\caption{Venn diagram representing the intersection and complements of sets A and B.}
+\label{fig:venn-diagram}
+\end{figure}
+
+The Venn diagram depicts a Bayes' probability space, with sets \(A\) and
+\(B\) as distinct events within the universal event space \(\Omega\).
+The area \(A \cap B\) illustrates the joint occurrence of events \(A\)
+and \(B\), while \(\sim\! A \, \cap \sim\! B\) denotes the region where
+neither event takes place. This visualization aids in understanding
+Bayesian inference, particularly how evidence \(B\) updates the
+probability of event \(A\) according to Bayes' Theorem.
+
+The Venn diagram depicts a Bayes' probability space, with sets \(A\) and
+\(B\) as distinct events within the universal event space \(\Omega\).
+The area \(A \cap B\) illustrates the joint occurrence of events \(A\)
+and \(B\), while \(\sim\! A \, \cap \sim\! B\) denotes the region where
+neither event takes place. This visualization aids in understanding
+Bayesian inference, particularly how evidence \(B\) updates the
+probability of event \(A\) according to Bayes' Theorem.
+
+\textbf{Identities which can by derived by inspection:}
+\[\begin{aligned} 
+\operatorname{P}(A) &=\operatorname{P}(A \cap B)+\operatorname{P}(A\, \cap \sim B) \\ 
+\operatorname{P}(\sim A)&=\operatorname{P}(\sim A \cap B)+\operatorname{P}(\sim A\, \cap \sim B) \\ 
+\operatorname{P}(B)&=\operatorname{P}(A \cap B)+\operatorname{P}(\sim A \cap B) \\ 
+\operatorname{P}(\sim B)&=\operatorname{P}(A\, \cap \sim B)+\operatorname{P}(\sim A\, \cap \sim B)
+\end{aligned}\]
+
+\[\begin{aligned}
+\{\operatorname{P}(A), \operatorname{P}(B)\} &\in[0,1] \triangleq [0 , \Omega] \\ 
+\operatorname{P}(A \cap B)&=\operatorname{P}(B \cap A)\\
+\operatorname{P}(\overline{A \cap B}) &= \Omega + \operatorname{P}(A \cap B) - \operatorname{P}(A) - \operatorname{P}(B)
+\end{aligned}\]
+
+\hypertarget{expressions-needed-for-bayes-analysis-calculations}{%
+\subsection{Expressions needed for Bayes analysis
+calculations}\label{expressions-needed-for-bayes-analysis-calculations}}
+
+The salient question arising at this juncture is: How do we relate the
+Venn diagram in Figure:\(\,\)\ref{fig:venn-diagram} to Bayes' theorem?
+The intersection of the probabilities of events \(A\) and \(B\) is
+pivotal in this discourse. The following equation elegantly encapsulates
+this relationship: \[
+P(B) P(A \mid B)=P(A \text{ and } B)=P(A) P(B \mid A)
+\] The commutativity of intersection streamlines Bayesian probability
+calculations, reducing them to the ratio of the events' intersection to
+the total probability of \(A\) or \(B\). This pivotal concept underpins
+Bayesian analysis. \[
+P(B) P(A \mid B)=\operatorname{P}(A \cap B)=P(B \cap A)=P(A) P(B \mid A)
+\] This consideration streamlines the computation of Bayesian
+probabilities. By conceptualizing it as the ratio of the intersection of
+events \(A\) and \(B\) to the total probability of \(A\) or \(B\), one
+can readily calculate the conditional probabilities inherent in Bayes'
+theorem.
+
+Thus, we arrive at essential expressions for Bayesian inference
+computation: \[
+\operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(A \cap B)}{\operatorname{P}(B)}
+\] \[
+\operatorname{P}(B\! \mid\! A)=\frac{\operatorname{P}(A \cap B)}{\operatorname{P}(A)}
+\]
+
+\newpage
+
+\hypertarget{maringal-and-bayes-probability-space-sums}{%
+\section{Maringal and Bayes' probability space
+sums}\label{maringal-and-bayes-probability-space-sums}}
+
+In Bayesian analysis, the interrelation of event probabilities and their
+complements constructs a full probability model. The following table
+clarifies this by mapping the joint probabilities of events \(A\) and
+\(b\) along with their complements in the probability space \(\Omega\).
+It exemplifies the key tenet that all outcome probabilities sum to
+unity, aligning with \(\Omega\). The table shows the network for
+calculating marginal probabilities and grasping Bayesian inference's
+core, which will be demonstrated in subsequent examples..
+
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{ccccccc}
+               & & $\mathbf{\{A\}}$               &   & $\mathbf{\{\sim\! A \}}$  &   & \textbf{Marginal}             \\
+               & &                       &   &                 &   &                      \\
+$\mathbf{\{B\}}$        & & P($A \cap B$)         & + & P($\sim\! A \cap B$) & = & P($B$)          \\
+               & &                       &   &                 &   &                      \\
+               & & +                     &   & +               &   &       +              \\
+               & &                       &   &                 &   &                      \\
+$\mathbf{\{\sim\! B \}}$ & & P($A\, \cap \sim\! B$)  & + & P($\sim\! A\, \cap \sim\! B$) & = & P($\sim\! B$)  \\
+               & &                         &   &               &   &                      \\
+               & & \text{ }\begin{rotate}{90}=\end{rotate}     &   & \text{ }\begin{rotate}{90}=\end{rotate}   &   &  \text{ }\begin{rotate}{90}=\end{rotate}  \\
+               & &                       &   &                 &   &                      \\
+\textbf{Marginal}       & & P($A$)                & + & P($\sim\! A$)   & = &  $\mathbf{\Omega}$            \\
+\end{tabular}
+\caption{Marginals and sums network of Traditional Bayes' Space}
+\label{fig:m_bayes_space}
+
+\end{figure}
+
+\newpage
+
+\newpage
+
+\hypertarget{bayes-by-example}{%
+\section{bayes' by example}\label{bayes-by-example}}
+
+\newpage
+
+\hypertarget{connectinge-bayes-to-naive-bayes}{%
+\section{Connectinge Bayes' to Naive
+Bayes'}\label{connectinge-bayes-to-naive-bayes}}
+
+In the context of extending your original Bayesian framework to Naive
+Bayes, the key modification comes from how the events \(A\) and \(B\)
+are treated when there is an assumption of conditional independence
+between features in a classification context.
+
+In Naive Bayes, the assumption is that the features (or events) are
+conditionally independent given the class. This assumption drastically
+simplifies the computation of the posterior probability, making it
+computationally efficient for tasks like classification. Here's how the
+core concepts from traditional Bayesian inference are adapted in Naive
+Bayes:
+
+Naive Bayes: Conditional Independence Assumption In traditional Bayesian
+analysis, you might compute the probability of a set of features given a
+class using a general conditional probability like:
+
+\[
+P(A \mid B)=\frac{P(A \cap B)}{P(B)}
+\]
+
+Where \(A\) and \(B\) represent some events. However, in the context of
+Naive Bayes, if \(A_1, A_2, \ldots, A_n\) are features and \(B\) is the
+class, the assumption of conditional independence leads to:
+
+\[
+P\left(B \mid A_1, A_2, \ldots, A_n\right)=\frac{P(B) \prod_{i=1}^n P\left(A_i \mid B\right)}{P\left(A_1, A_2, \ldots, A_n\right)}
+\]
+
+This assumption simplifies the likelihood term
+\(P\left(A_1, A_2, \ldots, A_n \mid B\right)\) as the product of
+individual conditional probabilities:
+
+\[
+P\left(A_1, A_2, \ldots, A_n \mid B\right)=\prod_{i=1}^n P\left(A_i \mid B\right)
+\]
+
+This is what makes Naive Bayes ``naive'' - it assumes that each feature
+(or piece of evidence) contributes independently to the probability of
+the class.
+
+\newpage
+
+\hypertarget{raw-bayes-text-here-first}{%
+\section{Raw Bayes Text Here First}\label{raw-bayes-text-here-first}}
+
+\newpage
+
+\hypertarget{modifications-in-venn-diagram-representation}{%
+\section{Modifications in Venn Diagram
+Representation}\label{modifications-in-venn-diagram-representation}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Traditional Bayesian Space: The Venn diagram you provided earlier
+  represents events \(A\) and \(B\) within the universal space
+  \(\Omega\). Each event may overlap or be disjoint, and their
+  interactions are captured through their joint, marginal, and
+  conditional probabilities.
+\item
+  Naive Bayes Representation: The key modification is that, in the Naive
+  Bayes model, we assume that each feature \(A_1, A_2, \ldots, A_n\) is
+  conditionally independent given the class \(B\). This simplification
+  means the probability space is represented differently, potentially
+  with separate Venn diagrams for each feature given \(B\).
+\end{enumerate}
+
+In the case of Naive Bayes, you can think of the events
+\(A_1, A_2, \ldots, A_n\) as having their own Venn diagrams, where each
+feature \(A_i\) contributes independently to the classification
+decision. The overlap between these features and \(B\) is still shown in
+the diagram, but the assumption of conditional independence implies that
+these overlaps do not interact as they would in a more general Bayesian
+framework.
+
+Modified Probability Space for Naive Bayes For Naive Bayes, we are
+interested in the posterior probability of the class \(B\) given the
+features \(A_1, A_2, \ldots, A_n\) :
+
+\[
+P\left(B \mid A_1, A_2, \ldots, A_n\right)=\frac{P(B) \prod_{i=1}^n P\left(A_i \mid B\right)}{P\left(A_1, A_2, \ldots, A_n\right)}
+\]
+
+This equation breaks down into: 1. Prior: \(P(B)\) - the prior
+probability of class \(B\). 2. Likelihood:
+\(\prod_{i=1}^n P\left(A_i \mid B\right)\) - the product of the
+conditional probabilities for each feature given the class. 3.
+Normalization: \(P\left(A_1, A_2, \ldots, A_n\right)\) - the likelihood
+of the observed features across all classes, used for normalization.
+
+\hypertarget{modifications-to-your-original-bayesian-framework}{%
+\section{Modifications to Your Original Bayesian
+Framework}\label{modifications-to-your-original-bayesian-framework}}
+
+The Venn diagram for Naive Bayes will primarily have distinct regions
+where each feature \(A_1, A_2, \ldots, A_n\) is considered conditionally
+independent of each other, but dependent on the class \(B\). These
+dependencies are shown as separate slices or parts of the overall space,
+but they do not overlap in the way traditional Bayesian probability
+might depict interactions between events. 1. The Venn diagram of the
+original Bayesian framework might have complex intersections between
+events \(A\) and \(B\), as they can influence each other. 2. In the
+Naive Bayes model, the overlap between events is reduced due to the
+assumption of conditional independence. Each feature is considered
+independently given the class, simplifying the model.
+
+Thus, while the structure of the probability space in both models
+follows a similar form, the key difference is how the conditional
+independence assumption in Naive Bayes simplifies the joint probability
+computation. Instead of modeling the full interaction between features,
+Naive Bayes reduces it to the product of individual feature
+probabilities conditioned on the class.
+
+\hypertarget{naive-bayes-as-filter}{%
+\section{Naive Bayes' as Filter}\label{naive-bayes-as-filter}}
+
+Yes, Naive Bayes can be thought of as a filter in certain contexts,
+especially in classification tasks. The idea behind this is that Naive
+Bayes filters out irrelevant features (or at least gives them less
+weight) due to its assumption of conditional independence.
+
+Key Aspects of Naive Bayes as a Filter:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Feature Relevance: Naive Bayes classifies by calculating the
+  probability of each class given the features. However, because of the
+  conditional independence assumption, it treats each feature
+  independently and does not model interactions between features. As a
+  result, irrelevant features that do not help discriminate between
+  classes will not have a significant impact on the classification. In
+  this sense, Naive Bayes inherently ``filters out'' noisy features that
+  don't provide discriminative power.
+\item
+  Probabilistic Thresholding: Naive Bayes computes the posterior
+  probability of each class using Bayes' theorem, and the class with the
+  highest probability is chosen. Features that are more relevant to the
+  class have a stronger influence on the posterior probability. Features
+  that are less relevant have a smaller influence because their
+  conditional probability given the class is likely to be uniform or
+  less informative. This allows Naive Bayes to ``filter'' out noisy
+  features by giving them a lower weight in the final decision.
+\item
+  Handling Redundant Features: Because Naive Bayes treats each feature
+  as independent, it does not take into account any redundant or
+  correlated features (which may be a source of noise in other
+  classification algorithms). In cases where features are highly
+  correlated, Naive Bayes essentially treats them separately, and the
+  model does not suffer as much from overfitting due to feature
+  redundancy. This simplification can act as a form of regularization,
+  which also helps in ``filtering out'' the unnecessary complexity that
+  might arise from correlated features.
+\end{enumerate}
+
+\newpage
+
+Naive Bayes in Practice - Text Classification: In tasks like spam
+detection, Naive Bayes acts as a filter by giving higher probabilities
+to features (e.g., certain words) that are more indicative of spam or
+ham (non-spam). The algorithm does not consider the relationship between
+words but simply filters through each word's likelihood in the context
+of spam and ham categories. - Feature Selection: In situations where you
+have a large number of features, Naive Bayes naturally reduces the
+influence of irrelevant features. While it's not a feature selection
+method per se (like some others that explicitly remove unimportant
+features), its simplification (treating features independently)
+effectively reduces the impact of less important features.
+
+Limitations of Naive Bayes as a Filter: While Naive Bayes does perform a
+form of feature weighting implicitly, it's important to note that it's
+not a filtering algorithm in the strict sense, like some other models
+(e.g., Decision Trees, Random Forests, or feature selection algorithms)
+that explicitly discard features. Naive Bayes doesn't eliminate features
+or explicitly ignore them; instead, it simply assigns lower
+probabilities to features that don't significantly contribute to class
+distinctions.
+
+In Summary: Naive Bayes can act as a filter in that it implicitly
+``filters out'' irrelevant or less relevant features by not considering
+the dependencies between them and by giving less weight to features that
+don't distinguish well between classes. However, it doesn't perform
+explicit feature selection or removal like other models that focus on
+filtering features based on their importance.
+
+\newpage
+
+\hypertarget{example-to-classical-bayes-vs.-naive-bayes}{%
+\section{Example to classical Bayes' vs.~Naive
+Bayes'}\label{example-to-classical-bayes-vs.-naive-bayes}}
+
+In the scenario presented in the image, the problem involves a medical
+test for a condition (illness), with the concern being a false positive
+(i.e., when the test indicates illness, but the person is actually
+healthy). Let's break down how Naive Bayes could be used to address this
+problem, step by step.
+
+Key Components of the Scenario:
+
+Events:
+
+\begin{itemize}
+\tightlist
+\item
+  A: The person has the illness (cancer).
+\item
+  \(\sim\) A: The person is illness-free.
+\item
+  \(B\) : The test result is positive.
+\item
+  \(\sim B\) : The test result is negative.
+\end{itemize}
+
+Given Data:
+
+\begin{itemize}
+\tightlist
+\item
+  \(P(A \mid B)\) : The probability that the person has the illness
+  given a positive test result.
+\item
+  \(P(\sim A \mid B)\) : The probability that the person is illness-free
+  given a positive test result.
+\item
+  The contingency table is used to provide the necessary data for
+  calculating these probabilities.
+\end{itemize}
+
+From the image, we have the following values from the contingency table:
+
+\begin{tabular}{|l|l|l|}
+\hline Test Result & Illness $(A)$ & Iliness-Free $(\sim A)$ \\
+\hline Positive & 8 & 103 \\
+\hline Negative & 2 & 895 \\
+\hline
+\end{tabular}
+
+So:
+
+\begin{itemize}
+\tightlist
+\item
+  Total number of tests \(=8+2+103+895=1008\).
+\item
+  Number of true positives (illness and positive test, \(A \cap B\) )
+  \(=8\).
+\item
+  Number of false positives (illness-free and positive test,
+  \(\sim A \cap B\) ) \(=103\).
+\item
+  Number of true negatives (illness-free and negative test,
+  \(\sim A \cap \sim B\) ) \(=895\).
+\item
+  Number of false negatives (iliness and negative test,
+  \(A \cap \sim B\) ) \(=2\).
+\end{itemize}
+
+\newpage
+
+\hypertarget{using-naive-bayes}{%
+\section{Using Naive Bayes}\label{using-naive-bayes}}
+
+Naive Bayes assumes conditional independence between features (in this
+case, the presence of illness and the test result). However, since we
+are just using the test result as evidence for illness or not, the Naive
+Bayes classifier simplifies to using Bayes' theorem directly.
+
+The posterior probability of having the illness given a positive test
+result is given by Bayes' theorem:
+
+\[
+P(A \mid B)=\frac{P(B \mid A) P(A)}{P(B)}
+\]
+
+Where: - \(P(A \mid B)\) : Probability of having the illness given a
+positive test result. - \(P(B \mid A)\) : Probability of testing
+positive given that the person has the illness (True Positive Rate). -
+\(\quad P(A)\) : Prior probability of having the illness (based on the
+population's illness rate). - \(P(B)\) : Probability of testing
+positive, which is the total probability of a positive test (True
+Positives + False Positives).
+
+Step-by-Step Calculation: 1. Prior Probability \(P(A)\) : This is the
+probability of having the illness in the population:
+
+\[
+P(A)=\frac{\text { Number of illness cases }}{\text { Total number of tests }}=\frac{8+2}{1008}=\frac{10}{1008} \approx 0.0099
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Likelihood \(P(B \mid A)\) : This is the probability of testing
+  positive given the person has the illness:
+\end{enumerate}
+
+\[
+P(B \mid A)=\frac{\text { True Positives }}{\text { Total illness cases }}=\frac{8}{10}=0.8
+\]
+
+\newpage
+
+\[
+P(B \mid A)=\frac{\text { True Positives }}{\text { Total illness cases }}=\frac{8}{10}=0.8
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Evidence \(P(B)\) : This is the total probability of a positive test
+  result:
+\end{enumerate}
+
+\[
+P(B)=\frac{\text { True Positives + False Positives }}{\text { Total number of tests }}=\frac{8+103}{1008}=\frac{111}{1008} \approx 0.1102
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Posterior Probability \(P(A \mid B)\) : Now, applying Bayes' theorem:
+\end{enumerate}
+
+\[
+P(A \mid B)=\frac{P(B \mid A) P(A)}{P(B)}=\frac{(0.8)(0.0099)}{0.1102} \approx 0.0717
+\]
+
+Thus, the probability that a person has the illness given a positive
+test result is approximately 7.17\%.
+
+Conclusion: Even though the test is positive, the low prior probability
+of the illness ( \(0.99 \%\) ) and the high false positive rate ( 103
+out of 895 illness-free people test positive) result in a relatively low
+posterior probability for the person actually having the illness. This
+demonstrates how Naive Bayes uses the data and Bayes' theorem to provide
+a more accurate estimate of the illness probability, given the test
+results.
+
+\newpage
+
+\newpage
+
+\hypertarget{after-area}{%
+\section{after area}\label{after-area}}
 
 \hypertarget{bayes-start-building}{%
 \section{Bayes start building}\label{bayes-start-building}}
 
-\begin{figure}
-\centering
 \begin{tikzpicture}
     \draw[thick,->] (0,0) -- (1,1);
     \draw[thick,->] (0,0) -- (1,-1);
 \end{tikzpicture}
 
-## Grad of Bayes tikz1 
+\hypertarget{maximum-likelihood-estimation-mle}{%
+\chapter{Maximum Likelihood Estimation
+(MLE)}\label{maximum-likelihood-estimation-mle}}
 
-```{=latex}
-\begin{figure}
-\centering
-\begin{tikzpicture}
-    \draw[thick,->] (0,0) -- (1,1);
-    \draw[thick,->] (0,0) -- (1,-1);
-\end{tikzpicture}
-\
-
-sep here 
-\
-
-\begin{tikzpicture}
-
-% Define 3D coordinates for the vectors
-\coordinate (A) at (1, 2, 3);  % Vector A (1, 2, 3)
-\coordinate (B) at (4, 5, 6);  % Vector B (4, 5, 6)
-\coordinate (O) at (0, 0, 0);  % Origin (0, 0, 0)
-
-% Draw the vectors as lines
-\draw[->, thick, blue] (O) -- (A) node[midway, below] {$\mathbf{A}$};
-\draw[->, thick, red] (O) -- (B) node[midway, above] {$\mathbf{B}$};
-
-% Add axis labels
-\draw[->] (O) -- (5, 0, 0) node[right] {X};
-\draw[->] (O) -- (0, 5, 0) node[above] {Y};
-\draw[->] (O) -- (0, 0, 5) node[above] {Z};
-
-\end{tikzpicture}
-\
-
-sep here 2 
-\
-
-
-
-
-
-\caption{A simple TikZ diagram.}
-\end{figure}
-
-\begin{verbatim}
-
-
-\newpage
-
-# Maximum Likelihood Estimation (MLE)
-
-$$
+\[
 \arg\max_{\theta} \prod_{i=1}^n P(x_i | \theta)
-$$
+\]
 
-**Introduction**: MLE is a method used to estimate the parameters of a statistical model.
+\textbf{Introduction}: MLE is a method used to estimate the parameters
+of a statistical model.
 
-**Description**: It finds the parameter values that maximize the likelihood of making the observations given the model.
+\textbf{Description}: It finds the parameter values that maximize the
+likelihood of making the observations given the model.
 
-**Importance in ML**: MLE is used to train many machine learning models, including logistic regression and Gaussian mixture models. It provides a way to fit models to data and make statistical inferences.
+\textbf{Importance in ML}: MLE is used to train many machine learning
+models, including logistic regression and Gaussian mixture models. It
+provides a way to fit models to data and make statistical inferences.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Ordinary Least Squares (OLS)
+\hypertarget{ordinary-least-squares-ols}{%
+\chapter{Ordinary Least Squares
+(OLS)}\label{ordinary-least-squares-ols}}
 
-$$
+\[
 \hat{\beta} = (X^T X)^{-1} X^T y
-$$
+\]
 
-**Introduction**: OLS is a method for estimating the unknown parameters in a linear regression model.
+\textbf{Introduction}: OLS is a method for estimating the unknown
+parameters in a linear regression model.
 
-**Description**: It minimizes the sum of squared residuals between the observed and predicted values.
+\textbf{Description}: It minimizes the sum of squared residuals between
+the observed and predicted values.
 
-**Importance in ML**: OLS is a fundamental technique for regression analysis. It helps determine the best-fit line for the data, making it useful for predictive modeling.
+\textbf{Importance in ML}: OLS is a fundamental technique for regression
+analysis. It helps determine the best-fit line for the data, making it
+useful for predictive modeling.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# F1 Score
+\hypertarget{f1-score}{%
+\chapter{F1 Score}\label{f1-score}}
 
-$$
+\[
 F_1 = \frac{2 \cdot P \cdot R}{P + R}
-$$
+\]
 
-**Introduction**: The F1 score is a measure of a test's accuracy that considers both precision (P) and recall (R).
+\textbf{Introduction}: The F1 score is a measure of a test's accuracy
+that considers both precision (P) and recall (R).
 
-**Description**: It is the harmonic mean of precision and recall, providing a single metric to evaluate model performance.
+\textbf{Description}: It is the harmonic mean of precision and recall,
+providing a single metric to evaluate model performance.
 
-**Importance in ML**: The F1 score is particularly useful for imbalanced datasets where the distribution of classes is uneven, providing a balanced measure of model effectiveness.
+\textbf{Importance in ML}: The F1 score is particularly useful for
+imbalanced datasets where the distribution of classes is uneven,
+providing a balanced measure of model effectiveness.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# ReLU (Rectified Linear Unit)
+\hypertarget{relu-rectified-linear-unit}{%
+\chapter{ReLU (Rectified Linear
+Unit)}\label{relu-rectified-linear-unit}}
 
-$$
+\[
 \text{ReLU}(x) = \max(0, x)
-$$
+\]
 
-**Introduction**: ReLU is an activation function used in neural networks.
+\textbf{Introduction}: ReLU is an activation function used in neural
+networks.
 
-**Description**: It outputs the input directly if positive; otherwise, it outputs zero.
+\textbf{Description}: It outputs the input directly if positive;
+otherwise, it outputs zero.
 
-**Importance in ML**: ReLU is crucial for deep learning as it helps mitigate the vanishing gradient problem, allowing models to learn faster and perform better.
+\textbf{Importance in ML}: ReLU is crucial for deep learning as it helps
+mitigate the vanishing gradient problem, allowing models to learn faster
+and perform better.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Softmax Function
+\hypertarget{softmax-function}{%
+\chapter{Softmax Function}\label{softmax-function}}
 
-$$
+\[
 P(y = j | z) = \frac{e^{z w_j}}{\sum_{k=1}^K e^{z w_k}}
-$$
+\]
 
-**Introduction**: Softmax is an activation function that outputs a probability distribution over multiple classes.
+\textbf{Introduction}: Softmax is an activation function that outputs a
+probability distribution over multiple classes.
 
-**Description**: It converts raw scores into probabilities, which sum up to one, making it suitable for multi-class classification.
+\textbf{Description}: It converts raw scores into probabilities, which
+sum up to one, making it suitable for multi-class classification.
 
-**Importance in ML**: Softmax is commonly used in the output layer of neural networks for classification problems involving multiple classes, making it essential for multi-class models.
+\textbf{Importance in ML}: Softmax is commonly used in the output layer
+of neural networks for classification problems involving multiple
+classes, making it essential for multi-class models.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# R-squared (R^2) Score
+\hypertarget{r-squared-r2-score}{%
+\chapter{R-squared (R\^{}2) Score}\label{r-squared-r2-score}}
 
-$$
+\[
 R^2 = 1 - \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{\sum_{i=1}^n (y_i - \bar{y})^2}
-$$
+\]
 
-**Introduction**: R-squared is a statistical measure that represents the proportion of variance in the dependent variable explained by the independent variables.
+\textbf{Introduction}: R-squared is a statistical measure that
+represents the proportion of variance in the dependent variable
+explained by the independent variables.
 
-**Description**: It is a goodness-of-fit measure that ranges from 0 to 1, with values closer to 1 indicating a better fit.
+\textbf{Description}: It is a goodness-of-fit measure that ranges from 0
+to 1, with values closer to 1 indicating a better fit.
 
-**Importance in ML**: R-squared is used to evaluate the performance of regression models. It provides insights into how well the model explains the variance in the target variable.
+\textbf{Importance in ML}: R-squared is used to evaluate the performance
+of regression models. It provides insights into how well the model
+explains the variance in the target variable.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Mean Squared Error (MSE)
+\hypertarget{mean-squared-error-mse}{%
+\chapter{Mean Squared Error (MSE)}\label{mean-squared-error-mse}}
 
-$$
+\[
 \text{MSE} = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2
-$$
+\]
 
-**Introduction**: Mean Squared Error is a common loss function used to measure the average squared difference between predicted and actual values.
+\textbf{Introduction}: Mean Squared Error is a common loss function used
+to measure the average squared difference between predicted and actual
+values.
 
-**Description**: It calculates the squared difference for each observation and then averages them to provide a metric of model accuracy.
+\textbf{Description}: It calculates the squared difference for each
+observation and then averages them to provide a metric of model
+accuracy.
 
-**Importance in ML**: MSE is used to evaluate the performance of regression models. Lower MSE values indicate a better fit, making it essential for identifying the optimal model.
+\textbf{Importance in ML}: MSE is used to evaluate the performance of
+regression models. Lower MSE values indicate a better fit, making it
+essential for identifying the optimal model.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Mean Squared Error with L2 Regularization (MSE + L2 Reg)
+\hypertarget{mean-squared-error-with-l2-regularization-mse-l2-reg}{%
+\chapter{Mean Squared Error with L2 Regularization (MSE + L2
+Reg)}\label{mean-squared-error-with-l2-regularization-mse-l2-reg}}
 
-$$
+\[
 \text{MSE}_{\text{regularized}} = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^p \beta_j^2
-$$
+\]
 
-**Introduction**: Regularized MSE adds a penalty to the loss function to prevent overfitting by discouraging overly complex models.
+\textbf{Introduction}: Regularized MSE adds a penalty to the loss
+function to prevent overfitting by discouraging overly complex models.
 
-**Description**: The regularization term \(\lambda \sum \beta_j^2\) helps keep model parameters small, which leads to simpler models.
+\textbf{Description}: The regularization term \(\lambda \sum \beta_j^2\)
+helps keep model parameters small, which leads to simpler models.
 
-**Importance in ML**: L2 regularization is key in reducing overfitting by controlling the complexity of the model, ensuring that the model generalizes well to new data.
+\textbf{Importance in ML}: L2 regularization is key in reducing
+overfitting by controlling the complexity of the model, ensuring that
+the model generalizes well to new data.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Eigenvectors and Eigenvalues
+\hypertarget{eigenvectors-and-eigenvalues}{%
+\chapter{Eigenvectors and
+Eigenvalues}\label{eigenvectors-and-eigenvalues}}
 
-$$
+\[
 A v = \lambda v
-$$
+\]
 
-**Introduction**: Eigenvectors and eigenvalues are fundamental concepts in linear algebra used to understand the structure of matrices.
+\textbf{Introduction}: Eigenvectors and eigenvalues are fundamental
+concepts in linear algebra used to understand the structure of matrices.
 
-**Description**: They represent the directions along which linear transformations act by only scaling the vectors, without changing their direction.
+\textbf{Description}: They represent the directions along which linear
+transformations act by only scaling the vectors, without changing their
+direction.
 
-**Importance in ML**: Eigenvectors and eigenvalues are used in dimensionality reduction techniques like PCA (Principal Component Analysis), which helps reduce the number of features while preserving essential information.
+\textbf{Importance in ML}: Eigenvectors and eigenvalues are used in
+dimensionality reduction techniques like PCA (Principal Component
+Analysis), which helps reduce the number of features while preserving
+essential information.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Entropy
+\hypertarget{entropy}{%
+\chapter{Entropy}\label{entropy}}
 
-$$
+\[
 \text{Entropy} = - \sum_{i} p_i \log_2(p_i)
-$$
+\]
 
-**Introduction**: Entropy is a measure of uncertainty or randomness in a dataset.
+\textbf{Introduction}: Entropy is a measure of uncertainty or randomness
+in a dataset.
 
-**Description**: It quantifies the impurity in a dataset, making it a key concept in information theory and decision trees.
+\textbf{Description}: It quantifies the impurity in a dataset, making it
+a key concept in information theory and decision trees.
 
-**Importance in ML**: Entropy is used in decision tree algorithms to decide the best split at each node by measuring the purity of a dataset. Lower entropy indicates a more homogenous group of samples.
+\textbf{Importance in ML}: Entropy is used in decision tree algorithms
+to decide the best split at each node by measuring the purity of a
+dataset. Lower entropy indicates a more homogenous group of samples.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# K-Means Clustering
+\hypertarget{k-means-clustering}{%
+\chapter{K-Means Clustering}\label{k-means-clustering}}
 
-$$
+\[
 \arg\min_S \sum_{k=1}^K \sum_{x \in S_k} \|x - \mu_k\|^2
-$$
+\]
 
-**Introduction**: K-Means is an unsupervised learning algorithm used for clustering data into K distinct groups.
+\textbf{Introduction}: K-Means is an unsupervised learning algorithm
+used for clustering data into K distinct groups.
 
-**Description**: It minimizes the sum of squared distances between data points and the centroid of their assigned cluster.
+\textbf{Description}: It minimizes the sum of squared distances between
+data points and the centroid of their assigned cluster.
 
-**Importance in ML**: K-Means is a fundamental clustering technique used in exploratory data analysis and segmentation tasks. It helps discover patterns and relationships in unlabeled data.
+\textbf{Importance in ML}: K-Means is a fundamental clustering technique
+used in exploratory data analysis and segmentation tasks. It helps
+discover patterns and relationships in unlabeled data.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Kullback-Leibler (KL) Divergence
+\hypertarget{kullback-leibler-kl-divergence}{%
+\chapter{Kullback-Leibler (KL)
+Divergence}\label{kullback-leibler-kl-divergence}}
 
-$$
+\[
 D_{KL}(P \| Q) = \sum_{x \in \chi} P(x) \log \frac{P(x)}{Q(x)}
-$$
+\]
 
-**Introduction**: KL Divergence is a measure of how one probability distribution diverges from a second, reference probability distribution.
+\textbf{Introduction}: KL Divergence is a measure of how one probability
+distribution diverges from a second, reference probability distribution.
 
-**Description**: It is commonly used to measure the difference between two probability distributions.
+\textbf{Description}: It is commonly used to measure the difference
+between two probability distributions.
 
-**Importance in ML**: KL Divergence is used in machine learning for loss functions in models like variational autoencoders. It quantifies how well the learned distribution approximates the true data distribution.
+\textbf{Importance in ML}: KL Divergence is used in machine learning for
+loss functions in models like variational autoencoders. It quantifies
+how well the learned distribution approximates the true data
+distribution.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Log Loss
+\hypertarget{log-loss}{%
+\chapter{Log Loss}\label{log-loss}}
 
-$$
+\[
 -\frac{1}{N} \sum_{i=1}^N \left( y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right)
-$$
+\]
 
-**Introduction**: Log Loss, or logistic loss, is a loss function used for binary classification tasks.
+\textbf{Introduction}: Log Loss, or logistic loss, is a loss function
+used for binary classification tasks.
 
-**Description**: It measures the performance of a classification model whose output is a probability value between 0 and 1.
+\textbf{Description}: It measures the performance of a classification
+model whose output is a probability value between 0 and 1.
 
-**Importance in ML**: Log Loss is crucial in evaluating classification models where the output is a probability. Lower log loss indicates a more accurate model, especially for probabilistic predictions.
+\textbf{Importance in ML}: Log Loss is crucial in evaluating
+classification models where the output is a probability. Lower log loss
+indicates a more accurate model, especially for probabilistic
+predictions.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Support Vector Machine (SVM) Objective
+\hypertarget{support-vector-machine-svm-objective}{%
+\chapter{Support Vector Machine (SVM)
+Objective}\label{support-vector-machine-svm-objective}}
 
-$$
+\[
 \min_{w, b} \frac{1}{2} \|w\|^2 + C \sum_{i=1}^n \max(0, 1 - y_i (w \cdot x_i - b))
-$$
+\]
 
-**Introduction**: SVM is a supervised learning model used for classification and regression tasks.
+\textbf{Introduction}: SVM is a supervised learning model used for
+classification and regression tasks.
 
-**Description**: It finds the hyperplane that best separates different classes by maximizing the margin between them.
+\textbf{Description}: It finds the hyperplane that best separates
+different classes by maximizing the margin between them.
 
-**Importance in ML**: SVMs are effective for high-dimensional spaces and are used in classification problems where the decision boundary is non-linear.
+\textbf{Importance in ML}: SVMs are effective for high-dimensional
+spaces and are used in classification problems where the decision
+boundary is non-linear.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Linear Regression
+\hypertarget{linear-regression}{%
+\chapter{Linear Regression}\label{linear-regression}}
 
-$$
+\[
 y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \epsilon
-$$
+\]
 
-**Introduction**: Linear regression is a simple and widely used method for predictive analysis.
+\textbf{Introduction}: Linear regression is a simple and widely used
+method for predictive analysis.
 
-**Description**: It models the relationship between a dependent variable and one or more independent variables by fitting a linear equation to observed data.
+\textbf{Description}: It models the relationship between a dependent
+variable and one or more independent variables by fitting a linear
+equation to observed data.
 
-**Importance in ML**: Linear regression is fundamental for understanding relationships between variables and is used in predictive modeling to estimate outcomes.
+\textbf{Importance in ML}: Linear regression is fundamental for
+understanding relationships between variables and is used in predictive
+modeling to estimate outcomes.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Singular Value Decomposition (SVD)
+\hypertarget{singular-value-decomposition-svd}{%
+\chapter{Singular Value Decomposition
+(SVD)}\label{singular-value-decomposition-svd}}
 
-$$
+\[
 A = U \Sigma V^T
-$$
+\]
 
-**Introduction**: SVD is a matrix factorization technique used in linear algebra.
+\textbf{Introduction}: SVD is a matrix factorization technique used in
+linear algebra.
 
-**Description**: It decomposes a matrix into three other matrices, revealing the intrinsic structure of the data.
+\textbf{Description}: It decomposes a matrix into three other matrices,
+revealing the intrinsic structure of the data.
 
-**Importance in ML**: SVD is used in dimensionality reduction, data compression, and noise reduction. It is also a core algorithm behind recommendation systems.
+\textbf{Importance in ML}: SVD is used in dimensionality reduction, data
+compression, and noise reduction. It is also a core algorithm behind
+recommendation systems.
 
----
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
-# Lagrange Multiplier
+\hypertarget{lagrange-multiplier}{%
+\chapter{Lagrange Multiplier}\label{lagrange-multiplier}}
 
-$$
+\[
 \max f(x) \;; \; g(x) = 0
-$$
-$$
+\] \[
 L(x, \lambda) = f(x) - \lambda \ast g(x)
-$$
+\]
 
-**Introduction**: The Lagrange multiplier is a method for finding the local maxima and minima of a function subject to equality constraints.
+\textbf{Introduction}: The Lagrange multiplier is a method for finding
+the local maxima and minima of a function subject to equality
+constraints.
 
-**Description**: It introduces a new variable, \(\lambda\), which helps in optimizing a function while considering the constraint.
+\textbf{Description}: It introduces a new variable, \(\lambda\), which
+helps in optimizing a function while considering the constraint.
 
-**Importance in ML**: Lagrange multipliers are used in optimization problems with constraints, such as training machine learning models with regularization terms.
-
+\textbf{Importance in ML}: Lagrange multipliers are used in optimization
+problems with constraints, such as training machine learning models with
+regularization terms.
 
 \newpage
 
-# The Human Equation
+\hypertarget{the-human-equation}{%
+\chapter{The Human Equation}\label{the-human-equation}}
 
-$$
+\[
 \textbf{HUMAN}
-$$
+\]
 
+\textbf{Introduction}:
 
-**Introduction**: 
+\textbf{Description}:
 
-**Description**: 
-
-**Importance in ML**: 
+\textbf{Importance in ML}:
 
 \newpage
-
 
 \backmatter
 
-# Appendix
+\hypertarget{appendix}{%
+\chapter{Appendix}\label{appendix}}
 
-## Matrix Formulation for Linear Separability {-}
+\hypertarget{matrix-formulation-for-linear-separability}{%
+\section*{Matrix Formulation for Linear
+Separability}\label{matrix-formulation-for-linear-separability}}
+\addcontentsline{toc}{section}{Matrix Formulation for Linear
+Separability}
 
-To check for linear separability, we can use a matrix formulation that involves the following:
+To check for linear separability, we can use a matrix formulation that
+involves the following:
 
-1. Data Matrix: Let $X$ be the matrix of feature vectors, where each row corresponds to a data point. The size of $X$ will be $n \times d$, where $n$ is the number of data points and $d$ is the number of features.
-2. Label Vector: Let $y$ be the vector of labels, where each entry represents the class label of a data point (typically +1 or -1 for binary classification). The size of y will be $n \times 1$.
-3. Linearly Separable Condition: The data points are linearly separable if there exists a vector w and a bias term $b$ such that:
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Data Matrix: Let \(X\) be the matrix of feature vectors, where each
+  row corresponds to a data point. The size of \(X\) will be
+  \(n \times d\), where \(n\) is the number of data points and \(d\) is
+  the number of features.
+\item
+  Label Vector: Let \(y\) be the vector of labels, where each entry
+  represents the class label of a data point (typically +1 or -1 for
+  binary classification). The size of y will be \(n \times 1\).
+\item
+  Linearly Separable Condition: The data points are linearly separable
+  if there exists a vector w and a bias term \(b\) such that:
+\end{enumerate}
 
-$$
+\[
 \mathbf{y}_i\left(\mathbf{w}^T \mathbf{x}_{\mathrm{i}}+b\right)>0, \quad \forall i=1,2, \ldots, n
-$$
+\]
 
+This condition means that all data points from one class are on one side
+of the hyperplane and all data points from the other class are on the
+opposite side.
 
-This condition means that all data points from one class are on one side of the hyperplane and all data points from the other class are on the opposite side.
+Matrix Representation of Linear Separability In matrix form, we can
+express the linear separability condition as:
 
-Matrix Representation of Linear Separability
-In matrix form, we can express the linear separability condition as:
-
-$$
+\[
 \mathrm{y} \cdot(X \mathbf{w}+b \mathbf{1})>0
-$$
+\]
 
+Where: - \(X\) is the data matrix of size \(n \times d\), -
+\(\quad \mathrm{y}\) is the label vector of size \(n \times 1\), -
+\(\mathbf{w}\) is the weight vector of size \(d \times 1\), - \(b\) is
+the bias term, and - 1 is a vector of ones of size \(n \times 1\).
 
-Where:
-- $X$ is the data matrix of size $n \times d$,
-- $\quad \mathrm{y}$ is the label vector of size $n \times 1$,
-- $\mathbf{w}$ is the weight vector of size $d \times 1$,
-- $b$ is the bias term, and
-- 1 is a vector of ones of size $n \times 1$.
-
-SVM's Role in Linear Separability
-For SVM specifically, the goal is to maximize the margin between the two classes while ensuring that the classes remain linearly separable. The margin is the distance between the closest points from each class (known as support vectors) to the hyperplane. SVM tries to find the hyperplane that maximizes this margin, ensuring that the data is not only separable but also well-separated by the hyperplane.
+SVM's Role in Linear Separability For SVM specifically, the goal is to
+maximize the margin between the two classes while ensuring that the
+classes remain linearly separable. The margin is the distance between
+the closest points from each class (known as support vectors) to the
+hyperplane. SVM tries to find the hyperplane that maximizes this margin,
+ensuring that the data is not only separable but also well-separated by
+the hyperplane.
 
 Mathematically, this is represented as:
 
-$$
+\[
 \text { Maximize } \frac{2}{\|\mathbf{w}\|}
-$$
-
+\]
 
 Subject to the constraints:
 
-$$
+\[
 y_i\left(\mathbf{w}^T \mathbf{x}_i+b\right) \geq 1, \quad \forall i
-$$
+\]
 
+Where: - \(y_i\) is the class label for the \(i\)-th point (either +1 or
+-1 ), - \(\mathbf{x}_i\) is the feature vector for the \(i\)-th data
+point, - w is the weight vector, - \(b\) is the bias term.
 
-Where:
-- $y_i$ is the class label for the $i$-th point (either +1 or -1 ),
-- $\mathbf{x}_i$ is the feature vector for the $i$-th data point,
-- w is the weight vector,
-- $b$ is the bias term.
+This ensures that the points are classified correctly with the maximum
+margin.
 
-This ensures that the points are classified correctly with the maximum margin.
+Conclusion: Matrix Formulation To summarize, linear separability in
+machine learning is about finding a hyperplane that can separate the
+classes of data in feature space. This is often formulated
+mathematically as:
 
-
-Conclusion: Matrix Formulation
-To summarize, linear separability in machine learning is about finding a hyperplane that can separate the classes of data in feature space. This is often formulated mathematically as:
-
-$$
+\[
 \mathbf{y} \cdot(X \mathbf{w}+b 1)>0
-$$
+\]
 
-
-For a binary classification problem, a classifier like SVM finds the optimal hyperplane that separates the classes with the largest margin, ensuring that the data is linearly separable.
-
-
-\newpage 
-
-
-# Epilogue - Guidance and Test Materials
-
-## Applying Musk Rules to Writing Your Book on the "25 Key Equations in Machine Learning" {.unnumbered}
-
-### 1. **Always Question the Requirements** {.unnumbered}
-- **Book Scope and Audience:** Reevaluate the core purpose and audience of the book. Who is your ideal reader? Do you really need to cover 25 equations, or would a different number be more impactful? Is there any unnecessary content that isn't truly essential to your goal of effective teaching and reference?
-- **Key Questions to Ask:** Do each of the sections contribute to the core learning objectives? Could some be combined, shortened, or presented differently to be clearer and more engaging?
-
-### 2. **Try Very Hard to Delete Parts or Processes** {.unnumbered}
-- **Delete Unnecessary Content:** Go through each chapter and decide if every subsection or detail is truly required. Are there parts of the explanations, historical contexts, or code examples that could be condensed or cut without losing value?
-- **Focus on Core Concepts:** Sometimes, less is more. Identify and focus on the key insights of each equation. For example, rather than going deep into every historical development of the normal distribution, focus on how the normal distribution is applied directly in machine learning.
-
-### 3. **Simplify or Optimize, But Not Too Early** {.unnumbered}
-- **Simplification After Completion:** In the initial phase, write freely to capture all your thoughts and ideas. Don't worry too much about the length or complexity. Once you have a draft, then simplify—remove verbose explanations, simplify complex code snippets, or summarize complex derivations to keep it engaging.
-- **Iteration in Drafts:** Write each chapter in an exploratory way first, then optimize the language and reduce complexity in subsequent drafts.
-
-### 4. **Move Faster** {.unnumbered}
-- **Accelerate Writing with LLMs and Tools:** Use tools like large language models (LLMs) to help generate content, summarize, and write initial drafts faster. You've already indicated using Mathpix, LaTeX, and R Markdown—lean into these tools to keep your process fast and flexible.
-- **Set Short-Term Goals:** Use milestones to maintain momentum. Instead of working on all 25 chapters at once, work on drafting 5 chapters in a week. Use techniques like "pomodoro" to keep the pace fast without burnout.
-
-### 5. **Finally: Automate** {.unnumbered}
-- **Automate Repetitive Tasks Last:** Once content is ready, automate formatting and typesetting. Given that you are using R Markdown and LaTeX, continue leveraging those tools for repetitive typesetting tasks, but do this after you've streamlined the core content.
-- **Automation for Consistency:** Automate consistency checks for formulas and code. This could be done with scripts that verify equation formatting, syntax checking for code snippets, or tools that flag unformatted variables.
-
-### **Specific Strategies to Speed Up the Book Creation:** {.unnumbered}
-1. **Outline Consolidation:**
-   - Review your current outline and condense or merge sections that overlap. Consider if all 25 equations deserve equal weight. You could provide detailed explanations for 10-15 equations while giving more general summaries for the rest if they are less foundational.
-
-2. **Minimize and Prioritize:** 
-   - Focus on the most impactful content. Given the target audience, ask yourself: do they need a historical deep dive, or is the practical application what matters most? Emphasize applications, examples, and visuals over long theoretical discussions unless absolutely necessary.
-
-3. **Visuals and Examples:**
-   - To make learning engaging, visuals and practical examples are key. Automate the creation of code snippets and figures that are repetitive. Tools like R and Python scripts can automatically generate the visuals needed for each equation, saving considerable time.
-
-4. **Leverage Existing Content:**
-   - Since you are creating this as a reference book, consider using existing open-source implementations of the concepts as examples, rather than creating everything from scratch. This will save time while still providing value.
-
-5. **Peer Review and Feedback Early:**
-   - Incorporate early feedback to streamline revisions. Share your draft with a small group of readers and ask for their feedback on clarity and structure. This will help you catch issues early, saving time during the editing phase.
-
-6. **Use a Versioned Approach:**
-   - Set smaller, achievable versions (like v0.3, v0.4, etc.) where each iteration refines content. For example, v0.3 might be the initial full draft, v0.4 could focus on reducing complexity, and v0.5 could involve formatting and visual consistency. This will help you move in structured steps rather than getting bogged down in perfecting each detail upfront.
-
-### Moving Faster, in Practice: {.unnumbered}
-- **Sprint Write Sections:** Work on chapters in sprints. Set a specific time limit for each chapter, such as three days per equation. The goal is to create momentum and avoid stagnation.
-- **Lean on a Support System:** Delegate part of the process. If possible, outsource parts like copy-editing, formatting, or even generating diagrams. The faster you move past the basic draft stage, the better you can refine and make the book truly impactful.
-  
-### Conclusion: {.unnumbered}
-The Musk Rules encourage challenging the purpose of everything you're including, focusing on essential content, and using tools and automation wisely, but only after the core content is strong. By questioning, deleting, simplifying, moving fast, and automating thoughtfully, you can accelerate the process of creating your book without compromising quality. Focus on the main principles that will make your book a genuinely valuable reference—clear, effective, and engaging explanations, visualizations, and examples—while avoiding unnecessary details that slow you down.
-
-How do these recommendations feel in the context of your goals for this book? Would you like help refining a specific section or strategy for moving faster?
-
-
+For a binary classification problem, a classifier like SVM finds the
+optimal hyperplane that separates the classes with the largest margin,
+ensuring that the data is linearly separable.
 
 \newpage
 
-## TEMP _ R code - Python code - test area 
+\hypertarget{epilogue---guidance-and-test-materials}{%
+\chapter{Epilogue - Guidance and Test
+Materials}\label{epilogue---guidance-and-test-materials}}
 
-## testing Python Integration (temp section - to remove later)
-Create a variable `x` in the Python session:
+\hypertarget{applying-musk-rules-to-writing-your-book-on-the-25-key-equations-in-machine-learning}{%
+\section*{Applying Musk Rules to Writing Your Book on the ``25 Key
+Equations in Machine
+Learning''}\label{applying-musk-rules-to-writing-your-book-on-the-25-key-equations-in-machine-learning}}
+\addcontentsline{toc}{section}{Applying Musk Rules to Writing Your Book
+on the ``25 Key Equations in Machine Learning''}
 
+\hypertarget{always-question-the-requirements}{%
+\subsection*{\texorpdfstring{1. \textbf{Always Question the
+Requirements}}{1. Always Question the Requirements}}\label{always-question-the-requirements}}
+\addcontentsline{toc}{subsection}{1. \textbf{Always Question the
+Requirements}}
 
-``` python
-x = [1, 2, 3]
-\end{verbatim}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Book Scope and Audience:} Reevaluate the core purpose and
+  audience of the book. Who is your ideal reader? Do you really need to
+  cover 25 equations, or would a different number be more impactful? Is
+  there any unnecessary content that isn't truly essential to your goal
+  of effective teaching and reference?
+\item
+  \textbf{Key Questions to Ask:} Do each of the sections contribute to
+  the core learning objectives? Could some be combined, shortened, or
+  presented differently to be clearer and more engaging?
+\end{itemize}
+
+\hypertarget{try-very-hard-to-delete-parts-or-processes}{%
+\subsection*{\texorpdfstring{2. \textbf{Try Very Hard to Delete Parts or
+Processes}}{2. Try Very Hard to Delete Parts or Processes}}\label{try-very-hard-to-delete-parts-or-processes}}
+\addcontentsline{toc}{subsection}{2. \textbf{Try Very Hard to Delete
+Parts or Processes}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Delete Unnecessary Content:} Go through each chapter and
+  decide if every subsection or detail is truly required. Are there
+  parts of the explanations, historical contexts, or code examples that
+  could be condensed or cut without losing value?
+\item
+  \textbf{Focus on Core Concepts:} Sometimes, less is more. Identify and
+  focus on the key insights of each equation. For example, rather than
+  going deep into every historical development of the normal
+  distribution, focus on how the normal distribution is applied directly
+  in machine learning.
+\end{itemize}
+
+\hypertarget{simplify-or-optimize-but-not-too-early}{%
+\subsection*{\texorpdfstring{3. \textbf{Simplify or Optimize, But Not
+Too
+Early}}{3. Simplify or Optimize, But Not Too Early}}\label{simplify-or-optimize-but-not-too-early}}
+\addcontentsline{toc}{subsection}{3. \textbf{Simplify or Optimize, But
+Not Too Early}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Simplification After Completion:} In the initial phase, write
+  freely to capture all your thoughts and ideas. Don't worry too much
+  about the length or complexity. Once you have a draft, then
+  simplify---remove verbose explanations, simplify complex code
+  snippets, or summarize complex derivations to keep it engaging.
+\item
+  \textbf{Iteration in Drafts:} Write each chapter in an exploratory way
+  first, then optimize the language and reduce complexity in subsequent
+  drafts.
+\end{itemize}
+
+\hypertarget{move-faster}{%
+\subsection*{\texorpdfstring{4. \textbf{Move
+Faster}}{4. Move Faster}}\label{move-faster}}
+\addcontentsline{toc}{subsection}{4. \textbf{Move Faster}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Accelerate Writing with LLMs and Tools:} Use tools like large
+  language models (LLMs) to help generate content, summarize, and write
+  initial drafts faster. You've already indicated using Mathpix, LaTeX,
+  and R Markdown---lean into these tools to keep your process fast and
+  flexible.
+\item
+  \textbf{Set Short-Term Goals:} Use milestones to maintain momentum.
+  Instead of working on all 25 chapters at once, work on drafting 5
+  chapters in a week. Use techniques like ``pomodoro'' to keep the pace
+  fast without burnout.
+\end{itemize}
+
+\hypertarget{finally-automate}{%
+\subsection*{\texorpdfstring{5. \textbf{Finally:
+Automate}}{5. Finally: Automate}}\label{finally-automate}}
+\addcontentsline{toc}{subsection}{5. \textbf{Finally: Automate}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Automate Repetitive Tasks Last:} Once content is ready,
+  automate formatting and typesetting. Given that you are using R
+  Markdown and LaTeX, continue leveraging those tools for repetitive
+  typesetting tasks, but do this after you've streamlined the core
+  content.
+\item
+  \textbf{Automation for Consistency:} Automate consistency checks for
+  formulas and code. This could be done with scripts that verify
+  equation formatting, syntax checking for code snippets, or tools that
+  flag unformatted variables.
+\end{itemize}
+
+\hypertarget{specific-strategies-to-speed-up-the-book-creation}{%
+\subsection*{\texorpdfstring{\textbf{Specific Strategies to Speed Up the
+Book
+Creation:}}{Specific Strategies to Speed Up the Book Creation:}}\label{specific-strategies-to-speed-up-the-book-creation}}
+\addcontentsline{toc}{subsection}{\textbf{Specific Strategies to Speed
+Up the Book Creation:}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Outline Consolidation:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Review your current outline and condense or merge sections that
+    overlap. Consider if all 25 equations deserve equal weight. You
+    could provide detailed explanations for 10-15 equations while giving
+    more general summaries for the rest if they are less foundational.
+  \end{itemize}
+\item
+  \textbf{Minimize and Prioritize:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Focus on the most impactful content. Given the target audience, ask
+    yourself: do they need a historical deep dive, or is the practical
+    application what matters most? Emphasize applications, examples, and
+    visuals over long theoretical discussions unless absolutely
+    necessary.
+  \end{itemize}
+\item
+  \textbf{Visuals and Examples:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    To make learning engaging, visuals and practical examples are key.
+    Automate the creation of code snippets and figures that are
+    repetitive. Tools like R and Python scripts can automatically
+    generate the visuals needed for each equation, saving considerable
+    time.
+  \end{itemize}
+\item
+  \textbf{Leverage Existing Content:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Since you are creating this as a reference book, consider using
+    existing open-source implementations of the concepts as examples,
+    rather than creating everything from scratch. This will save time
+    while still providing value.
+  \end{itemize}
+\item
+  \textbf{Peer Review and Feedback Early:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Incorporate early feedback to streamline revisions. Share your draft
+    with a small group of readers and ask for their feedback on clarity
+    and structure. This will help you catch issues early, saving time
+    during the editing phase.
+  \end{itemize}
+\item
+  \textbf{Use a Versioned Approach:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Set smaller, achievable versions (like v0.3, v0.4, etc.) where each
+    iteration refines content. For example, v0.3 might be the initial
+    full draft, v0.4 could focus on reducing complexity, and v0.5 could
+    involve formatting and visual consistency. This will help you move
+    in structured steps rather than getting bogged down in perfecting
+    each detail upfront.
+  \end{itemize}
+\end{enumerate}
+
+\hypertarget{moving-faster-in-practice}{%
+\subsection*{Moving Faster, in
+Practice:}\label{moving-faster-in-practice}}
+\addcontentsline{toc}{subsection}{Moving Faster, in Practice:}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Sprint Write Sections:} Work on chapters in sprints. Set a
+  specific time limit for each chapter, such as three days per equation.
+  The goal is to create momentum and avoid stagnation.
+\item
+  \textbf{Lean on a Support System:} Delegate part of the process. If
+  possible, outsource parts like copy-editing, formatting, or even
+  generating diagrams. The faster you move past the basic draft stage,
+  the better you can refine and make the book truly impactful.
+\end{itemize}
+
+\hypertarget{conclusion}{%
+\subsection*{Conclusion:}\label{conclusion}}
+\addcontentsline{toc}{subsection}{Conclusion:}
+
+The Musk Rules encourage challenging the purpose of everything you're
+including, focusing on essential content, and using tools and automation
+wisely, but only after the core content is strong. By questioning,
+deleting, simplifying, moving fast, and automating thoughtfully, you can
+accelerate the process of creating your book without compromising
+quality. Focus on the main principles that will make your book a
+genuinely valuable reference---clear, effective, and engaging
+explanations, visualizations, and examples---while avoiding unnecessary
+details that slow you down.
+
+How do these recommendations feel in the context of your goals for this
+book? Would you like help refining a specific section or strategy for
+moving faster?
+
+\newpage
+
+\hypertarget{temp-_-r-code---python-code---test-area}{%
+\section{TEMP \_ R code - Python code - test
+area}\label{temp-_-r-code---python-code---test-area}}
+
+\hypertarget{testing-python-integration-temp-section---to-remove-later}{%
+\section{testing Python Integration (temp section - to remove
+later)}\label{testing-python-integration-temp-section---to-remove-later}}
+
+Create a variable \texttt{x} in the Python session:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
 
 Access the Python variable \texttt{x} in an R code chunk:
 

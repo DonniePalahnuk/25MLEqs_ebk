@@ -71,9 +71,14 @@ header-includes:
   %\usepackage{pgfplots}                % math plotting
   %\pgfplotsset{compat=1.18}
 
+  \usepackage{rotating}
+  
+  \usepackage{hyperref}
+  \usepackage{cleveref}
+
   \usepackage{tikz}                    % tikz megatool
   \usepackage{tikz-3dplot}
-  \usetikzlibrary{arrows}
+  \usetikzlibrary{arrows.meta,shapes,backgrounds}
 
   %\usepackage{fvextra}                 % special linebreaking 
   %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
@@ -2160,6 +2165,7 @@ ggplot(vector_data_2d, aes(x = x, y = y, color = group)) +
 ggsave("cosine_similarity_2d_plot.pdf")
 ```
 \normalsize
+\newpage
 
 ### Tikz Output - cosine similarity
 \begin{tikzpicture}
@@ -2201,62 +2207,454 @@ $$
 
 We want to talk specifically of Bayes' first. 
 
-**diagram** ... will put the false positive one here. 
 
-## Bayes start building
-\begin{figure}
+## Introduction to Bayesian Theory  
+
+### Introduction the traditional formulation of Bayes' theory
+
+Bayes' Theorem is a powerful mathematical tool used in probability theory to calculate conditional probabilities. It is named after Reverend Thomas Bayes and articulates a fundamental relationship between the conditional probabilities of two events.
+
+The basic concept revolves around updating our initial beliefs or estimates (prior probabilities) in light of new evidence or information (likelihood) to arrive at a revised belief (posterior probability). This process is particularly useful in various fields such as statistics, machine learning, and data analysis, where making predictions based on incomplete information is common.
+
+### The traditional Bayes formula
+
+**The theorem is usually expressed as:**
+
+$$
+\operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)}{\operatorname{P}(B)}
+$$
+
+Where:
+
+- $\operatorname{P}(A\! \mid\! B)$ is the posterior probability. It represents the probability of event $A$ occurring given that $B$ has occurred.
+- $\operatorname{P}(B\! \mid\! A)$ is the likelihood. It represents the probability of observing event $B$ given that $A$ is true.
+- $\operatorname{P}(A)$ is the prior probability of $A$. It represents the initial belief before considering the new evidence $B$.
+- $\operatorname{P}(B)$ is the marginal probability of $B$. It represents the total probability of observing $B$ under all possible circumstances.
+
+**Understanding the components:**
+
+1. Prior Probability $(\operatorname{P}(A))$ : This is your initial belief about the probability of an event before any additional information is considered. For instance, if you are trying to determine the probability that a randomly chosen person is left-handed $(A)$, your prior might be the overall percentage of left-handed people in the population.
+2. Likelihood $(\operatorname{P}(B \mid A)$ ): This reflects how probable the evidence $(B)$ is, assuming the hypothesis $(A)$ is true. For example, if a diagnostic test is known to detect a disease $95 \%$ of the time when the disease is present, then $\operatorname{P}(B \mid A)=0.95$.
+3. Marginal Probability $(\operatorname{P}(B))$ : This is the total probability of observing the evidence ( $B$ ) under all possible circumstances. It's often calculated as the sum of probabilities for all possible values of $A: \operatorname{P}(B)=\operatorname{P}(B \mid A) \cdot \operatorname{P}(A)+\operatorname{P}(B \mid \neg A) \cdot \operatorname{P}(\neg A)$, where $\neg A$ represents the complement of $A$.
+4. Posterior Probability $(\operatorname{P}(A \mid B))$ : This is what you're solving for. It's your updated belief about the probability of $A$ after taking into account the new evidence $B$.
+
+### Rational Considerations of the meaning of the Bayes' formula
+
+We define some key terms for our discussion here: 
+
+\begin{figure}[htbp]
 \centering
-\begin{tikzpicture}
-    \draw[thick,->] (0,0) -- (1,1);
-    \draw[thick,->] (0,0) -- (1,-1);
-\end{tikzpicture}
-
-## Grad of Bayes tikz1 
-
-```{=latex}
-\begin{figure}
-\centering
-\begin{tikzpicture}
-    \draw[thick,->] (0,0) -- (1,1);
-    \draw[thick,->] (0,0) -- (1,-1);
-\end{tikzpicture}
-\
-
-sep here 
-\
-
-\begin{tikzpicture}
-
-% Define 3D coordinates for the vectors
-\coordinate (A) at (1, 2, 3);  % Vector A (1, 2, 3)
-\coordinate (B) at (4, 5, 6);  % Vector B (4, 5, 6)
-\coordinate (O) at (0, 0, 0);  % Origin (0, 0, 0)
-
-% Draw the vectors as lines
-\draw[->, thick, blue] (O) -- (A) node[midway, below] {$\mathbf{A}$};
-\draw[->, thick, red] (O) -- (B) node[midway, above] {$\mathbf{B}$};
-
-% Add axis labels
-\draw[->] (O) -- (5, 0, 0) node[right] {X};
-\draw[->] (O) -- (0, 5, 0) node[above] {Y};
-\draw[->] (O) -- (0, 0, 5) node[above] {Z};
-
-\end{tikzpicture}
-\
-
-sep here 2 
-\
-
-
-
-
-
-\caption{A simple TikZ diagram.}
+\begin{tabular}{cl} 
+Term: & Conotation: \\
+\hline
+$P(A\! \mid \! B)$ & Posterior \\
+$P(A)$ & Prior \\
+$P(B\! \mid \!A)$ & Likelihood \\
+$P(B)$ & Evidence
+\end{tabular}
+\caption{Terms and conotations}
+\label{fig:conotations}
 \end{figure}
-```
+
+Consider the probability of a hypothesis given the evidence:
+$$
+P(H\! \mid\! E) \\
+$$
+
+$$
+P\left(\begin{array}{c}\text { Hypothesis } \\ \text { given } \\ \text { the evidence }\end{array}\right)
+$$
+
+The key to tying this all together is to understand the following key expression:
+
+$$
+\text {Posterior} = \text {Likelihood} \cdot \frac{\text { Prior }}{\text { Evidence }}
+$$
+
+
+Which is mathematically represented as:
+
+
+$$
+P(A\! \mid\! B)=P(B\! \mid\! A) \frac{P(A)}{P(B)}
+$$
+
+\begin{tikzpicture}
+    % Nodes for A and B
+    \node (B) at (0,0) {$B$};
+    \node (A) at (2,0) {$A$};
+
+    % Draw the arrow from B to A
+    \draw[->,thick] (B) to[bend left] (A);
+
+    % Add the question mark above the arrow
+    \node at (1,0.7) {?};
+    
+\end{tikzpicture}
+
+
+### Classical Bayes' word problem example ("Red Ace Example")
+
+Imagine you have a deck of cards, and you want to know the probability that a card is an ace given that it's a red card. Here, the event 
+A is "the card is an ace," and B is "the card is red."
+
+- The prior probability $\operatorname{P}(A)$ is $4 / 52$ since there are 4 aces in a 52 -card deck.
+- The likelihood $\operatorname{P}(B \mid A)$ is $1 / 2$ because half of the aces are red.
+- The marginal probability $\operatorname{P}(B)$ is $26 / 52$ since there are 26 red cards in the deck.
+
+Plugging these values into Bayes' Theorem:
+
+So, the probability that a card is an ace given that it's red is $1 / 13$.
+
+Bayes' Theorem thus provides a robust framework for updating beliefs and making informed decisions based on new data. It's a cornerstone of statistical inference and finds applications in various fields, from spam filtering in emails to disease diagnosis in medicine
+
+
+### Considering the "Classic Example" and why we can do better 
+
+To candidly address the challenges inherent in understanding probability spaces and the diverse applications of Bayes' Theorem, it is essential to delve beyond the surface of typical examples. By doing so, we aim to unravel the deeper intricacies of Bayes' formula. Our objective here is not just to reiterate the theorem but to derive a series of identities and explore the concept of probability metric spaces.
+
+By fostering a profound comprehension from foundational principles and underlying identities, we intend to cultivate a structured approach to employing Bayes' Theorem in various scenarios. This is particularly vital in contexts where the traditional formulation of Bayes' may not be the most appropriate or insightful application. Through this exploration, we aspire to formulate more nuanced and, ostensibly, more compelling scenarios that demonstrate the versatility and power of Bayes' Theorem.
+
+In this journey, we will dissect the theorem, examining each component and its role in shaping the overall framework. We'll explore how prior beliefs are updated with new evidence, and how this process is influenced by the underlying probability structures. By doing so, we aim to provide readers with a toolkit for thinking critically about probability and making more informed decisions in the face of uncertainty.
+
+Ultimately, this exploration is not just about understanding a mathematical formula; it's about embracing a new way of thinking. It's about shifting our perspective from seeing Bayes' Theorem as a mere tool to appreciating it as a fundamental principle that underpins a vast array of applications—from scientific research to everyday decision-making.
 
 
 \newpage
+
+## Fundamental Bayes' Probability Space
+
+We begin by showing the probability space via a Venn diagram visualization. 
+
+### Probability Space Venn Diagram for traditional Bayesian
+
+
+TIKZ Goes here
+
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.25]
+    % Shade the field of the box pale yellow
+    \fill[yellow!5] (-2,-2) rectangle (3,2);
+    \draw (-2,-2) rectangle (3,2);
+
+    % Shade the A circle light pink and B Circle light blue
+    \fill[pink!50] (0,0) circle (1);
+    \fill[blue!15] (1,0) circle (1);
+
+    % Draw the circles for A and B
+    \draw (0,0) circle (1);
+    \draw (1,0) circle (1);
+
+    \node at (-0.5,0) {$A$};
+    \node at (1.5,0) {$B$};
+    
+    % Shade the intersection light purple
+    \begin{scope}
+        \clip (0,0) circle (1);
+        \fill[purple!30] (1,0) circle (1);
+    \end{scope}
+
+    % Labels
+    \node at (0.5,1.5) {$A \cap B$};
+    \node at (-0.9,-1.5) {$\sim\!A \, \cap \sim\!B$};
+
+    % Draw the arrow pointing to A intersect B
+    % \draw[-{Latex[length=2mm]}] (0.5,1.25) -- (0.5,0.1);
+    
+    % Add the Omega symbol below the right lower side of the main box
+    \node at (3.3,-1.80) {$\Omega$};
+    
+    
+\end{tikzpicture}
+\caption{Venn diagram representing the intersection and complements of sets A and B.}
+\label{fig:venn-diagram}
+\end{figure}
+
+The Venn diagram depicts a Bayes' probability space, with sets \( A \) and \( B \) as distinct events within the universal event space \( \Omega \). The area \( A \cap B \) illustrates the joint occurrence of events \( A \) and \( B \), while $\sim\! A \, \cap \sim\! B$ denotes the region where neither event takes place. This visualization aids in understanding Bayesian inference, particularly how evidence \( B \) updates the probability of event \( A \) according to Bayes' Theorem.
+
+
+The Venn diagram depicts a Bayes' probability space, with sets \( A \) and \( B \) as distinct events within the universal event space \( \Omega \). The area \( A \cap B \) illustrates the joint occurrence of events \( A \) and \( B \), while $\sim\! A \, \cap \sim\! B$ denotes the region where neither event takes place. This visualization aids in understanding Bayesian inference, particularly how evidence \( B \) updates the probability of event \( A \) according to Bayes' Theorem.
+
+**Identities which can by derived by inspection:** 
+$$\begin{aligned} 
+\operatorname{P}(A) &=\operatorname{P}(A \cap B)+\operatorname{P}(A\, \cap \sim B) \\ 
+\operatorname{P}(\sim A)&=\operatorname{P}(\sim A \cap B)+\operatorname{P}(\sim A\, \cap \sim B) \\ 
+\operatorname{P}(B)&=\operatorname{P}(A \cap B)+\operatorname{P}(\sim A \cap B) \\ 
+\operatorname{P}(\sim B)&=\operatorname{P}(A\, \cap \sim B)+\operatorname{P}(\sim A\, \cap \sim B)
+\end{aligned}$$
+
+$$\begin{aligned}
+\{\operatorname{P}(A), \operatorname{P}(B)\} &\in[0,1] \triangleq [0 , \Omega] \\ 
+\operatorname{P}(A \cap B)&=\operatorname{P}(B \cap A)\\
+\operatorname{P}(\overline{A \cap B}) &= \Omega + \operatorname{P}(A \cap B) - \operatorname{P}(A) - \operatorname{P}(B)
+\end{aligned}$$
+
+### Expressions needed for Bayes analysis calculations
+
+The salient question arising at this juncture is: How do we relate the Venn diagram in Figure:$\,$\ref{fig:venn-diagram} to Bayes' theorem? The intersection of the probabilities of events  $A$ and $B$ is pivotal in this discourse. The following equation elegantly encapsulates this relationship:
+$$
+P(B) P(A \mid B)=P(A \text{ and } B)=P(A) P(B \mid A)
+$$
+The commutativity of intersection streamlines Bayesian probability calculations, reducing them to the ratio of the events' intersection to the total probability of $A$ or $B$. This pivotal concept underpins Bayesian analysis.
+$$
+P(B) P(A \mid B)=\operatorname{P}(A \cap B)=P(B \cap A)=P(A) P(B \mid A)
+$$
+This consideration streamlines the computation of Bayesian probabilities. By conceptualizing it as the ratio of the intersection of events 
+$A$ and $B$ to the total probability of $A$ or $B$, one can readily calculate the conditional probabilities inherent in Bayes' theorem. 
+
+Thus, we arrive at essential expressions for Bayesian inference computation:
+$$
+\operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(A \cap B)}{\operatorname{P}(B)}
+$$
+$$
+\operatorname{P}(B\! \mid\! A)=\frac{\operatorname{P}(A \cap B)}{\operatorname{P}(A)}
+$$
+
+
+\newpage
+
+## Maringal and Bayes' probability space sums 
+
+In Bayesian analysis, the interrelation of event probabilities and their complements constructs a full probability model. The following table clarifies this by mapping the joint probabilities of events $A$ and $b$ along with their complements in the probability space $\Omega$. It exemplifies the key tenet that all outcome probabilities sum to unity, aligning with $\Omega$. The table shows the network for calculating marginal probabilities and grasping Bayesian inference's core, which will be demonstrated in subsequent examples.. 
+
+
+\begin{figure}[htbp]
+\centering
+\begin{tabular}{ccccccc}
+               & & $\mathbf{\{A\}}$               &   & $\mathbf{\{\sim\! A \}}$  &   & \textbf{Marginal}             \\
+               & &                       &   &                 &   &                      \\
+$\mathbf{\{B\}}$        & & P($A \cap B$)         & + & P($\sim\! A \cap B$) & = & P($B$)          \\
+               & &                       &   &                 &   &                      \\
+               & & +                     &   & +               &   &       +              \\
+               & &                       &   &                 &   &                      \\
+$\mathbf{\{\sim\! B \}}$ & & P($A\, \cap \sim\! B$)  & + & P($\sim\! A\, \cap \sim\! B$) & = & P($\sim\! B$)  \\
+               & &                         &   &               &   &                      \\
+               & & \text{ }\begin{rotate}{90}=\end{rotate}     &   & \text{ }\begin{rotate}{90}=\end{rotate}   &   &  \text{ }\begin{rotate}{90}=\end{rotate}  \\
+               & &                       &   &                 &   &                      \\
+\textbf{Marginal}       & & P($A$)                & + & P($\sim\! A$)   & = &  $\mathbf{\Omega}$            \\
+\end{tabular}
+\caption{Marginals and sums network of Traditional Bayes' Space}
+\label{fig:m_bayes_space}
+
+\end{figure}
+
+
+\newpage 
+
+
+\newpage
+
+
+## bayes' by example
+
+
+
+
+
+\newpage
+## Connectinge Bayes' to Naive Bayes'
+
+In the context of extending your original Bayesian framework to Naive Bayes, the key modification comes from how the events $A$ and $B$ are treated when there is an assumption of conditional independence between features in a classification context.
+
+In Naive Bayes, the assumption is that the features (or events) are conditionally independent given the class. This assumption drastically simplifies the computation of the posterior probability, making it computationally efficient for tasks like classification. Here's how the core concepts from traditional Bayesian inference are adapted in Naive Bayes:
+
+Naive Bayes: Conditional Independence Assumption
+In traditional Bayesian analysis, you might compute the probability of a set of features given a class using a general conditional probability like:
+
+$$
+P(A \mid B)=\frac{P(A \cap B)}{P(B)}
+$$
+
+
+Where $A$ and $B$ represent some events. However, in the context of Naive Bayes, if $A_1, A_2, \ldots, A_n$ are features and $B$ is the class, the assumption of conditional independence leads to:
+
+$$
+P\left(B \mid A_1, A_2, \ldots, A_n\right)=\frac{P(B) \prod_{i=1}^n P\left(A_i \mid B\right)}{P\left(A_1, A_2, \ldots, A_n\right)}
+$$
+
+
+This assumption simplifies the likelihood term $P\left(A_1, A_2, \ldots, A_n \mid B\right)$ as the product of individual conditional probabilities:
+
+$$
+P\left(A_1, A_2, \ldots, A_n \mid B\right)=\prod_{i=1}^n P\left(A_i \mid B\right)
+$$
+
+
+This is what makes Naive Bayes "naive" - it assumes that each feature (or piece of evidence) contributes independently to the probability of the class.
+
+\newpage
+
+## Raw Bayes Text Here First
+
+
+
+
+\newpage
+## Modifications in Venn Diagram Representation
+1. Traditional Bayesian Space: The Venn diagram you provided earlier represents events $A$ and $B$ within the universal space $\Omega$. Each event may overlap or be disjoint, and their interactions are captured through their joint, marginal, and conditional probabilities.
+2. Naive Bayes Representation: The key modification is that, in the Naive Bayes model, we assume that each feature $A_1, A_2, \ldots, A_n$ is conditionally independent given the class $B$. This simplification means the probability space is represented differently, potentially with separate Venn diagrams for each feature given $B$.
+
+In the case of Naive Bayes, you can think of the events $A_1, A_2, \ldots, A_n$ as having their own Venn diagrams, where each feature $A_i$ contributes independently to the classification decision. The overlap between these features and $B$ is still shown in the diagram, but the assumption of conditional independence implies that these overlaps do not interact as they would in a more general Bayesian framework.
+
+Modified Probability Space for Naive Bayes
+For Naive Bayes, we are interested in the posterior probability of the class $B$ given the features $A_1, A_2, \ldots, A_n$ :
+
+$$
+P\left(B \mid A_1, A_2, \ldots, A_n\right)=\frac{P(B) \prod_{i=1}^n P\left(A_i \mid B\right)}{P\left(A_1, A_2, \ldots, A_n\right)}
+$$
+
+
+This equation breaks down into:
+1. Prior: $P(B)$ - the prior probability of class $B$.
+2. Likelihood: $\prod_{i=1}^n P\left(A_i \mid B\right)$ - the product of the conditional probabilities for each feature given the class.
+3. Normalization: $P\left(A_1, A_2, \ldots, A_n\right)$ - the likelihood of the observed features across all classes, used for normalization.
+
+
+## Modifications to Your Original Bayesian Framework
+The Venn diagram for Naive Bayes will primarily have distinct regions where each feature $A_1, A_2, \ldots, A_n$ is considered conditionally independent of each other, but dependent on the class $B$. These dependencies are shown as separate slices or parts of the overall space, but they do not overlap in the way traditional Bayesian probability might depict interactions between events.
+1. The Venn diagram of the original Bayesian framework might have complex intersections between events $A$ and $B$, as they can influence each other.
+2. In the Naive Bayes model, the overlap between events is reduced due to the assumption of conditional independence. Each feature is considered independently given the class, simplifying the model.
+
+Thus, while the structure of the probability space in both models follows a similar form, the key difference is how the conditional independence assumption in Naive Bayes simplifies the joint probability computation. Instead of modeling the full interaction between features, Naive Bayes reduces it to the product of individual feature probabilities conditioned on the class.
+
+
+## Naive Bayes' as Filter
+Yes, Naive Bayes can be thought of as a filter in certain contexts, especially in classification tasks. The idea behind this is that Naive Bayes filters out irrelevant features (or at least gives them less weight) due to its assumption of conditional independence.
+
+Key Aspects of Naive Bayes as a Filter:
+
+1. Feature Relevance: Naive Bayes classifies by calculating the probability of each class given the features. However, because of the conditional independence assumption, it treats each feature independently and does not model interactions between features. As a result, irrelevant features that do not help discriminate between classes will not have a significant impact on the classification. In this sense, Naive Bayes inherently "filters out" noisy features that don't provide discriminative power.
+
+2. Probabilistic Thresholding: Naive Bayes computes the posterior probability of each class using Bayes' theorem, and the class with the highest probability is chosen. Features that are more relevant to the class have a stronger influence on the posterior probability. Features that are less relevant have a smaller influence because their conditional probability given the class is likely to be uniform or less informative. This allows Naive Bayes to "filter" out noisy features by giving them a lower weight in the final decision.
+
+3. Handling Redundant Features: Because Naive Bayes treats each feature as independent, it does not take into account any redundant or correlated features (which may be a source of noise in other classification algorithms). In cases where features are highly correlated, Naive Bayes essentially treats them separately, and the model does not suffer as much from overfitting due to feature redundancy. This simplification can act as a form of regularization, which also helps in "filtering out" the unnecessary complexity that might arise from correlated features.
+
+\newpage
+
+Naive Bayes in Practice
+- Text Classification: In tasks like spam detection, Naive Bayes acts as a filter by giving higher probabilities to features (e.g., certain words) that are more indicative of spam or ham (non-spam). The algorithm does not consider the relationship between words but simply filters through each word's likelihood in the context of spam and ham categories.
+- Feature Selection: In situations where you have a large number of features, Naive Bayes naturally reduces the influence of irrelevant features. While it's not a feature selection method per se (like some others that explicitly remove unimportant features), its simplification (treating features independently) effectively reduces the impact of less important features.
+
+Limitations of Naive Bayes as a Filter:
+While Naive Bayes does perform a form of feature weighting implicitly, it's important to note that it's not a filtering algorithm in the strict sense, like some other models (e.g., Decision Trees, Random Forests, or feature selection algorithms) that explicitly discard features. Naive Bayes doesn't eliminate features or explicitly ignore them; instead, it simply assigns lower probabilities to features that don't significantly contribute to class distinctions.
+
+In Summary:
+Naive Bayes can act as a filter in that it implicitly "filters out" irrelevant or less relevant features by not considering the dependencies between them and by giving less weight to features that don't distinguish well between classes. However, it doesn't perform explicit feature selection or removal like other models that focus on filtering features based on their importance.
+
+
+\newpage
+
+## Example to classical Bayes' vs. Naive Bayes'
+
+In the scenario presented in the image, the problem involves a medical test for a condition (illness), with the concern being a false positive (i.e., when the test indicates illness, but the person is actually healthy). Let's break down how Naive Bayes could be used to address this problem, step by step.
+
+
+Key Components of the Scenario:
+
+Events:
+
+- A: The person has the illness (cancer).
+- $\sim$ A: The person is illness-free.
+- $B$ : The test result is positive.
+- $\sim B$ : The test result is negative.
+
+Given Data:
+
+- $P(A \mid B)$ : The probability that the person has the illness given a positive test result.
+- $P(\sim A \mid B)$ : The probability that the person is illness-free given a positive test result.
+- The contingency table is used to provide the necessary data for calculating these probabilities.
+
+From the image, we have the following values from the contingency table:
+
+\begin{tabular}{|l|l|l|}
+\hline Test Result & Illness $(A)$ & Iliness-Free $(\sim A)$ \\
+\hline Positive & 8 & 103 \\
+\hline Negative & 2 & 895 \\
+\hline
+\end{tabular}
+
+So:
+
+- Total number of tests $=8+2+103+895=1008$.
+- Number of true positives (illness and positive test, $A \cap B$ ) $=8$.
+- Number of false positives (illness-free and positive test, $\sim A \cap B$ ) $=103$.
+- Number of true negatives (illness-free and negative test, $\sim A \cap \sim B$ ) $=895$.
+- Number of false negatives (iliness and negative test, $A \cap \sim B$ ) $=2$.
+
+
+
+\newpage
+
+
+## Using Naive Bayes
+Naive Bayes assumes conditional independence between features (in this case, the presence of illness and the test result). However, since we are just using the test result as evidence for illness or not, the Naive Bayes classifier simplifies to using Bayes' theorem directly.
+
+The posterior probability of having the illness given a positive test result is given by Bayes' theorem:
+
+$$
+P(A \mid B)=\frac{P(B \mid A) P(A)}{P(B)}
+$$
+
+
+Where:
+- $P(A \mid B)$ : Probability of having the illness given a positive test result.
+- $P(B \mid A)$ : Probability of testing positive given that the person has the illness (True Positive Rate).
+- $\quad P(A)$ : Prior probability of having the illness (based on the population's illness rate).
+- $P(B)$ : Probability of testing positive, which is the total probability of a positive test (True Positives + False Positives).
+
+Step-by-Step Calculation:
+1. Prior Probability $P(A)$ : This is the probability of having the illness in the population:
+
+$$
+P(A)=\frac{\text { Number of illness cases }}{\text { Total number of tests }}=\frac{8+2}{1008}=\frac{10}{1008} \approx 0.0099
+$$
+
+2. Likelihood $P(B \mid A)$ : This is the probability of testing positive given the person has the illness:
+
+$$
+P(B \mid A)=\frac{\text { True Positives }}{\text { Total illness cases }}=\frac{8}{10}=0.8
+$$
+
+\newpage
+
+$$
+P(B \mid A)=\frac{\text { True Positives }}{\text { Total illness cases }}=\frac{8}{10}=0.8
+$$
+
+3. Evidence $P(B)$ : This is the total probability of a positive test result:
+
+$$
+P(B)=\frac{\text { True Positives + False Positives }}{\text { Total number of tests }}=\frac{8+103}{1008}=\frac{111}{1008} \approx 0.1102
+$$
+
+4. Posterior Probability $P(A \mid B)$ : Now, applying Bayes' theorem:
+
+$$
+P(A \mid B)=\frac{P(B \mid A) P(A)}{P(B)}=\frac{(0.8)(0.0099)}{0.1102} \approx 0.0717
+$$
+
+
+Thus, the probability that a person has the illness given a positive test result is approximately 7.17\%.
+
+Conclusion:
+Even though the test is positive, the low prior probability of the illness ( $0.99 \%$ ) and the high false positive rate ( 103 out of 895 illness-free people test positive) result in a relatively low posterior probability for the person actually having the illness. This demonstrates how Naive Bayes uses the data and Bayes' theorem to provide a more accurate estimate of the illness probability, given the test results.
+
+\newpage
+
+\newpage
+
+## after area 
+
+## Bayes start building
+
+\begin{tikzpicture}
+    \draw[thick,->] (0,0) -- (1,1);
+    \draw[thick,->] (0,0) -- (1,-1);
+\end{tikzpicture}
+
+
 
 # Maximum Likelihood Estimation (MLE)
 
