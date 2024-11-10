@@ -2189,11 +2189,51 @@ ggsave("cosine_similarity_2d_plot.pdf")
 
 \newpage
 
+
+
 # Naive Bayes
 
 $$
 P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, x_n)}
 $$
+
+
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, x_n)}$}
+\end{center}
+\
+
+<!-- no tracking - only a floating 'cartoon' figure -->
+\begin{figure*}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-6-cosine_similarity.jpeg}
+    \caption*{\Large BAYES somthing Whimsical - not yet}
+  \end{center}
+\end{figure*}
+
+\newpage
+
+\vspace*{\fill}
+\begin{a_def_eq}{NaiveBayesDef}{def7} 
+
+\begin{align}\label{naivebayes}
+P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, x_n)}
+\end{align}
+
+\begin{description}[align=left, labelwidth=2.5cm, labelsep=0em, leftmargin=2.5cm] 
+    \item[$x_i$] The \textbf{feature} \( x_i \), representing the \(i\)-th feature of the data point (such as a specific word frequency in text classification, or a specific measurement in other domains).
+    \vspace{0.5\baselineskip}
+    \item[$y$] The \textbf{class label} \( y \), which represents the class or category that the data point belongs to.
+    \vspace{0.5\baselineskip}
+    \item[$P(y)$] The \textbf{prior probability} of class \( y \), which represents the initial belief about the probability of class \( y \) occurring in the dataset.
+    \vspace{0.5\baselineskip}
+    \item[$P(x_i | y)$] The \textbf{likelihood} of feature \( x_i \) given class \( y \), which represents the probability of observing the feature \( x_i \) if the data point belongs to class \( y \).
+    \vspace{0.5\baselineskip}
+    \item[$P(x_1, \ldots, x_n)$] The \textbf{evidence} or \textbf{normalizing constant}, which ensures that the total probability sums to 1. It is typically computed as \( P(x_1, \ldots, x_n) = \sum_y P(y) \prod_{i=1}^{n} P(x_i | y) \), but for classification, it serves as a normalization term.
+\end{description}
+
+\end{a_def_eq}
+\
 
 **Introduction**: Naive Bayes is a probabilistic classifier based on Bayes' theorem with strong independence assumptions.
 
@@ -2201,7 +2241,9 @@ $$
 
 **Importance in ML**: Naive Bayes is used for classification tasks, especially in text classification and spam detection. Its simplicity and efficiency make it a popular choice for high-dimensional datasets.
 
----
+\vspace*{\fill}
+
+\newpage
 
 ## Bayes' Introduction and Construction
 
@@ -2439,6 +2481,7 @@ $\mathbf{\{\sim\! B \}}$ & & P($A\, \cap \sim\! B$)  & + & P($\sim\! A\, \cap \s
 \label{fig:m_bayes_space}
 
 \end{figure}
+
 
 
 \newpage 
