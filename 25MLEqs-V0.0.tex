@@ -139,9 +139,9 @@
 %\usepackage{pgfplots}                % math plotting
 %\pgfplotsset{compat=1.18}
 
-%\usepackage{tikz}                    % tikz megatool
-%\usepackage{tikz-3dplot}
-%\usetikzlibrary{arrows}
+\usepackage{tikz}                    % tikz megatool
+\usepackage{tikz-3dplot}
+\usetikzlibrary{arrows}
 
 %\usepackage{fvextra}                 % special linebreaking 
 %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
@@ -2659,6 +2659,8 @@ noise}\label{example-1-scatter-data-with-linear-overlay-and-some-noise}}
 ## Pearson's Correlation for Example 2:  0.783414
 \end{verbatim}
 
+\normalsize
+
 \newpage
 
 \hypertarget{cosine-similarity}{%
@@ -3356,31 +3358,64 @@ space, and it ranges from 0 (when the vectors are identical) to 2 (when
 the vectors are diametrically opposed). The closer the cosine distance
 is to 0 , the more similar the vectors are.
 
-\hypertarget{why-its-not-a-norm}{%
-\subsection{Why it's not a Norm:}\label{why-its-not-a-norm}}
+\hypertarget{can-cosine-similarity-be-used-as-a-norm-cosine-distance-as-a-metric}{%
+\subsection{Can Cosine Similarity be Used as a Norm? (Cosine Distance as
+a
+Metric)}\label{can-cosine-similarity-be-used-as-a-norm-cosine-distance-as-a-metric}}
 
-\begin{itemize}
+While cosine similarity cannot be a norm due to the reasons above, the
+cosine distance, which is defined as:
+
+\[
+\operatorname{Cosine} \operatorname{Distance}(\mathbf{A}, \mathbf{B})=1-\operatorname{similarity}(\mathbf{A}, \mathbf{B})=1-\frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\|_2\left\|_{\mathbf{B}}\right\|_2}
+\]
+
+can be used as a distance metric. Cosine distance satisfies the
+necessary properties of a distance measure: 1. Non-negativity: Cosine
+Distance \((\mathbf{A}, \mathbf{B}) \geq 0\) with equality if and only
+if \(\mathbf{A}=\mathbf{B}\). 2. Symmetry: Cosine Distance
+\((\mathbf{A}, \mathbf{B})=\) Cosine Distance
+\((\mathbf{B}, \mathbf{A})\). 3. Identity of indiscernibles: Cosine
+Distance \((\mathbf{A}, \mathbf{B})=0\) if and only if
+\(\mathbf{A}=\mathbf{B}\). 4. Triangle Inequality: This property holds
+for cosine distance, meaning it satisfies the conditions to be a valid
+distance metric.
+
+However, cosine distance is a metric (not a norm), and while it is
+related to the angle between vectors, it is not directly related to the
+magnitude of the vectors.
+
+Using Cosine Distance as a Norm (Modified Version) While cosine
+similarity cannot directly be used as a norm, there are ways to modify
+or adapt concepts like cosine distance for scenarios where norms are
+needed. However, this requires a modification to the usual properties of
+cosine similarity.
+
+Transforming Cosine Similarity into a Norm-like Measure: 1. Unit Vectors
+(Normalization):
+
+In many applications, vectors are normalized to unit length, meaning
+\(\|\mathbf{A}\|_2=1\) and \(\|\mathbf{B}\|_2=1\). In this case, cosine
+similarity becomes a direct measure of how aligned or opposite the
+vectors are. The modified ``norm'' is then based on the angular distance
+between the vectors. However, this is still angular distance, not a true
+norm, because the triangle inequality may not hold in all cases.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
 \tightlist
 \item
-  A norm requires that the function satisfies the triangle inequality,
-  which cosine distance does not necessarily satisfy in all cases. Thus,
-  cosine distance is considered a metric rather than a norm.
-\item
-  Cosine distance is a metric because it measures the dissimilarity
-  between two vectors, but it is based on the angular distance (the
-  angle between two vectors) rather than the length or magnitude of the
-  vectors themselves.
-\end{itemize}
+  Scaling with Cosine Distance:
+\end{enumerate}
 
-\hypertarget{in-some-applications-spherical-or-angular-norm}{%
-\subsection{In Some Applications (Spherical or Angular
-Norm):}\label{in-some-applications-spherical-or-angular-norm}}
-
-While cosine distance is not traditionally a norm, in certain
-specialized fields, especially those dealing with unit vectors on the
-unit sphere, some people informally refer to this distance as the
-angular norm or spherical norm. This informal terminology arises because
-cosine distance measures the distance between points on a unit sphere.
+To make cosine distance behave more like a norm, you would need to scale
+the vectors in such a way that cosine distance follows the norm
+properties. For example, if we scale the vectors before calculating the
+cosine distance and then apply a normalization strategy, we could create
+an approximation of a norm-like structure. However, this would still
+require further adjustments to make it truly behave as a norm in all
+cases.
 
 \hypertarget{why-cosine-similarity-is-not-a-norm}{%
 \subsection{Why Cosine Similarity is Not a
@@ -3439,78 +3474,23 @@ of that scalar:
 Because of these issues, cosine similarity is not a norm in the strict
 mathematical sense.
 
-\hypertarget{can-cosine-similarity-be-used-as-a-norm-cosine-distance-as-a-metric}{%
-\section{Can Cosine Similarity be Used as a Norm? (Cosine Distance as a
-Metric)}\label{can-cosine-similarity-be-used-as-a-norm-cosine-distance-as-a-metric}}
+\hypertarget{modified-norm-in-specialized-contexts}{%
+\subsection{Modified Norm in Specialized
+Contexts:}\label{modified-norm-in-specialized-contexts}}
 
-While cosine similarity cannot be a norm due to the reasons above, the
-cosine distance, which is defined as:
-
-\[
-\operatorname{Cosine} \operatorname{Distance}(\mathbf{A}, \mathbf{B})=1-\operatorname{similarity}(\mathbf{A}, \mathbf{B})=1-\frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\|_2\left\|_{\mathbf{B}}\right\|_2}
-\]
-
-can be used as a distance metric. Cosine distance satisfies the
-necessary properties of a distance measure: 1. Non-negativity: Cosine
-Distance \((\mathbf{A}, \mathbf{B}) \geq 0\) with equality if and only
-if \(\mathbf{A}=\mathbf{B}\). 2. Symmetry: Cosine Distance
-\((\mathbf{A}, \mathbf{B})=\) Cosine Distance
-\((\mathbf{B}, \mathbf{A})\). 3. Identity of indiscernibles: Cosine
-Distance \((\mathbf{A}, \mathbf{B})=0\) if and only if
-\(\mathbf{A}=\mathbf{B}\). 4. Triangle Inequality: This property holds
-for cosine distance, meaning it satisfies the conditions to be a valid
-distance metric.
-
-However, cosine distance is a metric (not a norm), and while it is
-related to the angle between vectors, it is not directly related to the
-magnitude of the vectors.
-
-Using Cosine Distance as a Norm (Modified Version) While cosine
-similarity cannot directly be used as a norm, there are ways to modify
-or adapt concepts like cosine distance for scenarios where norms are
-needed. However, this requires a modification to the usual properties of
-cosine similarity.
-
-Transforming Cosine Similarity into a Norm-like Measure: 1. Unit Vectors
-(Normalization):
-
-In many applications, vectors are normalized to unit length, meaning
-\(\|\mathbf{A}\|_2=1\) and \(\|\mathbf{B}\|_2=1\). In this case, cosine
-similarity becomes a direct measure of how aligned or opposite the
-vectors are. The modified ``norm'' is then based on the angular distance
-between the vectors. However, this is still angular distance, not a true
-norm, because the triangle inequality may not hold in all cases.
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  Scaling with Cosine Distance:
-\end{enumerate}
-
-To make cosine distance behave more like a norm, you would need to scale
-the vectors in such a way that cosine distance follows the norm
-properties. For example, if we scale the vectors before calculating the
-cosine distance and then apply a normalization strategy, we could create
-an approximation of a norm-like structure. However, this would still
-require further adjustments to make it truly behave as a norm in all
-cases.
-
-Modified Norm in Specialized Contexts: in some specialized contexts,
-especially those involving unit vectors on the unit sphere, the cosine
-distance can be informally referred to as an angular norm or spherical
-norm. Here's why: - Unit Vectors: When vectors are normalized to have a
-length of 1 (i.e., unit vectors), the cosine similarty becomes a direct
-measure of how aligned or opposite the vectors are. The distance between
-these vectors is angular because it reflects the angle between them. -
-Spherical Geometry: In spherical geometry, the distance between points
-on the surface of a sphere is often computed using the cosine of the
-angle between them. in this context, cosine distance (or cosine
-similarity) could be informally referred to as an angular distance or
-spherical norm. These are not true norms in the mathematical sense, but
-the terminology is used to describe the nature of the distance being
-calculated on the surface of a sphere.
+in some specialized contexts, especially those involving unit vectors on
+the unit sphere, the cosine distance can be informally referred to as an
+angular norm or spherical norm. Here's why: - Unit Vectors: When vectors
+are normalized to have a length of 1 (i.e., unit vectors), the cosine
+similarty becomes a direct measure of how aligned or opposite the
+vectors are. The distance between these vectors is angular because it
+reflects the angle between them. - Spherical Geometry: In spherical
+geometry, the distance between points on the surface of a sphere is
+often computed using the cosine of the angle between them. in this
+context, cosine distance (or cosine similarity) could be informally
+referred to as an angular distance or spherical norm. These are not true
+norms in the mathematical sense, but the terminology is used to describe
+the nature of the distance being calculated on the surface of a sphere.
 
 \begin{itemize}
 \tightlist
@@ -3542,6 +3522,8 @@ preferences or behaviors.
 Here's how to calculate the cosine similarity between two vectors using
 R:
 
+\scriptsize
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Example vectors}
@@ -3562,6 +3544,110 @@ R:
 \begin{verbatim}
 ## Cosine Similarity between A and B:  0.9970545
 \end{verbatim}
+
+\normalsize
+
+\newpage
+
+\hypertarget{cosine-similarity-in-r-3d-plot}{%
+\section{Cosine Similarity in R,
+3D-plot}\label{cosine-similarity-in-r-3d-plot}}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load necessary libraries}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\CommentTok{\# Example 3D vectors}
+\NormalTok{A }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)  }\CommentTok{\# Vector A}
+\NormalTok{B }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{)  }\CommentTok{\# Vector B}
+
+\CommentTok{\# Function to calculate cosine similarity}
+\NormalTok{cosine\_similarity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(A, B) \{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A }\SpecialCharTok{*}\NormalTok{ B) }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{(A}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{sum}\NormalTok{(B}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))))}
+\NormalTok{\}}
+
+\CommentTok{\# Calculate cosine similarity}
+\NormalTok{similarity }\OtherTok{\textless{}{-}} \FunctionTok{cosine\_similarity}\NormalTok{(A, B)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Cosine Similarity between A and B: "}\NormalTok{, similarity, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Cosine Similarity between A and B:  0.9746318
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare data for ggplot}
+\NormalTok{vector\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A[}\DecValTok{1}\NormalTok{], }\DecValTok{0}\NormalTok{, B[}\DecValTok{1}\NormalTok{]), }\CommentTok{\# X{-}coordinates}
+  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A[}\DecValTok{2}\NormalTok{], }\DecValTok{0}\NormalTok{, B[}\DecValTok{2}\NormalTok{]), }\CommentTok{\# Y{-}coordinates}
+  \AttributeTok{z =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A[}\DecValTok{3}\NormalTok{], }\DecValTok{0}\NormalTok{, B[}\DecValTok{3}\NormalTok{]), }\CommentTok{\# Z{-}coordinates}
+  \AttributeTok{group =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"B"}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{\# Convert data to 2D projection for plotting in ggplot}
+\NormalTok{vector\_data\_2d }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{x =}\NormalTok{ vector\_data}\SpecialCharTok{$}\NormalTok{x }\SpecialCharTok{/}\NormalTok{ (vector\_data}\SpecialCharTok{$}\NormalTok{z }\SpecialCharTok{+} \DecValTok{3}\NormalTok{),  }\CommentTok{\# Simple projection}
+  \AttributeTok{y =}\NormalTok{ vector\_data}\SpecialCharTok{$}\NormalTok{y }\SpecialCharTok{/}\NormalTok{ (vector\_data}\SpecialCharTok{$}\NormalTok{z }\SpecialCharTok{+} \DecValTok{3}\NormalTok{),  }\CommentTok{\# Simple projection}
+  \AttributeTok{group =}\NormalTok{ vector\_data}\SpecialCharTok{$}\NormalTok{group}
+\NormalTok{)}
+
+\CommentTok{\# Create the 2D plot using ggplot}
+\FunctionTok{ggplot}\NormalTok{(vector\_data\_2d, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{color =}\NormalTok{ group)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{xend =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =} \DecValTok{0}\NormalTok{), }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"3D Cosine Similarity between Vectors A and B"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"X"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Y"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_fixed}\NormalTok{(}\AttributeTok{ratio =} \DecValTok{1}\NormalTok{)  }\CommentTok{\# Fix aspect ratio for proper projection}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.0_files/figure-latex/cosine_similarity_example_2-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:cosine_similarity_example_2}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Save the plot as a PDF}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"cosine\_similarity\_2d\_plot.pdf"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\normalsize
+
+\hypertarget{tikz-output---cosine-similarity}{%
+\subsection{Tikz Output - cosine
+similarity}\label{tikz-output---cosine-similarity}}
+
+\begin{tikzpicture}
+
+% Define 3D coordinates for the vectors
+\coordinate (A) at (1, 2, 3);  % Vector A (1, 2, 3)
+\coordinate (B) at (4, 5, 6);  % Vector B (4, 5, 6)
+\coordinate (O) at (0, 0, 0);  % Origin (0, 0, 0)
+
+% Draw the vectors as lines
+\draw[->, thick, blue] (O) -- (A) node[midway, below] {$\mathbf{A}$};
+\draw[->, thick, red] (O) -- (B) node[midway, above] {$\mathbf{B}$};
+
+% Add axis labels
+\draw[->] (O) -- (5, 0, 0) node[right] {X};
+\draw[->] (O) -- (0, 5, 0) node[above] {Y};
+\draw[->] (O) -- (0, 0, 5) node[above] {Z};
+
+\end{tikzpicture}
 
 \newpage
 

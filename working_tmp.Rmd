@@ -2,25 +2,6 @@
 
 # Chapter 7: Cosine Similarity and Its Mathematical Foundations
 
-## 7.1 Introduction to Cosine Similarity
-
-Cosine similarity is a measure used to compute the **cosine of the angle** between two non-zero vectors in an inner product space. It is commonly used to measure the similarity between documents in text mining, recommendation systems, and machine learning tasks. The basic idea is to calculate how similar two vectors are, regardless of their magnitudes, by comparing their directions.
-
-The formula for cosine similarity between two vectors \( \mathbf{A} \) and \( \mathbf{B} \) is:
-  
-  $$
-  \text{similarity}(\mathbf{A}, \mathbf{B}) = \frac{\mathbf{A} \cdot \mathbf{B}}{\| \mathbf{A} \| \| \mathbf{B} \|}
-$$
-  
-  Where:
-  - \( \mathbf{A} \cdot \mathbf{B} \) is the **dot product** of vectors \( \mathbf{A} \) and \( \mathbf{B} \),
-- \( \| \mathbf{A} \| \) and \( \| \mathbf{B} \| \) are the **norms** (or magnitudes) of the vectors \( \mathbf{A} \) and \( \mathbf{B} \), respectively.
-
-Cosine similarity ranges from -1 to 1:
-  - \( 1 \) indicates that the vectors are identical (i.e., they point in the same direction),
-- \( 0 \) indicates orthogonality (no similarity),
-- \( -1 \) indicates that the vectors are diametrically opposed (pointing in opposite directions).
-
 ### 7.2 Cosine Similarity and Vector Norms
 
 Cosine similarity is closely related to the concept of **vector norms**, especially the **Euclidean norm** (L2 norm). 
