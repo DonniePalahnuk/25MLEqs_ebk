@@ -29,6 +29,7 @@ papersize:              a4
 header-includes:
  - |
   ```{=latex}
+  \usepackage{pgfplots}
   \newcommand{\docTitle}{25 ML Fundamental Equations}
 
   \raggedbottom                         % ensures no page fill
