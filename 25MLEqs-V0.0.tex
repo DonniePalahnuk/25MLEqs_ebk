@@ -366,9 +366,8 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.00.0}{2024.10.25}{DP}{Created!}
   \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
-  \vhEntry{0.04.0}{2024.11.07}{DP}{Sigmoid Chapter}
-  \vhEntry{0.04.1}{2024.11.08}{DP}{Code clean up - house keeping, typos}
-  \vhEntry{0.05.0}{2024.11.10}{DP}{Correlation Chapter}
+  \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
+  \vhEntry{0.07.0}{2024.11.11}{DP}{Naive Bayes chapter drafted}
 \end{versionhistory}
 \newpage
 
@@ -3934,10 +3933,6 @@ similarity}\label{tikz-output---cosine-similarity}}
 \hypertarget{naive-bayes}{%
 \chapter{Naive Bayes}\label{naive-bayes}}
 
-\[
-P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, x_n)}
-\]
-
 \begin{center}
 \colorbox{white}{\color{navyimpactblue} \huge $P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, x_n)}$}
 \end{center}
@@ -4617,6 +4612,106 @@ So:
   Number of false negatives (iliness and negative test,
   \(A \cap \sim B\) ) \(=2\).
 \end{itemize}
+
+\newpage
+
+\hypertarget{using-bayes-and-the-tie-to-physics}{%
+\section{USing Bayes and the tie to
+physics}\label{using-bayes-and-the-tie-to-physics}}
+
+\hypertarget{physics-analogies-and-bayesian-reasoning-models}{%
+\subsection{Physics Analogies and Bayesian Reasoning
+Models}\label{physics-analogies-and-bayesian-reasoning-models}}
+
+A key concept in information theory, which yields its implied
+relationship to physics, is the average value (or expectation) of the
+information content of events (symbols arriving at the end of a
+communication line):
+
+\[
+H(x)=-\sum_x P(x) \log _2 P(x)
+\]
+
+This symbol \(H(x)\) is often called information entropy, drawing an
+analogy to physics (specifically thermodynamics), where entropy is a
+measure of disorder, particularly the number of specific ways that a set
+of particles may be arranged in space. As Feynman (2000) illustrated, we
+can understand this by considering a hypothetical situation \(A\): a
+volume containing a single molecule of gas with \(X\) equally likely
+locations. In this uniform distribution across \(X\) locations, the
+information needed to describe any possible location is given by:
+
+\[
+H_A(x)=-\sum_x P(x) \log _2 P(x)=-x\left(\frac{1}{x}\right) \log _2\left(\frac{1}{x}\right)=-\log _2\left(\frac{1}{x}\right)
+\]
+
+Thus, any message indicating the particle's location has this
+information content. While this scenario assumes uniform distribution,
+one can generalize this approach to compute the average information
+content across any distribution.
+
+Now, consider performing work to compress the gas, halving the original
+volume (situation \(B\)). Here, half the terms in the sum are zeroed
+out, the remaining probabilities double, and the bits required to convey
+the particle's location are given by:
+
+\[
+H_B(x)=-\log _2\left(\frac{1}{2 x}\right)=-\log _2\left(\frac{1}{x}\right)-1=H_A(x)-1
+\]
+
+In this way, the volume compression effectively reduces the information
+entropy (expected information content) of messages indicating the
+particle's location by one bit.
+
+\hypertarget{extending-the-analogy-to-biologics-lot-to-lot-variance}{%
+\subsection{Extending the Analogy to Biologics Lot-to-Lot
+Variance}\label{extending-the-analogy-to-biologics-lot-to-lot-variance}}
+
+In biologics, particularly in the production of drug substances, there
+is an analogous concept where we can think of ``information'' as the
+variability or uncertainty in quality attributes across different
+production lots. Consider the production of several biologics lots,
+where we measure attributes such as purity, potency, and concentration.
+Each lot can be thought of as a unique ``event'' with an associated
+probability distribution, akin to particle locations in thermodynamics.
+
+For small set sizes, such as when \(n = 3\) to \(5\), we face higher
+uncertainty and variance in these quality attributes across lots.
+Information entropy, in this case, represents the uncertainty in
+predicting the quality attributes for future lots based on initial
+measurements. The entropy \(H(x)\) of these quality attributes might
+indicate how ``disordered'' or variable our lot-to-lot outcomes are
+under initial conditions.
+
+Imagine now performing a series of adjustments after each production
+run. By incorporating learnings from each new lot (e.g., 1 through 5),
+we might make adjustments to the process parameters to reduce
+variability. This is analogous to ``compressing'' the space in which our
+attributes vary, akin to reducing the gas volume. For example, if we
+find that a specific pH adjustment improves consistency, we may decrease
+the uncertainty (information entropy) about the quality attributes of
+subsequent lots. The expected entropy of future lots \(6\), \(7\),
+\(8\), etc., becomes:
+
+\[
+H_{\text{new}}(x) = H_{\text{initial}}(x) - \Delta H
+\]
+
+where \(\Delta H\) represents the reduction in entropy due to process
+optimization and learnings from previous lots.
+
+Thus, the iterative nature of Bayesian reasoning in this context
+reflects how biologics manufacturing often relies on sequential data
+collection and process optimization. Just as reducing a gas's volume
+constrains the possible locations for particles, process adjustments
+reduce the variability in quality attributes, thereby lowering the
+information entropy and enhancing the predictability of future lot
+outcomes.
+
+In practice, this iterative approach of learning and adjustment can
+reduce the ``noise'' in biologic production and improve consistency,
+making the analogy between thermodynamic entropy and biologics
+lot-to-lot variance a powerful conceptual tool.
 
 \newpage
 
