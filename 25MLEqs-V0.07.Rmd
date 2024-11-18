@@ -283,6 +283,7 @@ library(reticulate)           # Python integration
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
   \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
   \vhEntry{0.07.0}{2024.11.11}{DP}{Naive Bayes chapter drafted}
+  \vhEntry{0.07.5}{2024.11.18}{DP}{KL Divergence section started}
 \end{versionhistory}
 \newpage
 
@@ -2929,7 +2930,66 @@ $$
 
 **Importance in ML**: KL Divergence is used in machine learning for loss functions in models like variational autoencoders. It quantifies how well the learned distribution approximates the true data distribution.
 
----
+\newpage
+
+## Introduction to Kullback-Leibler (KL) Divergence
+
+The **Kullback-Leibler (KL) divergence**, also called relative entropy, measures the discrepancy between two probability distributions, $P$ (the true distribution) and $Q$ (the approximation). It quantifies the inefficiency of using $Q$ to encode data from $P$. 
+
+For discrete distributions, the KL divergence is defined as:
+
+$$
+D_{KL}(P \| Q) = \sum_{x} P(x) \log \frac{P(x)}{Q(x)}
+$$
+
+For continuous distributions, it is expressed as:
+
+$$
+D_{KL}(P \| Q) = \int_{-\infty}^\infty p(x) \log \frac{p(x)}{q(x)} \, dx
+$$
+
+Key properties of KL divergence:
+- It is not symmetric: $D_{KL}(P \| Q) \neq D_{KL}(Q \| P)$.
+- It is non-negative: $D_{KL}(P \| Q) \geq 0$, with equality only when $P = Q$.
+
+## Example Calculation
+
+We compute $D_{KL}(P \| Q)$ for two discrete distributions:
+- $P(x_1, x_2) = [x_1, 1-x_1]$
+- $Q(x_1, x_2) = [0.5, 0.5]$
+
+The KL divergence formula becomes:
+
+$$
+D_{KL}(P \| Q) = x_1 \log \frac{x_1}{0.5} + (1 - x_1) \log \frac{1 - x_1}{0.5}
+$$
+
+We evaluate this for $x_1 = \{0.1, 0.2, 0.3, 0.4, 0.5\}$.
+
+## Results Table
+
+The table below shows the calculations for $D_{KL}$, $P(x_1)$, $P(x_2)$, and their respective log terms.
+
+$$
+\begin{array}{|c|c|c|c|c|c|}
+\hline
+\text{Value of } x_1 & D_{KL} & P(x_1) & \log \left(\frac{P(x_1)}{Q(x_1)}\right) & P(x_2) & \log \left(\frac{P(x_2)}{Q(x_2)}\right) \\
+\hline
+0.1 & 0.3681 & 0.1 & -1.609 & 0.9 & 0.5878 \\
+0.2 & 0.1927 & 0.2 & -0.9163 & 0.8 & 0.4700 \\
+0.3 & 0.08228 & 0.3 & -0.5108 & 0.7 & 0.3365 \\
+0.4 & 0.02014 & 0.4 & -0.2231 & 0.6 & 0.1823 \\
+0.5 & 0.0000 & 0.5 & 0.0000 & 0.5 & 0.0000 \\
+\hline
+\end{array}
+$$
+
+## Observations
+
+1. $D_{KL}$ decreases as $x_1$ approaches 0.5, where $P = Q$.
+2. The terms $P(x_i) \log \frac{P(x_i)}{Q(x_i)}$ reflect the penalty for mismatches between $P$ and $Q$.
+
+
 
 \newpage
 

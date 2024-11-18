@@ -1,0 +1,70 @@
+---
+title: "Test"
+author: "D Palahnuk"
+date: "2024-11-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+/newpage
+
+# Deriving the Rules of Probability
+
+To derive the rules of probability, consider the general case involving two random variables $(X)$ and $(Y)$.
+
+### Example Context
+In a medical example:
+- $(X)$ could represent the **presence or absence of cancer**.
+- $(Y)$ could represent the **outcome of a diagnostic test**.
+
+These variables vary between individuals in generally unknown ways, so they are referred to as **random variables** (or **stochastic variables**).
+
+### Variable Definitions
+We assume:
+
+- $(X)$ can take values $(x_i)$, where $i = 1, \ldots, L$,
+- $(Y)$ can take values $(y_j)$, where $j = 1, \ldots, M$.
+
+### Observational Setup
+Suppose there are $N$ total trials in which we sample both $(X)$ and $(Y)$. Define:
+
+- $(n_{ij})$: the **number of trials** where $(X = x_i)$ and $(Y = y_j)$,
+- $(c_i)$: the **number of trials** where $(X = x_i)$ (irrespective of $(Y)$),
+- $(r_j)$: the **number of trials** where $(Y = y_j)$ (irrespective of $(X)$).
+
+### Joint Probability
+The **joint probability** $p(X = x_i, Y = y_j)$ is the probability that:
+
+- $(X)$ takes the value $(x_i)$,
+- and $(Y)$ takes the value $(y_j)$.
+
+It is calculated as the fraction of trials $(n_{ij})$, where $(X = x_i)$ and $(Y = y_j)$, divided by the total number of trials $(N)$:
+$$
+p(X = x_i, Y = y_j) = \frac{n_{ij}}{N}.
+$$
+
+This represents the proportion of observations falling into the corresponding cell $(i, j)$ in a contingency table.
+
