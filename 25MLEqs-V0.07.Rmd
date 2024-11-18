@@ -284,6 +284,7 @@ library(reticulate)           # Python integration
   \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
   \vhEntry{0.07.0}{2024.11.11}{DP}{Naive Bayes chapter drafted}
   \vhEntry{0.07.5}{2024.11.18}{DP}{KL Divergence section started}
+  \vhEntry{0.07.6}{2024.11.18}{DP}{Naive Bayes chapter continues}
 \end{versionhistory}
 \newpage
 
@@ -2356,6 +2357,75 @@ By fostering a profound comprehension from foundational principles and underlyin
 In this journey, we will dissect the theorem, examining each component and its role in shaping the overall framework. We'll explore how prior beliefs are updated with new evidence, and how this process is influenced by the underlying probability structures. By doing so, we aim to provide readers with a toolkit for thinking critically about probability and making more informed decisions in the face of uncertainty.
 
 Ultimately, this exploration is not just about understanding a mathematical formula; it's about embracing a new way of thinking. It's about shifting our perspective from seeing Bayes' Theorem as a mere tool to appreciating it as a fundamental principle that underpins a vast array of applications—from scientific research to everyday decision-making.
+
+
+\newpage 
+
+### A visual understanding of Bayes 
+
+### Deriving the Rules of Probability
+
+To derive the rules of probability, consider the general case involving two random variables $(X)$ and $(Y)$.
+
+### Example Context
+In a medical example:
+- $(X)$ could represent the **presence or absence of cancer**.
+- $(Y)$ could represent the **outcome of a diagnostic test**.
+
+These variables vary between individuals in generally unknown ways, so they are referred to as **random variables** (or **stochastic variables**).
+
+### Variable Definitions
+We assume:
+
+- $(X)$ can take values $(x_i)$, where $i = 1, \ldots, L$,
+- $(Y)$ can take values $(y_j)$, where $j = 1, \ldots, M$.
+
+### Observational Setup
+Suppose there are $N$ total trials in which we sample both $(X)$ and $(Y)$. Define:
+
+- $(n_{ij})$: the **number of trials** where $(X = x_i)$ and $(Y = y_j)$,
+- $(c_i)$: the **number of trials** where $(X = x_i)$ (irrespective of $(Y)$),
+- $(r_j)$: the **number of trials** where $(Y = y_j)$ (irrespective of $(X)$).
+
+### Joint Probability
+The **joint probability** $p(X = x_i, Y = y_j)$ is the probability that:
+
+- $(X)$ takes the value $(x_i)$,
+- and $(Y)$ takes the value $(y_j)$.
+
+It is calculated as the fraction of trials $(n_{ij})$, where $(X = x_i)$ and $(Y = y_j)$, divided by the total number of trials $(N)$:
+$$
+p(X = x_i, Y = y_j) = \frac{n_{ij}}{N}.
+$$
+
+This represents the proportion of observations falling into the corresponding cell $(i, j)$ in a contingency table.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+    % Draw the grid
+    \draw[red, thick] (0,0) grid (6,4);
+
+    % Add an overbrace as a node for c_i
+    % \node at (1.5, 4.5) {$\overbrace{n_{i1} + n_{i2} + \cdots + n_{iM}}^{c_i}$};
+
+    % Add another overbrace as a node for c_i
+    \node at (3.5, 4.3) {$\overbrace{\hspace{2.7em}}^{c_i}$};
+ 
+    % Add a vertical brace for r_j
+    \node[rotate=-90] at (6.3, 2.5) {$\overbrace{\hspace{2.7em}}^{r_i}$};
+
+    % Add labels for x_i and y_j
+    \node[anchor=north] at (3,-0.2) {$x_i$};
+    \node[anchor=east] at (-0.15,2) {$y_j$};
+
+    % Add the n_ij label in the center of the grid
+    \node at (3.5,2.4) {$n_{ij}$};
+
+\end{tikzpicture} 
+\caption{Red Grid for Bayes Calc (edit later)}
+\label{fig:red_bayes_grid}
+\end{figure}
 
 
 \newpage
