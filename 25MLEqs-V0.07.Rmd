@@ -2242,11 +2242,6 @@ P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, 
 
 \newpage
 
-## Bayes' Introduction and Construction
-
-We want to talk specifically of Bayes' first. 
-
-
 ## Introduction to Bayesian Theory  
 
 ### Introduction the traditional formulation of Bayes' theory
@@ -2255,27 +2250,42 @@ Bayes' Theorem is a powerful mathematical tool used in probability theory to cal
 
 The basic concept revolves around updating our initial beliefs or estimates (prior probabilities) in light of new evidence or information (likelihood) to arrive at a revised belief (posterior probability). This process is particularly useful in various fields such as statistics, machine learning, and data analysis, where making predictions based on incomplete information is common.
 
-### The traditional Bayes formula
+### Bayes Formula
 
-**The theorem is usually expressed as:**
+The theorem is usually expressed as:
 
-$$
+\begin{align}
 \operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)}{\operatorname{P}(B)}
-$$
+\end{align}
 
 Where:
+\[
+\begin{array}{|c|c|l|}
+\hline
+\textbf{Term} & \textbf{Common Name} & \textbf{Description} \\
+\hline
+\operatorname{P}(A) & \text{Prior Probability} & \text{Initial belief about \(A\) before considering the new evidence \(B\).} \\
+\hline
+\operatorname{P}(B) & \text{Marginal Probability} & \text{Total probability of observing \(B\) under all possible circumstances.} \\
+\hline
+\operatorname{P}(A\! \mid\! B) & \text{Posterior Probability} & \text{Probability of event \(A\) occurring given that \(B\) has occurred.} \\
+\hline
+\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of observing event \(B\) given that \(A\) is true.} \\
+\hline
+\end{array}
+\]
 
-- $\operatorname{P}(A\! \mid\! B)$ is the posterior probability. It represents the probability of event $A$ occurring given that $B$ has occurred.
-- $\operatorname{P}(B\! \mid\! A)$ is the likelihood. It represents the probability of observing event $B$ given that $A$ is true.
-- $\operatorname{P}(A)$ is the prior probability of $A$. It represents the initial belief before considering the new evidence $B$.
-- $\operatorname{P}(B)$ is the marginal probability of $B$. It represents the total probability of observing $B$ under all possible circumstances.
+**Prior Probability $\operatorname{P}(A)$:**\
+This is your initial belief about the probability of an event before any additional information is considered. For instance, if you are trying to determine the probability that a randomly chosen person is left-handed $(A)$, your prior might be the overall percentage of left-handed people in the population.
 
-**Understanding the components:**
+**Likelihood $\operatorname{P}(B\! \mid\! A)$:**\
+This reflects how probable the evidence $(B)$ is, assuming the hypothesis $(A)$ is true. For example, if a diagnostic test is known to detect a disease $95 \%$ of the time when the disease is present, then $\operatorname{P}(B\! \mid\! A)=0.95$.
 
-1. Prior Probability $(\operatorname{P}(A))$ : This is your initial belief about the probability of an event before any additional information is considered. For instance, if you are trying to determine the probability that a randomly chosen person is left-handed $(A)$, your prior might be the overall percentage of left-handed people in the population.
-2. Likelihood $(\operatorname{P}(B \mid A)$ ): This reflects how probable the evidence $(B)$ is, assuming the hypothesis $(A)$ is true. For example, if a diagnostic test is known to detect a disease $95 \%$ of the time when the disease is present, then $\operatorname{P}(B \mid A)=0.95$.
-3. Marginal Probability $(\operatorname{P}(B))$ : This is the total probability of observing the evidence ( $B$ ) under all possible circumstances. It's often calculated as the sum of probabilities for all possible values of $A: \operatorname{P}(B)=\operatorname{P}(B \mid A) \cdot \operatorname{P}(A)+\operatorname{P}(B \mid \neg A) \cdot \operatorname{P}(\neg A)$, where $\neg A$ represents the complement of $A$.
-4. Posterior Probability $(\operatorname{P}(A \mid B))$ : This is what you're solving for. It's your updated belief about the probability of $A$ after taking into account the new evidence $B$.
+**Marginal Probability $\operatorname{P}(B)$:**\
+This is the total probability of observing the evidence ( $B$ ) under all possible circumstances. It's often calculated as the sum of probabilities for all possible values of $A: \operatorname{P}(B)=\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)+\operatorname{P}(B\! \mid\! \neg A) \cdot \operatorname{P}(\neg A)$, where $\neg A$ represents the complement of $A$.
+
+**Posterior Probability $\operatorname{P}(A\! \mid\! B)$:**\
+This is what you're solving for. It's your updated belief about the probability of $A$ after taking into account the new evidence $B$.
 
 ### Rational Considerations of the meaning of the Bayes' formula
 
@@ -2295,13 +2305,11 @@ $P(B)$ & Evidence
 \label{fig:conotations}
 \end{figure}
 
-Consider the probability of a hypothesis given the evidence:
-$$
-P(H\! \mid\! E) \\
-$$
+Taking a closer look at Bayes' formula: 
+
 
 $$
-P\left(\begin{array}{c}\text { Hypothesis } \\ \text { given } \\ \text { the evidence }\end{array}\right)
+P(A\! \mid\! B)=P(B\! \mid\! A) \frac{P(A)}{P(B)}
 $$
 
 The key to tying this all together is to understand the following key expression:
@@ -2311,13 +2319,11 @@ $$
 $$
 
 
-Which is mathematically represented as:
 
 
-$$
-P(A\! \mid\! B)=P(B\! \mid\! A) \frac{P(A)}{P(B)}
-$$
 
+\begin{figure}[htbp]
+\centering
 \begin{tikzpicture}
     % Nodes for A and B
     \node (B) at (0,0) {$B$};
@@ -2330,103 +2336,8 @@ $$
     \node at (1,0.7) {?};
     
 \end{tikzpicture}
-
-
-### Classical Bayes' word problem example ("Red Ace Example")
-
-Imagine you have a deck of cards, and you want to know the probability that a card is an ace given that it's a red card. Here, the event 
-A is "the card is an ace," and B is "the card is red."
-
-- The prior probability $\operatorname{P}(A)$ is $4 / 52$ since there are 4 aces in a 52 -card deck.
-- The likelihood $\operatorname{P}(B \mid A)$ is $1 / 2$ because half of the aces are red.
-- The marginal probability $\operatorname{P}(B)$ is $26 / 52$ since there are 26 red cards in the deck.
-
-Plugging these values into Bayes' Theorem:
-
-So, the probability that a card is an ace given that it's red is $1 / 13$.
-
-Bayes' Theorem thus provides a robust framework for updating beliefs and making informed decisions based on new data. It's a cornerstone of statistical inference and finds applications in various fields, from spam filtering in emails to disease diagnosis in medicine
-
-
-### Considering the "Classic Example" and why we can do better 
-
-To candidly address the challenges inherent in understanding probability spaces and the diverse applications of Bayes' Theorem, it is essential to delve beyond the surface of typical examples. By doing so, we aim to unravel the deeper intricacies of Bayes' formula. Our objective here is not just to reiterate the theorem but to derive a series of identities and explore the concept of probability metric spaces.
-
-By fostering a profound comprehension from foundational principles and underlying identities, we intend to cultivate a structured approach to employing Bayes' Theorem in various scenarios. This is particularly vital in contexts where the traditional formulation of Bayes' may not be the most appropriate or insightful application. Through this exploration, we aspire to formulate more nuanced and, ostensibly, more compelling scenarios that demonstrate the versatility and power of Bayes' Theorem.
-
-In this journey, we will dissect the theorem, examining each component and its role in shaping the overall framework. We'll explore how prior beliefs are updated with new evidence, and how this process is influenced by the underlying probability structures. By doing so, we aim to provide readers with a toolkit for thinking critically about probability and making more informed decisions in the face of uncertainty.
-
-Ultimately, this exploration is not just about understanding a mathematical formula; it's about embracing a new way of thinking. It's about shifting our perspective from seeing Bayes' Theorem as a mere tool to appreciating it as a fundamental principle that underpins a vast array of applications—from scientific research to everyday decision-making.
-
-
-\newpage 
-
-### A visual understanding of Bayes 
-
-### Deriving the Rules of Probability
-
-To derive the rules of probability, consider the general case involving two random variables $(X)$ and $(Y)$.
-
-### Example Context
-In a medical example:
-- $(X)$ could represent the **presence or absence of cancer**.
-- $(Y)$ could represent the **outcome of a diagnostic test**.
-
-These variables vary between individuals in generally unknown ways, so they are referred to as **random variables** (or **stochastic variables**).
-
-### Variable Definitions
-We assume:
-
-- $(X)$ can take values $(x_i)$, where $i = 1, \ldots, L$,
-- $(Y)$ can take values $(y_j)$, where $j = 1, \ldots, M$.
-
-### Observational Setup
-Suppose there are $N$ total trials in which we sample both $(X)$ and $(Y)$. Define:
-
-- $(n_{ij})$: the **number of trials** where $(X = x_i)$ and $(Y = y_j)$,
-- $(c_i)$: the **number of trials** where $(X = x_i)$ (irrespective of $(Y)$),
-- $(r_j)$: the **number of trials** where $(Y = y_j)$ (irrespective of $(X)$).
-
-### Joint Probability
-The **joint probability** $p(X = x_i, Y = y_j)$ is the probability that:
-
-- $(X)$ takes the value $(x_i)$,
-- and $(Y)$ takes the value $(y_j)$.
-
-It is calculated as the fraction of trials $(n_{ij})$, where $(X = x_i)$ and $(Y = y_j)$, divided by the total number of trials $(N)$:
-$$
-p(X = x_i, Y = y_j) = \frac{n_{ij}}{N}.
-$$
-
-This represents the proportion of observations falling into the corresponding cell $(i, j)$ in a contingency table.
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-    % Draw the grid
-    \draw[red, thick] (0,0) grid (6,4);
-
-    % Add an overbrace as a node for c_i
-    % \node at (1.5, 4.5) {$\overbrace{n_{i1} + n_{i2} + \cdots + n_{iM}}^{c_i}$};
-
-    % Add another overbrace as a node for c_i
-    \node at (3.5, 4.3) {$\overbrace{\hspace{2.7em}}^{c_i}$};
- 
-    % Add a vertical brace for r_j
-    \node[rotate=-90] at (6.3, 2.5) {$\overbrace{\hspace{2.7em}}^{r_i}$};
-
-    % Add labels for x_i and y_j
-    \node[anchor=north] at (3,-0.2) {$x_i$};
-    \node[anchor=east] at (-0.15,2) {$y_j$};
-
-    % Add the n_ij label in the center of the grid
-    \node at (3.5,2.4) {$n_{ij}$};
-
-\end{tikzpicture} 
-\caption{Red Grid for Bayes Calc (edit later)}
-\label{fig:red_bayes_grid}
+\label{fig:B_to_A}
 \end{figure}
-
 
 \newpage
 
@@ -2435,9 +2346,6 @@ This represents the proportion of observations falling into the corresponding ce
 We begin by showing the probability space via a Venn diagram visualization. 
 
 ### Probability Space Venn Diagram for traditional Bayesian
-
-
-TIKZ Goes here
 
 
 \begin{figure}[htbp]
@@ -2558,6 +2466,144 @@ $\mathbf{\{\sim\! B \}}$ & & P($A\, \cap \sim\! B$)  & + & P($\sim\! A\, \cap \s
 
 ## bayes' by example
 
+
+
+
+### Classical Bayes' word problem example ("Red Ace Example")
+
+Imagine you have a deck of cards, and you want to know the probability that a card is an ace given that it's a red card. Here, the event 
+A is "the card is an ace," and B is "the card is red."
+
+- The prior probability $\operatorname{P}(A)$ is $4 / 52$ since there are 4 aces in a 52 -card deck.
+- The likelihood $\operatorname{P}(B \mid A)$ is $1 / 2$ because half of the aces are red.
+- The marginal probability $\operatorname{P}(B)$ is $26 / 52$ since there are 26 red cards in the deck.
+
+Plugging these values into Bayes' Theorem:
+
+So, the probability that a card is an ace given that it's red is $1 / 13$.
+
+Bayes' Theorem thus provides a robust framework for updating beliefs and making informed decisions based on new data. It's a cornerstone of statistical inference and finds applications in various fields, from spam filtering in emails to disease diagnosis in medicine
+
+
+### Considering the "Classic Example" and why we can do better 
+
+To candidly address the challenges inherent in understanding probability spaces and the diverse applications of Bayes' Theorem, it is essential to delve beyond the surface of typical examples. By doing so, we aim to unravel the deeper intricacies of Bayes' formula. Our objective here is not just to reiterate the theorem but to derive a series of identities and explore the concept of probability metric spaces.
+
+By fostering a profound comprehension from foundational principles and underlying identities, we intend to cultivate a structured approach to employing Bayes' Theorem in various scenarios. This is particularly vital in contexts where the traditional formulation of Bayes' may not be the most appropriate or insightful application. Through this exploration, we aspire to formulate more nuanced and, ostensibly, more compelling scenarios that demonstrate the versatility and power of Bayes' Theorem.
+
+In this journey, we will dissect the theorem, examining each component and its role in shaping the overall framework. We'll explore how prior beliefs are updated with new evidence, and how this process is influenced by the underlying probability structures. By doing so, we aim to provide readers with a toolkit for thinking critically about probability and making more informed decisions in the face of uncertainty.
+
+Ultimately, this exploration is not just about understanding a mathematical formula; it's about embracing a new way of thinking. It's about shifting our perspective from seeing Bayes' Theorem as a mere tool to appreciating it as a fundamental principle that underpins a vast array of applications—from scientific research to everyday decision-making.
+
+
+\newpage 
+
+### A visual understanding of Bayes 
+
+### Deriving the Rules of Probability
+
+To derive the rules of probability, consider the general case involving two random variables $(X)$ and $(Y)$.
+
+### Example Context
+In a medical example:
+
+- $(X)$ could represent the **presence or absence of cancer**
+- $(Y)$ could represent the **outcome of a diagnostic test**
+
+These variables vary between individuals in generally unknown ways, so they are referred to as **random variables** (or **stochastic variables**).
+
+### Variable Definitions
+We assume:
+
+- $(X)$ can take values $(x_i)$, where $i = 1, \ldots, L$
+- $(Y)$ can take values $(y_j)$, where $j = 1, \ldots, M$
+
+### Observational Setup
+Suppose there are $N$ total trials in which we sample both $(X)$ and $(Y)$. Define:
+
+- $(n_{ij})$: the **number of trials** where $(X = x_i)$ and $(Y = y_j)$
+- $(c_i)$: the **number of trials** where $(X = x_i)$ (irrespective of $(Y)$)
+- $(r_j)$: the **number of trials** where $(Y = y_j)$ (irrespective of $(X)$)
+
+### Joint Probability
+The **joint probability** $p(X = x_i, Y = y_j)$ is the probability that:
+
+- $(X)$ takes the value $(x_i)$,
+- and $(Y)$ takes the value $(y_j)$.
+
+It is calculated as the fraction of trials $(n_{ij})$, where $(X = x_i)$ and $(Y = y_j)$, divided by the total number of trials $(N)$:
+$$
+p(X = x_i, Y = y_j) = \frac{n_{ij}}{N}.
+$$
+
+This represents the proportion of observations falling into the corresponding cell $(i, j)$ in a contingency table.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+    % Draw the grid
+    \draw[red, thick] (0,0) grid (6,4);
+
+    % Add an overbrace as a node for c_i
+    % \node at (1.5, 4.5) {$\overbrace{n_{i1} + n_{i2} + \cdots + n_{iM}}^{c_i}$};
+
+    % Add another overbrace as a node for c_i
+    \node at (3.5, 4.3) {$\overbrace{\hspace{2.7em}}^{c_i}$};
+ 
+    % Add a vertical brace for r_j
+    \node[rotate=-90] at (6.3, 2.5) {$\overbrace{\hspace{2.7em}}^{r_i}$};
+
+    % Add labels for x_i and y_j
+    \node[anchor=north] at (3,-0.2) {$x_i$};
+    \node[anchor=east] at (-0.15,2) {$y_j$};
+
+    % Add the n_ij label in the center of the grid
+    \node at (3.5,2.4) {$n_{ij}$};
+
+\end{tikzpicture} 
+\caption{Red Grid for Bayes Calc (edit later)}
+\label{fig:red_bayes_grid}
+\end{figure}
+
+
+## Sum and Product Rules of Probability
+
+To derive the **sum and product rules of probability**, consider the following:
+
+- We have two **random variables**:
+  
+-- \(X\), which takes values \(\{x_i\}\) where \(i = 1, \ldots, L\)
+-- \(Y\), which takes values \(\{y_j\}\) where \(j = 1, \ldots, M\)
+
+- For this illustration:
+  - \(L = 5\)
+  - \(M = 3\)
+
+### Definitions:
+- **Total instances**: Let $N$ denote the total number of instances of these variables.
+- **Joint instances**: The number of instances where $X = x_i$ and $Y = y_j$ is $n_{ij}$. This corresponds to the **number of instances in the $(i, j)$ cell of the array**.
+- **Column totals**:
+  - The total number of instances in column $i$, corresponding to $X = x_i$, is $c_i$.
+- **Row totals**:
+  - The total number of instances in row $j$, corresponding to $Y = y_j$, is $r_j$.
+
+### Summary of Relationships:
+$$
+\sum_{j=1}^{M} n_{ij} = c_i \quad \text{(Sum over rows for each column $i$)} 
+$$
+
+$$
+\sum_{i=1}^{L} n_{ij} = r_j \quad \text{(Sum over columns for each row $j$)}
+$$
+
+### Observations:
+- The joint frequency $n_{ij}$ determines how many instances satisfy $X = x_i$ and $Y = y_j$.
+- Marginal counts $c_i$ and $r_j$ are computed as the **sum of joint frequencies** over their respective rows or columns.
+
+
+
+
+\newpage
 
 
 
