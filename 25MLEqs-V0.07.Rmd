@@ -285,6 +285,7 @@ library(reticulate)           # Python integration
   \vhEntry{0.07.0}{2024.11.11}{DP}{Naive Bayes chapter drafted}
   \vhEntry{0.07.5}{2024.11.18}{DP}{KL Divergence section started}
   \vhEntry{0.07.6}{2024.11.18}{DP}{Naive Bayes chapter continues}
+  \vhEntry{0.07.6}{2024.11.20}{DP}{Naive Bayes chapter updates}
 \end{versionhistory}
 \newpage
 
@@ -2391,9 +2392,7 @@ We begin by showing the probability space via a Venn diagram visualization.
 The Venn diagram depicts a Bayes' probability space, with sets \( A \) and \( B \) as distinct events within the universal event space \( \Omega \). The area \( A \cap B \) illustrates the joint occurrence of events \( A \) and \( B \), while $\sim\! A \, \cap \sim\! B$ denotes the region where neither event takes place. This visualization aids in understanding Bayesian inference, particularly how evidence \( B \) updates the probability of event \( A \) according to Bayes' Theorem.
 
 
-The Venn diagram depicts a Bayes' probability space, with sets \( A \) and \( B \) as distinct events within the universal event space \( \Omega \). The area \( A \cap B \) illustrates the joint occurrence of events \( A \) and \( B \), while $\sim\! A \, \cap \sim\! B$ denotes the region where neither event takes place. This visualization aids in understanding Bayesian inference, particularly how evidence \( B \) updates the probability of event \( A \) according to Bayes' Theorem.
-
-**Identities which can by derived by inspection:** 
+**Identities derived by inspection:** 
 $$\begin{aligned} 
 \operatorname{P}(A) &=\operatorname{P}(A \cap B)+\operatorname{P}(A\, \cap \sim B) \\ 
 \operatorname{P}(\sim A)&=\operatorname{P}(\sim A \cap B)+\operatorname{P}(\sim A\, \cap \sim B) \\ 
@@ -2401,6 +2400,8 @@ $$\begin{aligned}
 \operatorname{P}(\sim B)&=\operatorname{P}(A\, \cap \sim B)+\operatorname{P}(\sim A\, \cap \sim B)
 \end{aligned}$$
 
+
+**Fundamental Axioms:** 
 $$\begin{aligned}
 \{\operatorname{P}(A), \operatorname{P}(B)\} &\in[0,1] \triangleq [0 , \Omega] \\ 
 \operatorname{P}(A \cap B)&=\operatorname{P}(B \cap A)\\
@@ -2409,7 +2410,7 @@ $$\begin{aligned}
 
 ### Expressions needed for Bayes analysis calculations
 
-The salient question arising at this juncture is: How do we relate the Venn diagram in Figure:$\,$\ref{fig:venn-diagram} to Bayes' theorem? The intersection of the probabilities of events  $A$ and $B$ is pivotal in this discourse. The following equation elegantly encapsulates this relationship:
+The salient question arising at this juncture is: How do we relate the Venn diagram in Figure:$\,$\ref{fig:venn-diagram} to Bayes' theorem? And, how do we calculate using theorem? The intersection of the probabilities of events  $A$ and $B$ is pivotal in this discourse. The following equation elegantly encapsulates this relationship:
 $$
 P(B) P(A \mid B)=P(A \text{ and } B)=P(A) P(B \mid A)
 $$
