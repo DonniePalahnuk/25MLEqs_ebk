@@ -15,9 +15,9 @@ output:
     number_sections:    yes
     keep_tex:           yes
     fig_caption:        yes
-subtitle: \textit{Insight Hatch Machine Learning Reviews - Vol 1}
-#bibliography: citations.bib
-#csl: microbiology.csl
+subtitle:               \textit{Insight Hatch Machine Learning Reviews - Vol 1}
+#bibliography:          citations.bib
+#csl:                   microbiology.csl
 link-citations:         yes
 nocite: '@*'
 fontsize:               12 pt
@@ -2294,7 +2294,7 @@ We define some key terms for our discussion here:
 
 \begin{figure}[htbp]
 \centering
-\begin{tabular}{cl} 
+\begin{tabular}{|c|l|} 
 Term: & Conotation: \\
 \hline
 $P(A\! \mid \! B)$ & Posterior \\
@@ -2308,10 +2308,18 @@ $P(B)$ & Evidence
 
 Taking a closer look at Bayes' formula: 
 
+$$
+\overset{\text{Poterior}}{P(A \! \mid \! B)} 
+= 
+\overset{\text{Likelihood}}{P(B \! \mid \! A)} 
+\cdot 
+\frac{
+    \overset{\text{Prior}}{P(A)}
+}{
+    \underset{\text{Evidence}}{P(B)}
+}
+$$
 
-$$
-P(A\! \mid\! B)=P(B\! \mid\! A) \frac{P(A)}{P(B)}
-$$
 
 The key to tying this all together is to understand the following key expression:
 
@@ -2319,26 +2327,29 @@ $$
 \text {Posterior} = \text {Likelihood} \cdot \frac{\text { Prior }}{\text { Evidence }}
 $$
 
+The implication is simple in the sense we want to understand how 
+"the occurrence of B" affects "the occurrence of A"
 
-
-
+<!-- dr -->
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}
     % Nodes for A and B
-    \node (B) at (0,0) {$B$};
-    \node (A) at (2,0) {$A$};
+    \node (B) at (0,0) {$\underset{\text{We know this!}}{B}$};
+    \node (A) at (4,0) {$\underset{\text{What is the impact?}}{A}$};
 
     % Draw the arrow from B to A
     \draw[->,thick] (B) to[bend left] (A);
 
     % Add the question mark above the arrow
-    \node at (1,0.7) {?};
+    \node at (2,1.1) {implies?};
     
 \end{tikzpicture}
 \label{fig:B_to_A}
 \end{figure}
+
+
 
 \newpage
 

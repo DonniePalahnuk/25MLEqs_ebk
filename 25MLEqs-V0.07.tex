@@ -4066,7 +4066,7 @@ We define some key terms for our discussion here:
 
 \begin{figure}[htbp]
 \centering
-\begin{tabular}{cl} 
+\begin{tabular}{|c|l|} 
 Term: & Conotation: \\
 \hline
 $P(A\! \mid \! B)$ & Posterior \\
@@ -4081,7 +4081,15 @@ $P(B)$ & Evidence
 Taking a closer look at Bayes' formula:
 
 \[
-P(A\! \mid\! B)=P(B\! \mid\! A) \frac{P(A)}{P(B)}
+\overset{\text{Poterior}}{P(A \! \mid \! B)} 
+= 
+\overset{\text{Likelihood}}{P(B \! \mid \! A)} 
+\cdot 
+\frac{
+    \overset{\text{Prior}}{P(A)}
+}{
+    \underset{\text{Evidence}}{P(B)}
+}
 \]
 
 The key to tying this all together is to understand the following key
@@ -4091,18 +4099,21 @@ expression:
 \text {Posterior} = \text {Likelihood} \cdot \frac{\text { Prior }}{\text { Evidence }}
 \]
 
+The implication is simple in the sense we want to understand how ``the
+occurrence of B'' affects ``the occurrence of A''
+
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}
     % Nodes for A and B
-    \node (B) at (0,0) {$B$};
-    \node (A) at (2,0) {$A$};
+    \node (B) at (0,0) {$\underset{\text{We know this!}}{B}$};
+    \node (A) at (4,0) {$\underset{\text{What is the impact?}}{A}$};
 
     % Draw the arrow from B to A
     \draw[->,thick] (B) to[bend left] (A);
 
     % Add the question mark above the arrow
-    \node at (1,0.7) {?};
+    \node at (2,1.1) {implies?};
     
 \end{tikzpicture}
 \label{fig:B_to_A}
@@ -4169,14 +4180,6 @@ neither event takes place. This visualization aids in understanding
 Bayesian inference, particularly how evidence \(B\) updates the
 probability of event \(A\) according to Bayes' Theorem.
 
-\begin{align} 
-$$
-\operatorname{P}(A) &=\operatorname{P}(A \cap B)+\operatorname{P}(A\, \cap \sim B) \\ 
-\operatorname{P}(\sim A)&=\operatorname{P}(\sim A \cap B)+\operatorname{P}(\sim A\, \cap \sim B) \\ 
-\operatorname{P}(B)&=\operatorname{P}(A \cap B)+\operatorname{P}(\sim A \cap B)
-$$
-\end{align}
-
 \textbf{Identities derived by inspection:} \[\begin{aligned} 
 \operatorname{P}(A) &=\operatorname{P}(A \cap B)+\operatorname{P}(A\, \cap \sim B) \\ 
 \operatorname{P}(\sim A)&=\operatorname{P}(\sim A \cap B)+\operatorname{P}(\sim A\, \cap \sim B) \\ 
@@ -4184,7 +4187,7 @@ $$
 \operatorname{P}(\sim B)&=\operatorname{P}(A\, \cap \sim B)+\operatorname{P}(\sim A\, \cap \sim B)
 \end{aligned}\]
 
-\[\begin{aligned}
+\textbf{Fundamental Axioms:} \[\begin{aligned}
 \{\operatorname{P}(A), \operatorname{P}(B)\} &\in[0,1] \triangleq [0 , \Omega] \\ 
 \operatorname{P}(A \cap B)&=\operatorname{P}(B \cap A)\\
 \operatorname{P}(\overline{A \cap B}) &= \Omega + \operatorname{P}(A \cap B) - \operatorname{P}(A) - \operatorname{P}(B)
@@ -4196,9 +4199,9 @@ calculations}\label{expressions-needed-for-bayes-analysis-calculations}}
 
 The salient question arising at this juncture is: How do we relate the
 Venn diagram in Figure:\(\,\)\ref{fig:venn-diagram} to Bayes' theorem?
-The intersection of the probabilities of events \(A\) and \(B\) is
-pivotal in this discourse. The following equation elegantly encapsulates
-this relationship: \[
+And, how do we calculate using theorem? The intersection of the
+probabilities of events \(A\) and \(B\) is pivotal in this discourse.
+The following equation elegantly encapsulates this relationship: \[
 P(B) P(A \mid B)=P(A \text{ and } B)=P(A) P(B \mid A)
 \] The commutativity of intersection streamlines Bayesian probability
 calculations, reducing them to the ratio of the events' intersection to
