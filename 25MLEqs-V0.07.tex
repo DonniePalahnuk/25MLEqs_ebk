@@ -4049,15 +4049,15 @@ The theorem is usually expressed as:
 Where: \[
 \begin{array}{|c|c|l|}
 \hline
-\textbf{Term} & \textbf{Colloquial Name} & \textbf{Description} \\
+\textbf{Term} & \textbf{Category} & \textbf{Description} \\
 \hline
-\operatorname{P}(A) & \text{Prior Probability} & \text{Initial belief about \(A\) before considering the new evidence \(B\)} \\
+\operatorname{P}(A) & \text{Prior Prob} & \text{Initial belief about \(A\) before considering the new evidence \(B\)} \\
 \hline
-\operatorname{P}(B) & \text{Marginal Probability} & \text{Total probability of observing \(B\) under all possible circumstances} \\
+\operatorname{P}(B) & \text{Marginal Prob} & \text{Total probability of observing \(B\) under all possible circumstances} \\
 \hline
-\operatorname{P}(A\! \mid\! B) & \text{Posterior Probability} & \text{Probability of event \(A\) occurring given that \(B\) has occurred} \\
+\operatorname{P}(A\! \mid\! B) & \text{Posterior Prob} & \text{Probability of event \(A\) occurring given that \(B\) has occurred} \\
 \hline
-\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of observing event \(B\) given that \(A\) is true} \\
+\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of event \(B\) occurring given that \(A\) has occurred} \\
 \hline
 \end{array}
 \]
@@ -4079,7 +4079,7 @@ then \(\operatorname{P}(B\! \mid\! A)=0.95\).
 This is the total probability of observing the evidence ( \(B\) ) under
 all possible circumstances. It's often calculated as the sum of
 probabilities for all possible values of
-\(A: \operatorname{P}(B)=\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)+\operatorname{P}(B\! \mid\! \neg A) \cdot \operatorname{P}(\neg A)\),
+\(A: \operatorname{P}(B)=\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)+\operatorname{P}(B\! \mid \sim\! A) \cdot \operatorname{P}(\sim\! A)\),
 where \(\neg A\) represents the complement of \(A\).
 
 \textbf{Posterior Probability \(\operatorname{P}(A\! \mid\! B)\):}\\
@@ -4425,24 +4425,34 @@ computation: \[
 
 \newpage
 
-\hypertarget{prob-space}{%
-\section{Prob Space}\label{prob-space}}
+\hypertarget{probability-space-graph-over-omega}{%
+\section{\texorpdfstring{Probability Space Graph over
+\(\Omega\)}{Probability Space Graph over \textbackslash Omega}}\label{probability-space-graph-over-omega}}
 
 Interestingly Enough - these relations yield a probability symmetry
 originating from \(\Omega\).
 
+Interestingly enough, the relationships visualized in this graph yield a
+probability symmetry originating from \(\Omega\). This graph is
+meaningful because it provides a structured way to represent the
+relationships between various conditional probabilities in the
+probability space \(\Omega\). By mapping these relationships, we gain
+insights into the fundamental symmetries and connections that define
+conditional probability.
+
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture} 
+\begin{tikzpicture}[scale=1.0] 
     [
     new set=my nodes, 
     new set=my nodes2,
-    every node/.style = {font=\footnotesize}
+    every node/.style = {font=\footnotesize}, % Global style for nodes
     ] 
 
 {
 % define nodes
-\node[draw] (Omega_Left)      at    (0,0)     {$\Omega$};
+\node[draw, align=center] (Omega_Left) at (0,0) {\Large $\Omega$ \\ \footnotesize Prob \\ Space}; 
+% \node[draw] (Omega_Left)    at    (0,0)     {$\Omega$};
 \node[draw] (A)               at    (3,2)     {$P(A)$};
 \node[draw] (notA)            at    (3,-2)    {$P(\sim\! A)$};
 \node[draw] (AcapB)           at    (7,3)     {$P(A \cap B)$};
@@ -4451,30 +4461,31 @@ originating from \(\Omega\).
 \node[draw] (notAcapnotB)     at    (7,-3)    {$P(\sim\! A \cap \sim\! B)$};
 
 \node[draw] (BcapA)           at    (10,3)      {$P(B \cap A)$};
-\node[draw] (notBcapA)        at    (10,-1)         {$P(\sim\! B \cap A)$};
-\node[draw] (BcapnotA)        at    (10,1)  {$P(B \cap \sim\! A )$};
+\node[draw] (notBcapA)        at    (10,-1)     {$P(\sim\! B \cap A)$};
+\node[draw] (BcapnotA)        at    (10,1)    {$P(B \cap \sim\! A )$};
 \node[draw] (notBcapnotA)     at    (10,-3)     {$P(\sim\! B \cap \sim\! A)$};
 
 \node[draw] (B)               at    (14,2)      {$P(B)$};
 \node[draw] (notB)            at    (14,-2)     {$P(\sim\! B)$};
 
-\node[draw] (Omega_Right)     at    (17,0)      {$\Omega$};
+\node[draw, align=center] (Omega_Right) at (17,0) {\Large $\Omega$ \\ \footnotesize Prob \\ Space}; 
+% \node[draw] (Omega_Right)     at  (17,0)      {$\Omega$};
 
 
 % make some help grid
 % \draw[help lines] (-1,4) grid (14,-4);
 
 % draw lines left Omega_Left to P(A) and P(~A)
-\draw (Omega_Left) -- (A)       node [midway,above,sloped]      {$P(A\! \mid\! A)$};
-\draw (Omega_Left) -- (notA)    node [midway,below,sloped]      {$P(\sim\! A\! \mid \sim\! A)$};
+\draw (Omega_Left) -- (A)       node [midway,above,sloped]      {\scriptsize $P(A\! \mid\! A)$};
+\draw (Omega_Left) -- (notA)    node [midway,below,sloped]      {\scriptsize $P(\sim\! A\! \mid \sim\! A)$};
 
 % draw lines second layer top from P(A)
-\draw (A) -- (AcapB)            node [midway,above,sloped]      {$P(B\! \mid\! A)$};
-\draw (A) -- (AcapnotB)         node [midway,below,sloped]      {$P(\sim\! B\! \mid\! A)$};
+\draw (A) -- (AcapB)            node [midway,above,sloped]      {\scriptsize $P(B\! \mid\! A)$};
+\draw (A) -- (AcapnotB)         node [midway,below,sloped]      {\scriptsize $P(\sim\! B\! \mid\! A)$};
 
 % draw lines second layer bot from P(~A)
-\draw (notA) -- (notAcapB)      node [midway,above,sloped]      {$P(B\! \mid \sim\! A)$};
-\draw (notA) -- (notAcapnotB)   node [midway,below,sloped]      {$P(\sim\! B\! \mid \sim\! A)$};
+\draw (notA) -- (notAcapB)      node [midway,above,sloped]      {\scriptsize $P(B\! \mid \sim\! A)$};
+\draw (notA) -- (notAcapnotB)   node [midway,below,sloped]      {\scriptsize $P(\sim\! B\! \mid \sim\! A)$};
 
 % draw commutative connection
 \draw [dashed] (AcapB) -- (BcapA);
@@ -4483,43 +4494,79 @@ originating from \(\Omega\).
 \draw [dashed] (notAcapnotB) -- (notBcapnotA);
 
 % draw lines second layer top from P(B)
-\draw (B) -- (BcapA)            node [midway,above,sloped]      {$P(A\! \mid\! B)$};
-\draw (B) -- (BcapnotA)         node [midway,below,sloped]      {$P(\sim\! A\! \mid\! B)$};
+\draw (B) -- (BcapA)            node [midway,above,sloped]      {\scriptsize $P(A\! \mid\! B)$};
+\draw (B) -- (BcapnotA)         node [midway,below,sloped]      {\scriptsize $P(\sim\! A\! \mid\! B)$};
 
 % draw lines second layer top from P(~B)
-\draw (notB) -- (notBcapA)      node [midway,above,sloped]      {$P(A\! \mid \sim\! B)$};
-\draw (notB) -- (notBcapnotA)   node [midway,below,sloped]      {$P(\sim\! A\! \mid \sim\! B)$};
+\draw (notB) -- (notBcapA)      node [midway,above,sloped]      {\scriptsize $P(A\! \mid \sim\! B)$};
+\draw (notB) -- (notBcapnotA)   node [midway,below,sloped]      {\scriptsize $P(\sim\! A\! \mid \sim\! B)$};
 
 % draw lines left Omega_Left to P(A) and P(~A)
-\draw (Omega_Right) -- (B)      node [midway,above,sloped]      {$P(B\! \mid\! B)$};
-\draw (Omega_Right) -- (notB)   node [midway,below,sloped]      {$P(\sim\! B\! \mid \sim\! B)$};
+\draw (Omega_Right) -- (B)      node [midway,above,sloped]      {\scriptsize $P(B\! \mid\! B)$};
+\draw (Omega_Right) -- (notB)   node [midway,below,sloped]      {\scriptsize $P(\sim\! B\! \mid \sim\! B)$};
 
 
 }
 \end{tikzpicture}
-\caption{Prob Graph $\Omega$ bridged by commutative intersection $P(A \cap B) = P(B \cap A)$}.
+\caption{Probability Graph $\Omega$ bridged by commutative intersection $P(A \cap B) = P(B \cap A)$}.
 \label{fig:ProbGraph1-diagram}
 \end{figure}
 
-Through graph re-ordering we can better visualize the symmetry around
-\(\Omega\).
+\hypertarget{why-is-this-graph-meaningful}{%
+\subsection{Why is this graph
+meaningful?}\label{why-is-this-graph-meaningful}}
+
+This type of visualization allows us to:
+
+\begin{itemize}
+\tightlist
+\item
+  Understand how conditional probabilities link different events.
+\item
+  Highlight the inherent symmetry in relationships such as
+  \(P(A \cap B) = P(B \cap A)\), emphasizing commutative properties.
+\item
+  Clarify how joint probabilities, complements, and conditional
+  probabilities interact within the space \(\Omega\).
+\end{itemize}
+
+Each \textbf{edge} in the graph represents a \textbf{conditional
+probability} that connects adjacent nodes. For example:
+
+\begin{itemize}
+\tightlist
+\item
+  An edge from \(\Omega\) to \(P(A)\) trivalially represents
+  \(P(A \mid A)\), the probability of \(A\) given \(A\).
+\item
+  Similarly, edges like \(P(B \mid A)\) connect events \(P(A)\) and
+  \(P(A \cap B)\), reinforcing the dependency between them.
+\end{itemize}
+
+\newpage
+
+Through graph re-ordering we can better highlite inherent symmetries
+around \(\Omega\). We can then better understand how these conditional
+probabilities form a consistent framework that governs the relationships
+between different events.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture} 
+\begin{tikzpicture}[scale = 1.05] 
     [
     every node/.style = {font=\footnotesize}
     ] 
 
 {
 % define nodes
-\node[draw] (Omega_Center)  at  (0,0)       {$\Omega$};
-\node[draw] (A)             at  (-4,4)  {$P(A)$};
-\node[draw] (notA)          at  (4,-4)  {$P(\sim\! A)$};
-\node[draw] (AcapB)         at  (0,4)       {$P(A \cap B)$};
-\node[draw] (AcapnotB)      at  (-4,0)  {$P(A \cap \sim\! B)$};
-\node[draw] (notAcapB)      at  (4,0)   {$P(\sim\! A \cap B)$};
-\node[draw] (notAcapnotB)   at  (0,-4)  {$P(\sim\! A \cap \sim\! B)$};
+% \node[draw] (Omega_Center)    at  (0,0)       {\Large $\Omega$};
+\node[draw, align=center] (Omega_Center) at (0,0) {\Large $\Omega$ \\ \footnotesize Prob Space};
+\node[draw] (A)             at  (-4,4)          {$P(A)$};
+\node[draw] (notA)          at  (4,-4)        {$P(\sim\! A)$};
+\node[draw] (AcapB)         at  (0,4)           {$P(A \cap B)$};
+\node[draw] (AcapnotB)      at  (-4,0)      {$P(A \cap \sim\! B)$};
+\node[draw] (notAcapB)      at  (4,0)       {$P(\sim\! A \cap B)$};
+\node[draw] (notAcapnotB)   at  (0,-4)    {$P(\sim\! A \cap \sim\! B)$};
 
 % \node[draw] (BcapA)           at  (8,3)       {$P(B \cap A)$};
 % \node[draw] (notBcapA)        at  (8,-1)  {$P(\sim\! B \cap A)$};
@@ -4532,25 +4579,129 @@ Through graph re-ordering we can better visualize the symmetry around
 
 % make some help grid
 % \draw[help lines] (-6,-6) grid (6,6);
-\draw (Omega_Center) -- (A)         node [midway,above,sloped]      {$P(A\! \mid\! A)$};
-\draw (Omega_Center) -- (notA)  node [midway,above,sloped]      {$P(\sim\! A\! \mid  \sim\! A)$};
-\draw (Omega_Center) -- (B)         node [midway,above,sloped]      {$P(B\! \mid\! B)$};
-\draw (Omega_Center) -- (notB)  node [midway,above,sloped]      {$P(\sim\! B\! \mid \sim\! B)$};
+\draw (Omega_Center) -- (A)         node [midway,above,sloped]      {\scriptsize $P(A\! \mid\! A)$};
+\draw (Omega_Center) -- (notA)  node [midway,above,sloped]      {\scriptsize $P(\sim\! A\! \mid  \sim\! A)$};
+\draw (Omega_Center) -- (B)         node [midway,above,sloped]      {\scriptsize $P(B\! \mid\! B)$};
+\draw (Omega_Center) -- (notB)  node [midway,above,sloped]      {\scriptsize $P(\sim\! B\! \mid \sim\! B)$};
 
-\draw  (A) -- (AcapB)           node [midway,above,sloped]          {$P(B\! \mid\! A)$};
-\draw  (AcapnotB) -- (A)            node [midway,above,sloped]          {$P(\sim\! B\! \mid\! A)$};
-\draw  (B) -- (AcapB)           node [midway,above,sloped]          {$P(A\! \mid\! B)$};
-\draw  (B) -- (notAcapB)            node [midway,above,sloped]          {$P(\sim\! A\! \mid\! B)$};
-\draw  (notB) -- (AcapnotB)         node [midway,above,sloped]          {$P(A\! \mid \sim\! B)$};
-\draw  (notB) -- (notAcapnotB)      node [midway,above,sloped]          {$P(\sim\! A\! \mid \sim\! B)$};
-\draw  (notA) -- (notAcapnotB)      node [midway,above,sloped]          {$P(\sim\! B\! \mid \sim\! A)$};
-\draw  (notAcapB) -- (notA)     node [midway,above,sloped]          {$P(B\! \mid \sim\! A)$};
+\draw  (A) -- (AcapB)           node [midway,above,sloped]        {\scriptsize $P(B\! \mid\! A)$};
+\draw  (AcapnotB) -- (A)            node [midway,above,sloped]      {\scriptsize $P(\sim\! B\! \mid\! A)$};
+\draw  (B) -- (AcapB)           node [midway,above,sloped]        {\scriptsize $P(A\! \mid\! B)$};
+\draw  (B) -- (notAcapB)            node [midway,above,sloped]          {\scriptsize $P(\sim\! A\! \mid\! B)$};
+\draw  (notB) -- (AcapnotB)         node [midway,above,sloped]      {\scriptsize $P(A\! \mid \sim\! B)$};
+\draw  (notB) -- (notAcapnotB)      node [midway,above,sloped]  {\scriptsize $P(\sim\! A\! \mid \sim\! B)$};
+\draw  (notA) -- (notAcapnotB)      node [midway,above,sloped]  {\scriptsize $P(\sim\! B\! \mid \sim\! A)$};
+\draw  (notAcapB) -- (notA)     node [midway,above,sloped]          {\scriptsize $P(B\! \mid \sim\! A)$};
 
 }
 \end{tikzpicture}
 \caption{Probability Graph displaying inherent symmetry around $\Omega$}
 \label{fig:ProbGraph2-diagram}
 \end{figure}
+
+Probability theory provides a robust framework for understanding and
+quantifying uncertainty. At the heart of this framework lies the concept
+of a probability space, represented here as \(\Omega\). The mappings
+within this space, as visualized in the following graphs, reveal deep
+insights into how probabilities interact, connect, and relate to each
+other.
+
+This visualization captures the relationships between various events and
+their intersections, along with the conditional probabilities that
+bridge these relationships. Each node in the graph represents a specific
+probability or set of probabilities, while the edges linking them denote
+conditional probabilities, which express the likelihood of one event
+given the occurrence of another. By structuring these connections
+graphically, we can achieve a more intuitive grasp of the mathematical
+underpinnings of probability theory.
+
+\textbf{Why This Graph is Meaningful ?}
+
+Symmetry and Commutative Properties:
+
+The graph highlights a fundamental property of probability: the
+commutative nature of intersections. For instance,
+\(P(A \cap B) = P(B \cap A)\). This symmetry is clearly visualized
+through the commutative links, represented as dashed lines.
+
+Conditional Dependencies:
+
+Each edge encodes a conditional probability, such as \(P(A \mid B)\) or
+\(P(B \mid A)\). These conditional probabilities provide critical
+insights into how one event influences another. The graph captures this
+influence in a structured and visually accessible way.
+
+Partitioning of Probability Space:
+
+The diagram divides \(\Omega\) into mutually exclusive and exhaustive
+components, such as \(P(A \cap B)\), \(P(A \cap \sim B)\),
+\(P(\sim A \cap B)\), and \(P(\sim A \cap \sim B)\). This partitioning
+reveals how probabilities distribute across the space and helps in
+understanding joint and marginal probabilities.
+
+Inherent Symmetry:
+
+The visualization emphasizes the inherent symmetry in probability
+relationships. For example, the mappings around \(\Omega\) are visually
+balanced, reinforcing the idea that \(\Omega\) serves as the universal
+set encompassing all events.
+
+Practical Interpretations:
+
+Such mappings are particularly useful in Bayesian inference, where
+updating beliefs based on observed data requires careful computation of
+conditional probabilities. This graph provides a foundation for such
+calculations by making the relationships explicit.
+
+Insights Gained from the Visualization
+
+Connectivity:
+
+The direct edges between nodes illustrate how probabilities propagate
+through the system. For example, \(P(A)\) connects to \(P(A \cap B)\)
+via the conditional probability \(P(B \mid A)\). This connectivity
+mirrors real-world decision-making processes where one piece of
+information influences another.
+
+Comparative Understanding:
+
+By juxtaposing related probabilities, such as \(P(A \cap B)\) and
+\(P(B \cap A)\), the graph enables a side-by-side comparison that
+reinforces mathematical equivalence.
+
+Structure of Relationships:
+
+The graph imposes a structure on the probability space, making abstract
+relationships more tangible. This structured view is invaluable for
+teaching, analysis, and practical applications such as decision analysis
+and machine learning.
+
+How to Use This Graph
+
+Study Conditional Probabilities:
+
+Trace the edges to understand the relationship between nodes. For
+example, \(P(A \cap B)\) is linked to \(P(A)\) through \(P(B \mid A)\),
+showing the dependence of the joint probability on the marginal and
+conditional probabilities.
+
+Analyze Bayesian Inference:
+
+Use the graph to identify how evidence updates beliefs. For instance,
+given \(P(B \mid A)\) and \(P(A)\), one can compute \(P(A \cap B)\),
+which forms the basis of Bayesian updates.
+
+Visualize Complex Spaces:
+
+For advanced topics, such as joint distributions or higher-dimensional
+spaces, extend the graphing technique to include additional events and
+their intersections.
+
+In summary, this probability space graph provides an essential tool for
+exploring and understanding the relationships between events in a
+probabilistic framework. By visualizing \(\Omega\) and its components,
+we gain not only a mathematical appreciation but also a conceptual
+understanding of the intricate dance of probabilities.
 
 \newpage
 

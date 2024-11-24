@@ -264,20 +264,7 @@ header-includes:
   ``` 
 ---
 <!-- headers above -->
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  warning = FALSE,
-  message = FALSE,
-  fig.pos = 'h',
-  tidy.opts = list(width.cutoff = 60),
-  fig.width = 4, 
-  fig.height = 3, 
-  fig.cap = "Default caption for all figures",  # Optional default caption
-  fig.align = "center"
-)
-library(reticulate)           # Python integration
-# cat("\\small\n")
-```
+
 
 
 
@@ -502,7 +489,8 @@ The following R code demonstrates how to implement gradient descent for this pol
 \
 
 \scriptsize
-```{r}
+
+``` r
 # Set seed for reproducibility
 set.seed(42)
 
@@ -545,7 +533,8 @@ gd_result <- gradient_descent(learning_rate, iterations, start_point)
 The following R code demonstrates how to implement gradient descent for this polynomial, including plotting the descent path and function value across iterations. This practical example aims to give you a clear understanding of how gradient descent operates on real functions, using R for illustration.
 
 \scriptsize
-```{r gradient-descent-iteration-plot1, fig.cap="Gradient Descent on Polynomial Function - Iteration vs Function Value"}
+
+``` r
 library(ggplot2)
 ggplot(gd_result, aes(x = Iteration, y = function_values)) +
   geom_line(color = "blue", size = 1.2) +
@@ -557,11 +546,21 @@ ggplot(gd_result, aes(x = Iteration, y = function_values)) +
     plot.title = element_text(size = 11)  # Adjust the size value as needed
   )
 ```
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/gradient-descent-iteration-plot1-1} 
+
+}
+
+\caption{Gradient Descent on Polynomial Function - Iteration vs Function Value}\label{fig:gradient-descent-iteration-plot1}
+\end{figure}
 \normalsize
 
 \newpage
 \scriptsize
-```{r gradient-descent-iteration-plot2, fig.cap="Gradient Descent on Polynomial Function - Trace the Path on the Polynomial"}
+
+``` r
 # Additional Plot: Trace the Path of Gradient Descent on the Polynomial
 x_range <- seq(min(gd_result$x_values) - 1, max(gd_result$x_values) + 1, length.out = 500)
 polynomial_values <- polynomial_function(x_range)
@@ -576,7 +575,16 @@ ggplot() +
   theme(
     plot.title = element_text(size = 11)  # Adjust the size value as needed
   )
-```  
+```
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/gradient-descent-iteration-plot2-1} 
+
+}
+
+\caption{Gradient Descent on Polynomial Function - Trace the Path on the Polynomial}\label{fig:gradient-descent-iteration-plot2}
+\end{figure}
 \normalsize
 
 
@@ -1000,7 +1008,8 @@ In practice, machine learning models often use pre-calculated tables or librarie
 The Z-score calculation can be easily implemented in R to standardize a dataset or to identify outliers. Below is a simple example to illustrate how we can compute Z-scores for a given dataset and visualize the data distribution using a histogram:
 
 \scriptsize
-```{r z_score_example, echo=TRUE}
+
+``` r
 # Load required libraries
 library(ggplot2)
 
@@ -1030,10 +1039,32 @@ plot <- ggplot(data, aes(x = x, y = y)) +
 
 # Print the plot
 print(plot)
+```
 
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/z_score_example-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:z_score_example}
+\end{figure}
+
+``` r
 # Print out the results
 cat("Z-Score:", z_score, "\n")
+```
+
+```
+## Z-Score: 1.25
+```
+
+``` r
 cat("Probability (P-value) for Z <=", z_score, ":", round(p_value * 100, 2), "%\n")
+```
+
+```
+## Probability (P-value) for Z <= 1.25 : 89.44 %
 ```
 \normalsize
 
@@ -1487,15 +1518,34 @@ For instance, if two features are highly correlated, one may be removed from the
 To compute the correlation coefficient in R, you can use the built-in `cor()` function:
 
 \scriptsize
-```{r correlation_example, echo=TRUE}
+
+``` r
 # Example R code to compute Pearson's correlation coefficient
 x <- c(1, 2, 3, 4, 5)
 y <- c(5, 4, 3, 2, 1)
 correlation <- cor(x, y)
 # print{correlation}
 cat(x)
+```
+
+```
+## 1 2 3 4 5
+```
+
+``` r
 cat(y)
+```
+
+```
+## 5 4 3 2 1
+```
+
+``` r
 cat(correlation)
+```
+
+```
+## -1
 ```
 \normalsize
 
@@ -1513,7 +1563,8 @@ $$
 
 
 \scriptsize
-```{r example1}
+
+``` r
 # Example 1: Create scatter data
 set.seed(42)  # For reproducibility
 
@@ -1525,17 +1576,33 @@ y1 <- 3 + 2 * x1 + rnorm(100, mean = 0, sd = 1)  # Linear relationship with some
 plot(x1, y1, main = "Scatter Plot with Linear Overlay Ex1",
      xlab = "X1", ylab = "Y1", pch = 19, col = "blue")
 abline(lm(y1 ~ x1), col = "red", lwd = 2)  # Add linear regression line
+```
 
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/example1-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:example1}
+\end{figure}
+
+``` r
 # Calculate Pearson's correlation coefficient
 r1 <- cor(x1, y1)
 cat("Pearson's Correlation for Example 1: ", r1, "\n")
+```
+
+```
+## Pearson's Correlation for Example 1:  0.9775592
 ```
 \normalsize
 
 ### Example 1: Scatter Data with Linear Overlay and some noise
 
 \scriptsize
-```{r example2}
+
+``` r
 # Example 2: Create another set of scatter data
 set.seed(24)  # For reproducibility
 
@@ -1547,10 +1614,25 @@ y2 <- 1 + 0.5 * x2 + rnorm(100, mean = 0, sd = 2)  # Another linear relationship
 plot(x2, y2, main = "Scatter Plot with Linear Overlay Ex2",
      xlab = "X2", ylab = "Y2", pch = 19, col = "green")
 abline(lm(y2 ~ x2), col = "purple", lwd = 2)  # Add linear regression line
+```
 
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/example2-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:example2}
+\end{figure}
+
+``` r
 # Calculate Pearson's correlation coefficient
 r2 <- cor(x2, y2)
 cat("Pearson's Correlation for Example 2: ", r2, "\n")
+```
+
+```
+## Pearson's Correlation for Example 2:  0.783414
 ```
 \normalsize
 
@@ -2107,7 +2189,8 @@ Cosine similarity plays a crucial role in various machine learning tasks, partic
 Here’s how to calculate the cosine similarity between two vectors using R:
 
 \scriptsize
-```{r cosine_similarity_example}
+
+``` r
 # Example vectors
 A <- c(1, 3, 4, 5)
 B <- c(2, 4, 6, 8)
@@ -2121,13 +2204,18 @@ cosine_similarity <- function(A, B) {
 similarity <- cosine_similarity(A, B)
 cat("Cosine Similarity between A and B: ", similarity, "\n")
 ```
+
+```
+## Cosine Similarity between A and B:  0.9970545
+```
 \normalsize
 
 \newpage
 
 ## Cosine Similarity in R, 3D-plot
 \scriptsize
-```{r cosine_similarity_example_2}
+
+``` r
 # Load necessary libraries
 library(ggplot2)
 
@@ -2143,7 +2231,13 @@ cosine_similarity <- function(A, B) {
 # Calculate cosine similarity
 similarity <- cosine_similarity(A, B)
 cat("Cosine Similarity between A and B: ", similarity, "\n")
+```
 
+```
+## Cosine Similarity between A and B:  0.9746318
+```
+
+``` r
 # Prepare data for ggplot
 vector_data <- data.frame(
   x = c(0, A[1], 0, B[1]), # X-coordinates
@@ -2169,7 +2263,18 @@ ggplot(vector_data_2d, aes(x = x, y = y, color = group)) +
        x = "X", y = "Y") +
   theme(legend.position = "none") +
   coord_fixed(ratio = 1)  # Fix aspect ratio for proper projection
+```
 
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/cosine_similarity_example_2-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:cosine_similarity_example_2}
+\end{figure}
+
+``` r
 # Save the plot as a PDF
 ggsave("cosine_similarity_2d_plot.pdf")
 ```
@@ -3709,27 +3814,39 @@ How do these recommendations feel in the context of your goals for this book? Wo
 ## testing Python Integration (temp section - to remove later)
 Create a variable `x` in the Python session:
 
-```{python}
+
+``` python
 x = [1, 2, 3]
 ```
 
 Access the Python variable `x` in an R code chunk:
 
-```{r}
+
+``` r
 py$x
+```
+
+```
+## [1] 1 2 3
 ```
 
 Create a new variable `y` in the Python session using R,
 and pass a data frame to `y`:
 
-```{r}
+
+``` r
 py$y <- head(cars)
 ```
 
 Print the variable `y` in Python:
 
-```{python}
+
+``` python
 print(y)
+```
+
+```
+## {'speed': [4.0, 4.0, 7.0, 7.0, 8.0, 9.0], 'dist': [2.0, 10.0, 4.0, 22.0, 16.0, 10.0]}
 ```
 
 \newpage 
@@ -3738,7 +3855,8 @@ print(y)
 
 Let's define the numbers we will use in both R and Python:
 
-```{r}
+
+``` r
 # Define a vector of numbers in R
 define_numbers <- c(1, 2, 3, 4, 5)
 ```
@@ -3747,23 +3865,30 @@ define_numbers <- c(1, 2, 3, 4, 5)
 
 This is a simple R code block that calculates the sum of 5 numbers:
 
-```{r}
+
+``` r
 # R code to sum 5 numbers
 r_sum <- sum(define_numbers)
 print(paste("The sum of the numbers in R is:", r_sum))
 ```
 
+```
+## [1] "The sum of the numbers in R is: 15"
+```
+
 
 
 ## Python Code To Pass *
-```{r}
+
+``` r
 py$n2 <- define_numbers
 ```
 
 ## Python Code Block
 This is a simple Python code block that calculates the sum of 5 numbers:
 
-```{python}
+
+``` python
 # Python code to calculate the sum of numbers defined in R
 
 # Define a list of numbers
@@ -3775,7 +3900,18 @@ total_sum2 = sum(n2)
 
 # Print the result
 print(f"The sum of the numbers 'total sum' is: {total_sum}")
+```
+
+```
+## The sum of the numbers 'total sum' is: 15
+```
+
+``` python
 print(f"The sum of the numbers 'n2' is: {total_sum2}")
+```
+
+```
+## The sum of the numbers 'n2' is: 15.0
 ```
 
 \newpage
