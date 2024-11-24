@@ -288,10 +288,8 @@ library(reticulate)           # Python integration
   \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
   \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
-  \vhEntry{0.07.0}{2024.11.11}{DP}{Naive Bayes chapter drafted}
-  \vhEntry{0.07.5}{2024.11.18}{DP}{KL Divergence section started}
-  \vhEntry{0.07.6}{2024.11.18}{DP}{Naive Bayes chapter continues}
-  \vhEntry{0.07.6}{2024.11.20}{DP}{Naive Bayes chapter updates}
+  \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
+  \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
 \end{versionhistory}
 \newpage
 
@@ -2248,6 +2246,32 @@ P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, 
 **Importance in ML**: Naive Bayes is used for classification tasks, especially in text classification and spam detection. Its simplicity and efficiency make it a popular choice for high-dimensional datasets.
 
 \vspace*{\fill}
+
+\newpage
+
+## Naive Baye's - overview
+
+Naive Bayes is a fundamental classification technique in machine learning that utilizes Bayes' theorem to make predictions based on feature independence. It is particularly valued for its simplicity and efficiency, making it suitable for large datasets and real-time applications.
+Overview of Naive Bayes
+
+Naive Bayes classifiers are a family of linear probabilistic classifiers that assume the features are **conditionally independent** given the target class. This assumption simplifies the computation of probabilities, allowing for quick and efficient classification. Despite its "naive" assumption, this method has proven effective in various applications, especially in natural language processing (NLP) tasks like spam detection and sentiment analysis.
+
+**Key Features:**:
+
+Probabilistic Model: Naive Bayes uses conditional probability to predict class membership based on the likelihood of features occurring within each class.
+
+Independence Assumption: It assumes that the presence of a particular feature does not affect the presence of any other feature, which simplifies calculations significantly.
+
+Fast and Scalable: The algorithm is highly scalable, requiring only a small amount of training data to estimate parameters effectively, making it suitable for large datasets134.
+Applications
+
+**Naive Bayes is widely used in various domains:**
+
+Text Classification: Such as spam filtering and sentiment analysis.
+Medical Diagnosis: Classifying diseases based on symptoms.
+Recommendation Systems: Suggesting products based on user preferences.
+
+In order to discuss the Naive Bayes' equation and its application we first introduce the Bayes' equation. 
 
 \newpage
 
