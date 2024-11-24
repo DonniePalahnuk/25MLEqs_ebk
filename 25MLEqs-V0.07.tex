@@ -97,6 +97,12 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+\usepackage{tikz}
+\usetikzlibrary{trees} % Required for tree structure
+% \usetikzlibrary {graphs}
+\usetikzlibrary {graphs,shapes.geometric, quotes}
+\usepackage{amsmath}
+
 \usepackage{pgfplots}
 \newcommand{\docTitle}{25 ML Fundamental Equations}
 
@@ -3952,7 +3958,7 @@ similarity}\label{tikz-output---cosine-similarity}}
 \newpage
 
 \vspace*{\fill}
-\begin{a_def_eq}{NaiveBayesDef}{def7} 
+\begin{a_def_eq}{Naive Bayes}{def7} 
 
 \begin{align}\label{naivebayes}
 P(y | x_1, \ldots, x_n) = \frac{P(y) \prod_{i=1}^{n} P(x_i | y)}{P(x_1, \ldots, x_n)}
@@ -4009,6 +4015,28 @@ process is particularly useful in various fields such as statistics,
 machine learning, and data analysis, where making predictions based on
 incomplete information is common.
 
+The implication is simple in the sense we want to understand how ``the
+occurrence of B'' affects ``the occurrence of A''
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+    % Nodes for A and B
+    \node (B) at (0,0) {$\underset{\text{We know this!}}{B}$};
+    \node (A) at (4,0) {$\underset{\text{What is the impact?}}{A}$};
+
+    % Draw the arrow from B to A
+    \draw[->,thick] (B) to[bend left] (A);
+
+    % Add the question mark above the arrow
+    \node at (2,1.1) {implies?};
+    
+\end{tikzpicture}
+\label{fig:B_to_A}
+\end{figure}
+
+\newpage
+
 \hypertarget{bayes-formula}{%
 \subsection{Bayes Formula}\label{bayes-formula}}
 
@@ -4021,15 +4049,15 @@ The theorem is usually expressed as:
 Where: \[
 \begin{array}{|c|c|l|}
 \hline
-\textbf{Term} & \textbf{Common Name} & \textbf{Description} \\
+\textbf{Term} & \textbf{Colloquial Name} & \textbf{Description} \\
 \hline
-\operatorname{P}(A) & \text{Prior Probability} & \text{Initial belief about \(A\) before considering the new evidence \(B\).} \\
+\operatorname{P}(A) & \text{Prior Probability} & \text{Initial belief about \(A\) before considering the new evidence \(B\)} \\
 \hline
-\operatorname{P}(B) & \text{Marginal Probability} & \text{Total probability of observing \(B\) under all possible circumstances.} \\
+\operatorname{P}(B) & \text{Marginal Probability} & \text{Total probability of observing \(B\) under all possible circumstances} \\
 \hline
-\operatorname{P}(A\! \mid\! B) & \text{Posterior Probability} & \text{Probability of event \(A\) occurring given that \(B\) has occurred.} \\
+\operatorname{P}(A\! \mid\! B) & \text{Posterior Probability} & \text{Probability of event \(A\) occurring given that \(B\) has occurred} \\
 \hline
-\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of observing event \(B\) given that \(A\) is true.} \\
+\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of observing event \(B\) given that \(A\) is true} \\
 \hline
 \end{array}
 \]
@@ -4057,6 +4085,8 @@ where \(\neg A\) represents the complement of \(A\).
 \textbf{Posterior Probability \(\operatorname{P}(A\! \mid\! B)\):}\\
 This is what you're solving for. It's your updated belief about the
 probability of \(A\) after taking into account the new evidence \(B\).
+
+\newpage
 
 \hypertarget{rational-considerations-of-the-meaning-of-the-bayes-formula}{%
 \subsection{Rational Considerations of the meaning of the Bayes'
@@ -4099,26 +4129,6 @@ expression:
 \text {Posterior} = \text {Likelihood} \cdot \frac{\text { Prior }}{\text { Evidence }}
 \]
 
-The implication is simple in the sense we want to understand how ``the
-occurrence of B'' affects ``the occurrence of A''
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-    % Nodes for A and B
-    \node (B) at (0,0) {$\underset{\text{We know this!}}{B}$};
-    \node (A) at (4,0) {$\underset{\text{What is the impact?}}{A}$};
-
-    % Draw the arrow from B to A
-    \draw[->,thick] (B) to[bend left] (A);
-
-    % Add the question mark above the arrow
-    \node at (2,1.1) {implies?};
-    
-\end{tikzpicture}
-\label{fig:B_to_A}
-\end{figure}
-
 \newpage
 
 \hypertarget{fundamental-bayes-probability-space}{%
@@ -4134,7 +4144,7 @@ Bayesian}\label{probability-space-venn-diagram-for-traditional-bayesian}}
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[scale=1.25]
+\begin{tikzpicture}[scale=1.5]
     % Shade the field of the box pale yellow
     \fill[yellow!5] (-2,-2) rectangle (3,2);
     \draw (-2,-2) rectangle (3,2);
@@ -4193,20 +4203,212 @@ probability of event \(A\) according to Bayes' Theorem.
 \operatorname{P}(\overline{A \cap B}) &= \Omega + \operatorname{P}(A \cap B) - \operatorname{P}(A) - \operatorname{P}(B)
 \end{aligned}\]
 
-\hypertarget{expressions-needed-for-bayes-analysis-calculations}{%
-\subsection{Expressions needed for Bayes analysis
-calculations}\label{expressions-needed-for-bayes-analysis-calculations}}
+\newpage
 
-The salient question arising at this juncture is: How do we relate the
-Venn diagram in Figure:\(\,\)\ref{fig:venn-diagram} to Bayes' theorem?
-And, how do we calculate using theorem? The intersection of the
-probabilities of events \(A\) and \(B\) is pivotal in this discourse.
-The following equation elegantly encapsulates this relationship: \[
-P(B) P(A \mid B)=P(A \text{ and } B)=P(A) P(B \mid A)
-\] The commutativity of intersection streamlines Bayesian probability
-calculations, reducing them to the ratio of the events' intersection to
-the total probability of \(A\) or \(B\). This pivotal concept underpins
-Bayesian analysis. \[
+\newpage
+
+\hypertarget{kolmogorov-axioms-of-probability}{%
+\section{Kolmogorov Axioms of
+Probability}\label{kolmogorov-axioms-of-probability}}
+
+The Kolmogorov axioms \{non-negativity, normalization, and additivity\}
+provide a way to derive a general expression for conditional
+probability, forming the basis of Bayes' theorem. We want a way to
+efficiently calculate Bayesian probability updates. This is a derviation
+grounded in the axiomatic structure of probability.
+
+\hypertarget{the-kolmogorov-axioms}{%
+\subsection{The Kolmogorov Axioms}\label{the-kolmogorov-axioms}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Non-negativity}: \(P(E) \geq 0\) for any event \(E\).
+\item
+  \textbf{Normalization}: \(P(\Omega) = 1\), where \(\Omega\) is the
+  sample space.
+\item
+  \textbf{Additivity}: If \(A\) and \(B\) are disjoint events
+  (\(A \cap B = \emptyset\)), then: \[
+  P(A \cup B) = P(A) + P(B).
+  \]
+\end{enumerate}
+
+\hypertarget{definition-of-conditional-probability}{%
+\subsection{Definition of Conditional
+Probability}\label{definition-of-conditional-probability}}
+
+Conditional probability is defined as: \[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)} \quad \text{if } P(B) > 0.
+\]
+
+This definition can be derived systematically using the axioms of
+probability and set theory.
+
+\hypertarget{axiomatic-derivation-of-pa-mid-b}{%
+\subsection{\texorpdfstring{Axiomatic Derivation of
+\(P(A \mid B)\)}{Axiomatic Derivation of P(A \textbackslash mid B)}}\label{axiomatic-derivation-of-pa-mid-b}}
+
+\textbf{Step 1: Define the restricted sample space}\\
+When conditioning on event \(B\), we are effectively restricting the
+sample space to \(B\). In this restricted sample space: - The total
+probability of \(B\) becomes 1, i.e., \(P_B(\Omega) = 1\), where \(P_B\)
+denotes the new probability measure conditioned on \(B\).
+
+\textbf{Step 2: Normalize probabilities within \(B\)}\\
+The probability of any event \(A\), given \(B\), should reflect the
+proportion of \(A\) within \(B\). This leads to the proportionality: \[
+P(A \mid B) \propto P(A \cap B).
+\] To normalize this proportion, divide by the total probability of
+\(B\): \[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}.
+\]
+
+\textbf{Step 3: Justify using Kolmogorov's axioms}\\
+This definition satisfies the axioms of probability:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Non-negativity}: Since \(P(A \cap B) \geq 0\) and
+  \(P(B) > 0\), \(P(A \mid B) \geq 0\).
+\item
+  \textbf{Normalization}: The total probability in the restricted space
+  sums to 1: \[
+  P(B \mid B) = \frac{P(B \cap B)}{P(B)} = \frac{P(B)}{P(B)} = 1.
+  \]
+\item
+  \textbf{Additivity}: For disjoint events \(A_1, A_2\), where
+  \(A_1 \cap A_2 = \emptyset\): \[
+  P((A_1 \cup A_2) \mid B) = \frac{P((A_1 \cup A_2) \cap B)}{P(B)}.
+  \] By the additivity axiom: \[
+  P((A_1 \cup A_2) \cap B) = P((A_1 \cap B)) + P((A_2 \cap B)),
+  \] so: \[
+  P((A_1 \cup A_2) \mid B) = \frac{P(A_1 \cap B)}{P(B)} + \frac{P(A_2 \cap B)}{P(B)} = P(A_1 \mid B) + P(A_2 \mid B).
+  \]
+\end{enumerate}
+
+\hypertarget{axiomatic-derivation-of-pb-mid-a}{%
+\subsection{\texorpdfstring{Axiomatic Derivation of
+\(P(B \mid A)\)}{Axiomatic Derivation of P(B \textbackslash mid A)}}\label{axiomatic-derivation-of-pb-mid-a}}
+
+By symmetry of intersection (\(A \cap B = B \cap A\)), the same
+reasoning applies: \[
+P(B \mid A) = \frac{P(B \cap A)}{P(A)} \quad \text{if } P(A) > 0.
+\]
+
+\hypertarget{summary-of-the-axiomatic-derivation}{%
+\subsection{Summary of the Axiomatic
+Derivation}\label{summary-of-the-axiomatic-derivation}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Start from the definition of probability within a restricted sample
+  space (conditioning).
+\item
+  Use normalization within the restricted space (\(B\)) to derive
+  \(P(A \mid B)\).
+\item
+  Verify that the result satisfies Kolmogorov's axioms (non-negativity,
+  normalization, additivity).
+\item
+  Symmetry of intersection ensures the analogous formula for
+  \(P(B \mid A)\).
+\end{enumerate}
+
+Thus: \[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B \mid A) = \frac{P(A \cap B)}{P(A)}.
+\] These results naturally follow from the probability axioms and set
+theory.
+
+\newpage
+
+\hypertarget{the-role-of-commutativity-in-bayesian-probability-calculations}{%
+\subsection{The Role of Commutativity in Bayesian Probability
+Calculations}\label{the-role-of-commutativity-in-bayesian-probability-calculations}}
+
+The salient question arising at this juncture is:
+
+\textbf{How do we relate the Venn diagram in
+Figure:\(\,\)\ref{fig:venn-diagram} to Bayes' theorem?}
+
+\textbf{And, how do we calculate using theorem?}
+
+In set theory:
+
+\[
+A \cap B=B \cap A, \quad \text { and } \quad A \cup B=B \cup A .
+\]
+
+These properties reflect the invariance of the resulting set under the
+order of operation. Similarly, in a metric space, where probability is
+conceptualized as a measure \(P\), the measure of the intersection
+\((A \cap B)\) is invariant under the order of \(A\) and \(B\). This
+invariance is the cornerstone that allows Bayes' relation to hold up
+under all valid probability distributions. This property allows us to
+express the joint probability of two events \(A\) and \(B\) in multiple
+equivalent ways:
+
+\[
+P(A \cap B)=P(B \cap A) .
+\]
+
+This symmetry is not arbitrary; it arises directly from the axioms of
+set theory. Specifically, the intersection operation in sets is
+commutative, meaning the order of the operands does not affect the
+result. In a probabilistic context, this translates to the joint
+occurrence of \(A\) and \(B\) being independent of which event is
+referenced first.
+
+From a metric perspective, probability can be thought of as a measure
+defined on a *\textbf{sigma-algebra of subsets}. The intersection of two
+subsets corresponds to the overlap of their measurable areas. The
+measure of this overlap does not depend on the order in which the
+subsets are combined.
+
+This commutativity directly enables the derivation of Bayes' theorem.
+The theorem hinges on the equivalence of two different factorizations of
+the joint probability \(P(A \cap B)\) :
+
+\[
+P(A \cap B)=P(A) P(B \mid A)=P(B) P(A \mid B)
+\]
+
+Without the commutative property, such equivalence could not be
+guaranteed. This would undermine the consistency of conditional
+probability calculations and, by extension, the entire framework of
+Bayesian analysis.
+
+\hypertarget{computational-implications-for-bayesian-analysis}{%
+\subsection{Computational Implications for Bayesian
+Analysis}\label{computational-implications-for-bayesian-analysis}}
+
+The commutative property simplifies Bayesian calculations by providing a
+consistent framework to calculate conditional probabilities.
+Specifically, we can use:
+
+\[
+P(A \mid B)=\frac{P(A \cap B)}{P(B)}, \quad \text { and } \quad P(B \mid A)=\frac{P(A \cap B)}{P(A)} .
+\]
+
+These forms are essential in computational Bayesian analysis because
+they allow direct computation of conditional probabilities using readily
+available components: the joint probability and the marginal
+probabilities.
+
+By relying on commutativity, we avoid ambiguity and reduce the
+complexity of Bayesian inference to manageable and consistent
+operations. This makes Bayesian analysis not only theoretically sound
+but also practically implementable in diverse applications such as
+machine learning, statistical inference, and decision-making under
+uncertainty. The commutativity of intersection streamlines Bayesian
+probability calculations, reducing them to the ratio of the events'
+intersection to the total probability of \(A\) or \(B\). This pivotal
+concept underpins Bayesian analysis. \[
 P(B) P(A \mid B)=\operatorname{P}(A \cap B)=P(B \cap A)=P(A) P(B \mid A)
 \] This consideration streamlines the computation of Bayesian
 probabilities. By conceptualizing it as the ratio of the intersection of
@@ -4223,6 +4425,135 @@ computation: \[
 
 \newpage
 
+\hypertarget{prob-space}{%
+\section{Prob Space}\label{prob-space}}
+
+Interestingly Enough - these relations yield a probability symmetry
+originating from \(\Omega\).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture} 
+    [
+    new set=my nodes, 
+    new set=my nodes2,
+    every node/.style = {font=\footnotesize}
+    ] 
+
+{
+% define nodes
+\node[draw] (Omega_Left)      at    (0,0)     {$\Omega$};
+\node[draw] (A)               at    (3,2)     {$P(A)$};
+\node[draw] (notA)            at    (3,-2)    {$P(\sim\! A)$};
+\node[draw] (AcapB)           at    (7,3)     {$P(A \cap B)$};
+\node[draw] (AcapnotB)        at    (7,1)     {$P(A \cap \sim\! B)$};
+\node[draw] (notAcapB)        at    (7,-1)    {$P(\sim\! A \cap B)$};
+\node[draw] (notAcapnotB)     at    (7,-3)    {$P(\sim\! A \cap \sim\! B)$};
+
+\node[draw] (BcapA)           at    (10,3)      {$P(B \cap A)$};
+\node[draw] (notBcapA)        at    (10,-1)         {$P(\sim\! B \cap A)$};
+\node[draw] (BcapnotA)        at    (10,1)  {$P(B \cap \sim\! A )$};
+\node[draw] (notBcapnotA)     at    (10,-3)     {$P(\sim\! B \cap \sim\! A)$};
+
+\node[draw] (B)               at    (14,2)      {$P(B)$};
+\node[draw] (notB)            at    (14,-2)     {$P(\sim\! B)$};
+
+\node[draw] (Omega_Right)     at    (17,0)      {$\Omega$};
+
+
+% make some help grid
+% \draw[help lines] (-1,4) grid (14,-4);
+
+% draw lines left Omega_Left to P(A) and P(~A)
+\draw (Omega_Left) -- (A)       node [midway,above,sloped]      {$P(A\! \mid\! A)$};
+\draw (Omega_Left) -- (notA)    node [midway,below,sloped]      {$P(\sim\! A\! \mid \sim\! A)$};
+
+% draw lines second layer top from P(A)
+\draw (A) -- (AcapB)            node [midway,above,sloped]      {$P(B\! \mid\! A)$};
+\draw (A) -- (AcapnotB)         node [midway,below,sloped]      {$P(\sim\! B\! \mid\! A)$};
+
+% draw lines second layer bot from P(~A)
+\draw (notA) -- (notAcapB)      node [midway,above,sloped]      {$P(B\! \mid \sim\! A)$};
+\draw (notA) -- (notAcapnotB)   node [midway,below,sloped]      {$P(\sim\! B\! \mid \sim\! A)$};
+
+% draw commutative connection
+\draw [dashed] (AcapB) -- (BcapA);
+\draw [dashed] (AcapnotB) -- (notBcapA);
+\draw [dashed] (notAcapB) -- (BcapnotA);        
+\draw [dashed] (notAcapnotB) -- (notBcapnotA);
+
+% draw lines second layer top from P(B)
+\draw (B) -- (BcapA)            node [midway,above,sloped]      {$P(A\! \mid\! B)$};
+\draw (B) -- (BcapnotA)         node [midway,below,sloped]      {$P(\sim\! A\! \mid\! B)$};
+
+% draw lines second layer top from P(~B)
+\draw (notB) -- (notBcapA)      node [midway,above,sloped]      {$P(A\! \mid \sim\! B)$};
+\draw (notB) -- (notBcapnotA)   node [midway,below,sloped]      {$P(\sim\! A\! \mid \sim\! B)$};
+
+% draw lines left Omega_Left to P(A) and P(~A)
+\draw (Omega_Right) -- (B)      node [midway,above,sloped]      {$P(B\! \mid\! B)$};
+\draw (Omega_Right) -- (notB)   node [midway,below,sloped]      {$P(\sim\! B\! \mid \sim\! B)$};
+
+
+}
+\end{tikzpicture}
+\caption{Prob Graph $\Omega$ bridged by commutative intersection $P(A \cap B) = P(B \cap A)$}.
+\label{fig:ProbGraph1-diagram}
+\end{figure}
+
+Through graph re-ordering we can better visualize the symmetry around
+\(\Omega\).
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture} 
+    [
+    every node/.style = {font=\footnotesize}
+    ] 
+
+{
+% define nodes
+\node[draw] (Omega_Center)  at  (0,0)       {$\Omega$};
+\node[draw] (A)             at  (-4,4)  {$P(A)$};
+\node[draw] (notA)          at  (4,-4)  {$P(\sim\! A)$};
+\node[draw] (AcapB)         at  (0,4)       {$P(A \cap B)$};
+\node[draw] (AcapnotB)      at  (-4,0)  {$P(A \cap \sim\! B)$};
+\node[draw] (notAcapB)      at  (4,0)   {$P(\sim\! A \cap B)$};
+\node[draw] (notAcapnotB)   at  (0,-4)  {$P(\sim\! A \cap \sim\! B)$};
+
+% \node[draw] (BcapA)           at  (8,3)       {$P(B \cap A)$};
+% \node[draw] (notBcapA)        at  (8,-1)  {$P(\sim\! B \cap A)$};
+% \node[draw] (BcapnotA)        at  (8,1)       {$P(B \cap \sim\! A )$};
+% \node[draw] (notBcapnotA)         at  (8,-3)  {$P(\sim\! B \cap \sim\! A)$};
+
+\node[draw] (B)             at  (4,4)   {$P(B)$};
+\node[draw] (notB)          at  (-4,-4)     {$P(\sim\! B)$};
+
+
+% make some help grid
+% \draw[help lines] (-6,-6) grid (6,6);
+\draw (Omega_Center) -- (A)         node [midway,above,sloped]      {$P(A\! \mid\! A)$};
+\draw (Omega_Center) -- (notA)  node [midway,above,sloped]      {$P(\sim\! A\! \mid  \sim\! A)$};
+\draw (Omega_Center) -- (B)         node [midway,above,sloped]      {$P(B\! \mid\! B)$};
+\draw (Omega_Center) -- (notB)  node [midway,above,sloped]      {$P(\sim\! B\! \mid \sim\! B)$};
+
+\draw  (A) -- (AcapB)           node [midway,above,sloped]          {$P(B\! \mid\! A)$};
+\draw  (AcapnotB) -- (A)            node [midway,above,sloped]          {$P(\sim\! B\! \mid\! A)$};
+\draw  (B) -- (AcapB)           node [midway,above,sloped]          {$P(A\! \mid\! B)$};
+\draw  (B) -- (notAcapB)            node [midway,above,sloped]          {$P(\sim\! A\! \mid\! B)$};
+\draw  (notB) -- (AcapnotB)         node [midway,above,sloped]          {$P(A\! \mid \sim\! B)$};
+\draw  (notB) -- (notAcapnotB)      node [midway,above,sloped]          {$P(\sim\! A\! \mid \sim\! B)$};
+\draw  (notA) -- (notAcapnotB)      node [midway,above,sloped]          {$P(\sim\! B\! \mid \sim\! A)$};
+\draw  (notAcapB) -- (notA)     node [midway,above,sloped]          {$P(B\! \mid \sim\! A)$};
+
+}
+\end{tikzpicture}
+\caption{Probability Graph displaying inherent symmetry around $\Omega$}
+\label{fig:ProbGraph2-diagram}
+\end{figure}
+
+\newpage
+
 \hypertarget{maringal-and-bayes-probability-space-sums}{%
 \section{Maringal and Bayes' probability space
 sums}\label{maringal-and-bayes-probability-space-sums}}
@@ -4234,22 +4565,37 @@ clarifies this by mapping the joint probabilities of events \(A\) and
 It exemplifies the key tenet that all outcome probabilities sum to
 unity, aligning with \(\Omega\). The table shows the network for
 calculating marginal probabilities and grasping Bayesian inference's
-core, which will be demonstrated in subsequent examples..
+core, which will be demonstrated in subsequent examples. Note: While we
+can normally employ \(\Omega = 1\), we can also commonly allow some
+value like \(\Omega = 750\) and then the numbers sum to this value.
 
 \begin{figure}[htbp]
 \centering
-\begin{tabular}{ccccccc}
-               & & $\mathbf{\{A\}}$               &   & $\mathbf{\{\sim\! A \}}$  &   & \textbf{Marginal}             \\
-               & &                       &   &                 &   &                      \\
-$\mathbf{\{B\}}$        & & P($A \cap B$)         & + & P($\sim\! A \cap B$) & = & P($B$)          \\
-               & &                       &   &                 &   &                      \\
-               & & +                     &   & +               &   &       +              \\
-               & &                       &   &                 &   &                      \\
-$\mathbf{\{\sim\! B \}}$ & & P($A\, \cap \sim\! B$)  & + & P($\sim\! A\, \cap \sim\! B$) & = & P($\sim\! B$)  \\
-               & &                         &   &               &   &                      \\
-               & & \text{ }\begin{rotate}{90}=\end{rotate}     &   & \text{ }\begin{rotate}{90}=\end{rotate}   &   &  \text{ }\begin{rotate}{90}=\end{rotate}  \\
-               & &                       &   &                 &   &                      \\
-\textbf{Marginal}       & & P($A$)                & + & P($\sim\! A$)   & = &  $\mathbf{\Omega}$            \\
+
+\begin{tabular}{|c|c c c c c c c|}
+
+\hline
+               & &                       & &                 & &                &   \\
+               
+& & $\mathbf{\{A\}}$  & & $\mathbf{\{\sim\! A \}}$  & & \textbf{Marginal}       &   \\
+
+               & &                       & &                 & &                &   \\
+\hline
+               & &                       & &                 & &                &   \\
+
+$\mathbf{\{B\}}$  & & P($A \cap B$)      & + & P($\sim\! A \cap B$) & = & P($B$)  &    \\
+
+               & &                       & &                 & &                &   \\
+               & & +                     & &   +             & &       +        &   \\
+               & &                       & &                 & &                &   \\
+$\mathbf{\{\sim\! B \}}$ & & P($A\, \cap \sim\! B$)  & + & P($\sim\! A\, \cap \sim\! B$) & = & P($\sim\! B$)  & \\
+               & &                       & &                 & &                &   \\
+               & & \text{ }\begin{rotate}{90}=\end{rotate}     &   & \text{ }\begin{rotate}{90}=\end{rotate}   &   &  \text{ }\begin{rotate}{90}=\end{rotate}    & \\
+               & &                       & &                 & &                &   \\
+\textbf{Marginal} & & P($A$)             & + & P($\sim\! A$) & = & $\Omega$       &   \\
+               & &                       & &                 & &                &   \\
+\hline
+
 \end{tabular}
 \caption{Marginals and sums network of Traditional Bayes' Space}
 \label{fig:m_bayes_space}
