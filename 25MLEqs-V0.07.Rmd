@@ -11,6 +11,7 @@ documentclass:    book
 output:
   pdf_document:
     latex_engine:       lualatex
+    # pandoc_args: ["--verbose"]
     toc:                yes
     number_sections:    yes
     keep_tex:           yes
@@ -36,6 +37,8 @@ header-includes:
   \usepackage{amsmath}
 
   \usepackage{pgfplots}
+  \pgfplotsset{compat=1.18} 
+  
   \newcommand{\docTitle}{25 ML Fundamental Equations}
 
   \raggedbottom                         % ensures no page fill
@@ -290,6 +293,7 @@ library(reticulate)           # Python integration
   \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
   \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
   \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
+  \vhEntry{0.08.0}{2024.11.25}{DP}{Start MLE}
 \end{versionhistory}
 \newpage
 
@@ -543,7 +547,7 @@ gd_result <- gradient_descent(learning_rate, iterations, start_point)
 The following R code demonstrates how to implement gradient descent for this polynomial, including plotting the descent path and function value across iterations. This practical example aims to give you a clear understanding of how gradient descent operates on real functions, using R for illustration.
 
 \scriptsize
-```{r gradient-descent-iteration-plot1, fig.cap="Gradient Descent on Polynomial Function - Iteration vs Function Value"}
+```{r gradient-descent-iteration-plot1, fig.cap="Gradient Descent on Polynomial Function - Iteration vs Function Value", fig.pos='htbp'}
 library(ggplot2)
 ggplot(gd_result, aes(x = Iteration, y = function_values)) +
   geom_line(color = "blue", size = 1.2) +
@@ -559,7 +563,7 @@ ggplot(gd_result, aes(x = Iteration, y = function_values)) +
 
 \newpage
 \scriptsize
-```{r gradient-descent-iteration-plot2, fig.cap="Gradient Descent on Polynomial Function - Trace the Path on the Polynomial"}
+```{r gradient-descent-iteration-plot2, fig.cap="Gradient Descent on Polynomial Function - Trace the Path on the Polynomial", fig.pos='htbp'}
 # Additional Plot: Trace the Path of Gradient Descent on the Polynomial
 x_range <- seq(min(gd_result$x_values) - 1, max(gd_result$x_values) + 1, length.out = 500)
 polynomial_values <- polynomial_function(x_range)
@@ -685,7 +689,7 @@ Let me know which direction you’d like to explore, and I'll get started!
 \begin{figure*}[h!]
   \begin{center}
     \includegraphics[width=0.6\textwidth]{pictures/Whimsical-2-normal_distribution.jpeg}
-    \caption*{\Large Seeing the average and variance with the Normal Distribution}
+    \caption*{\Large Normal Distribution, Variance and Mean}
   \end{center}
 \end{figure*}
 
@@ -734,7 +738,7 @@ The normal distribution equation represents a probability density function (PDF)
 
 ## The Players
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Left Image (Normal Distribution Summary)
     \begin{minipage}[t]{0.55\textwidth}
@@ -998,7 +1002,7 @@ In practice, machine learning models often use pre-calculated tables or librarie
 The Z-score calculation can be easily implemented in R to standardize a dataset or to identify outliers. Below is a simple example to illustrate how we can compute Z-scores for a given dataset and visualize the data distribution using a histogram:
 
 \scriptsize
-```{r z_score_example, echo=TRUE}
+```{r z_score_example, echo=TRUE, fig.pos='htbp'}
 # Load required libraries
 library(ggplot2)
 
@@ -1334,7 +1338,7 @@ This function smoothly scales inputs, but its range only extends from -1 to 1. I
 
 \newpage 
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Left Image (Sigmoid)
     \begin{minipage}[t]{1.0\textwidth}
@@ -1511,7 +1515,7 @@ $$
 
 
 \scriptsize
-```{r example1}
+```{r example1, fig.pos='htbp'}
 # Example 1: Create scatter data
 set.seed(42)  # For reproducibility
 
@@ -1533,7 +1537,7 @@ cat("Pearson's Correlation for Example 1: ", r1, "\n")
 ### Example 1: Scatter Data with Linear Overlay and some noise
 
 \scriptsize
-```{r example2}
+```{r example2, fig.pos='htbp'}
 # Example 2: Create another set of scatter data
 set.seed(24)  # For reproducibility
 
@@ -2125,7 +2129,7 @@ cat("Cosine Similarity between A and B: ", similarity, "\n")
 
 ## Cosine Similarity in R, 3D-plot
 \scriptsize
-```{r cosine_similarity_example_2}
+```{r cosine_similarity_example_2, fig.pos='htbp'}
 # Load necessary libraries
 library(ggplot2)
 
@@ -2309,28 +2313,34 @@ The implication is simple in the sense we want to understand how
 
 ### Bayes Formula
 
-The theorem is usually expressed as:
+\begin{a_def}{Traditional Bayes'}{def7a} 
 
 \begin{align}
 \operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)}{\operatorname{P}(B)}
 \end{align}
 
-Where:
-$$
-\begin{array}{|c|c|l|}
-\hline
-\textbf{Term} & \textbf{Category} & \textbf{Description} \\
-\hline
-\operatorname{P}(A) & \text{Prior Prob} & \text{Initial belief about \(A\) before considering the new evidence \(B\)} \\
-\hline
-\operatorname{P}(B) & \text{Marginal Prob} & \text{Total probability of observing \(B\) under all possible circumstances} \\
-\hline
-\operatorname{P}(A\! \mid\! B) & \text{Posterior Prob} & \text{Probability of event \(A\) occurring given that \(B\) has occurred} \\
-\hline
-\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of event \(B\) occurring given that \(A\) has occurred} \\
-\hline
-\end{array}
-$$
+% \tcblower
+
+\begin{description}[align=left, labelwidth=2.5cm, labelsep=0em, leftmargin=2.5cm] 
+    \item[$A$] The \textbf{event of interest}, which represents the hypothesis or condition for which the probability is being computed.
+    \vspace{0.5\baselineskip}
+    \item[$B$] The \textbf{evidence or observed event}, which represents the known condition or observation influencing the computation of \( \operatorname{P}(A \mid B) \).
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(A)$] The \textbf{prior probability} of event \( A \), representing the initial belief about the likelihood of \( A \) occurring, before considering the evidence \( B \).
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(B)$] The \textbf{marginal probability} of \( B \), representing the total likelihood of observing \( B \) across all possible scenarios.
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(B \mid A)$] The \textbf{likelihood} of observing evidence \( B \) given that \( A \) is true. It quantifies how probable the evidence is under the hypothesis.
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(A \mid B)$] The \textbf{posterior probability} of \( A \) given \( B \), representing the updated belief about the likelihood of \( A \) after considering the evidence \( B \).
+\end{description}
+
+\end{a_def}
+\
+
+\newpage
+
+### Explanation of the player in Bayes' formula
 
 **Prior Probability $\operatorname{P}(A)$:**\
 This is your initial belief about the probability of an event before any additional information is considered. For instance, if you are trying to determine the probability that a randomly chosen person is left-handed $(A)$, your prior might be the overall percentage of left-handed people in the population.
@@ -2344,24 +2354,8 @@ This is the total probability of observing the evidence ( $B$ ) under all possib
 **Posterior Probability $\operatorname{P}(A\! \mid\! B)$:**\
 This is what you're solving for. It's your updated belief about the probability of $A$ after taking into account the new evidence $B$.
 
-\newpage
+
 ### Rational Considerations of the meaning of the Bayes' formula
-
-We define some key terms for our discussion here: 
-
-\begin{figure}[htbp]
-\centering
-\begin{tabular}{|c|l|} 
-Term: & Conotation: \\
-\hline
-$P(A\! \mid \! B)$ & Posterior \\
-$P(A)$ & Prior \\
-$P(B\! \mid \!A)$ & Likelihood \\
-$P(B)$ & Evidence
-\end{tabular}
-\caption{Terms and conotations}
-\label{fig:conotations}
-\end{figure}
 
 Taking a closer look at Bayes' formula: 
 
@@ -3249,17 +3243,70 @@ Even though the test is positive, the low prior probability of the illness ( $0.
 
 
 
-# Maximum Likelihood Estimation (MLE)
+\newpage
 
-$$
-\arg\max_{\theta} \prod_{i=1}^n P(x_i | \theta)
-$$
+# Maximum Likelihood
+
+<!---
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $\arg\max_{\theta} \prod_{i=1}^n P(x_i | \theta)$}
+\end{center}
+
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $\mathop{\mathrm{arg\,max}}_{\theta} \prod_{i=1}^n P(x_i | \theta)$}
+\end{center}
+--->
+
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $\underset{\theta}{\mathop{\mathrm{arg\,max}}} \prod_{i=1}^n P(x_i | \theta)$}
+\end{center}
+
+\
+
+<!-- no tracking - only a floating 'cartoon' figure -->
+\begin{figure*}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-2-normal_distribution.jpeg}
+    \caption*{\Large Normal Distribution, Variance and Mean}
+  \end{center}
+\end{figure*}
+
+\newpage
+
+\vspace*{\fill}
+<!--- Def Block --->
+\begin{a_def_eq}{Maximum Likelihood Estimation}{def8} 
+
+\begin{align}
+\mathop{\mathrm{arg\,max}}_{\theta} \prod_{i=1}^n P(x_i | \theta)
+\end{align}
+
+
+\begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
+    \item[$x_i$] The \textbf{observed data point} or the \( i \)-th element of the dataset, which the likelihood function evaluates based on the parameter \( \theta \).
+    \vspace{0.5\baselineskip}
+    \item[$\theta$] The \textbf{parameter(s)} to be estimated using MLE. These can represent different characteristics of the distribution (e.g., mean, variance).
+    \vspace{0.5\baselineskip}
+    \item[$\hat{\theta}$] The \textbf{MLE estimate} of the parameter \( \theta \), representing the value that maximizes the likelihood function.
+    \vspace{0.5\baselineskip}
+    \item[$P(x_i | \theta)$] The \textbf{likelihood function} evaluated for the data point \( x_i \) given the parameter \( \theta \). It represents the probability of observing \( x_i \) under the assumed parameter.
+    \vspace{0.5\baselineskip}
+    \item[$\prod$] The \textbf{product operator}, which combines the likelihoods of all observed data points \( x_1, x_2, \dots, x_n \) to compute the overall likelihood of the dataset.
+    \vspace{0.5\baselineskip}
+    \item[$\arg\max$] The \textbf{argument of the maximum}, which identifies the value of \( \theta \) that maximizes the likelihood function.
+    \vspace{0.5\baselineskip}
+\end{description}
+
+\end{a_def_eq}
+\
+
 
 **Introduction**: MLE is a method used to estimate the parameters of a statistical model.
 
 **Description**: It finds the parameter values that maximize the likelihood of making the observations given the model.
 
 **Importance in ML**: MLE is used to train many machine learning models, including logistic regression and Gaussian mixture models. It provides a way to fit models to data and make statistical inferences.
+
 
 ---
 

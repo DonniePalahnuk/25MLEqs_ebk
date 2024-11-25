@@ -104,6 +104,8 @@
 \usepackage{amsmath}
 
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.18} 
+
 \newcommand{\docTitle}{25 ML Fundamental Equations}
 
 \raggedbottom                         % ensures no page fill
@@ -375,6 +377,7 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
   \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
   \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
+  \vhEntry{0.08.0}{2024.11.25}{DP}{Start MLE}
 \end{versionhistory}
 \newpage
 
@@ -891,7 +894,7 @@ R for illustration.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 
 {\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/gradient-descent-iteration-plot1-1} 
 
@@ -923,7 +926,7 @@ R for illustration.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 
 {\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/gradient-descent-iteration-plot2-1} 
 
@@ -1095,7 +1098,7 @@ I'll get started!
 \begin{figure*}[h!]
   \begin{center}
     \includegraphics[width=0.6\textwidth]{pictures/Whimsical-2-normal_distribution.jpeg}
-    \caption*{\Large Seeing the average and variance with the Normal Distribution}
+    \caption*{\Large Normal Distribution, Variance and Mean}
   \end{center}
 \end{figure*}
 
@@ -1164,7 +1167,7 @@ making it a cornerstone in both statistics and machine learning.
 \hypertarget{the-players}{%
 \section{The Players}\label{the-players}}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Left Image (Normal Distribution Summary)
     \begin{minipage}[t]{0.55\textwidth}
@@ -1737,7 +1740,7 @@ distribution using a histogram:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 
 {\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/z_score_example-1} 
 
@@ -2257,7 +2260,7 @@ transition around zero is preferred.
 
 \newpage
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     % Left Image (Sigmoid)
     \begin{minipage}[t]{1.0\textwidth}
@@ -2605,7 +2608,7 @@ N_{pdf}(\mu,\sigma) = N_{pdf}(\mu=1,\sigma=1)
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 
 {\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/example1-1} 
 
@@ -2650,7 +2653,7 @@ noise}\label{example-1-scatter-data-with-linear-overlay-and-some-noise}}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 
 {\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/example2-1} 
 
@@ -3894,7 +3897,7 @@ R:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 
 {\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/cosine_similarity_example_2-1} 
 
@@ -4080,27 +4083,37 @@ occurrence of B'' affects ``the occurrence of A''
 \hypertarget{bayes-formula}{%
 \subsection{Bayes Formula}\label{bayes-formula}}
 
-The theorem is usually expressed as:
+\begin{a_def}{Traditional Bayes'}{def7a} 
 
 \begin{align}
 \operatorname{P}(A\! \mid\! B)=\frac{\operatorname{P}(B\! \mid\! A) \cdot \operatorname{P}(A)}{\operatorname{P}(B)}
 \end{align}
 
-Where: \[
-\begin{array}{|c|c|l|}
-\hline
-\textbf{Term} & \textbf{Category} & \textbf{Description} \\
-\hline
-\operatorname{P}(A) & \text{Prior Prob} & \text{Initial belief about \(A\) before considering the new evidence \(B\)} \\
-\hline
-\operatorname{P}(B) & \text{Marginal Prob} & \text{Total probability of observing \(B\) under all possible circumstances} \\
-\hline
-\operatorname{P}(A\! \mid\! B) & \text{Posterior Prob} & \text{Probability of event \(A\) occurring given that \(B\) has occurred} \\
-\hline
-\operatorname{P}(B\! \mid\! A) & \text{Likelihood} & \text{Probability of event \(B\) occurring given that \(A\) has occurred} \\
-\hline
-\end{array}
-\]
+% \tcblower
+
+\begin{description}[align=left, labelwidth=2.5cm, labelsep=0em, leftmargin=2.5cm] 
+    \item[$A$] The \textbf{event of interest}, which represents the hypothesis or condition for which the probability is being computed.
+    \vspace{0.5\baselineskip}
+    \item[$B$] The \textbf{evidence or observed event}, which represents the known condition or observation influencing the computation of \( \operatorname{P}(A \mid B) \).
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(A)$] The \textbf{prior probability} of event \( A \), representing the initial belief about the likelihood of \( A \) occurring, before considering the evidence \( B \).
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(B)$] The \textbf{marginal probability} of \( B \), representing the total likelihood of observing \( B \) across all possible scenarios.
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(B \mid A)$] The \textbf{likelihood} of observing evidence \( B \) given that \( A \) is true. It quantifies how probable the evidence is under the hypothesis.
+    \vspace{0.5\baselineskip}
+    \item[$\operatorname{P}(A \mid B)$] The \textbf{posterior probability} of \( A \) given \( B \), representing the updated belief about the likelihood of \( A \) after considering the evidence \( B \).
+\end{description}
+
+\end{a_def}
+
+\hfill\break
+
+\newpage
+
+\hypertarget{explanation-of-the-player-in-bayes-formula}{%
+\subsection{Explanation of the player in Bayes'
+formula}\label{explanation-of-the-player-in-bayes-formula}}
 
 \textbf{Prior Probability \(\operatorname{P}(A)\):}\\
 This is your initial belief about the probability of an event before any
@@ -4126,27 +4139,9 @@ where \(\neg A\) represents the complement of \(A\).
 This is what you're solving for. It's your updated belief about the
 probability of \(A\) after taking into account the new evidence \(B\).
 
-\newpage
-
 \hypertarget{rational-considerations-of-the-meaning-of-the-bayes-formula}{%
 \subsection{Rational Considerations of the meaning of the Bayes'
 formula}\label{rational-considerations-of-the-meaning-of-the-bayes-formula}}
-
-We define some key terms for our discussion here:
-
-\begin{figure}[htbp]
-\centering
-\begin{tabular}{|c|l|} 
-Term: & Conotation: \\
-\hline
-$P(A\! \mid \! B)$ & Posterior \\
-$P(A)$ & Prior \\
-$P(B\! \mid \!A)$ & Likelihood \\
-$P(B)$ & Evidence
-\end{tabular}
-\caption{Terms and conotations}
-\label{fig:conotations}
-\end{figure}
 
 Taking a closer look at Bayes' formula:
 
@@ -5532,13 +5527,53 @@ results.
     \draw[thick,->] (0,0) -- (1,-1);
 \end{tikzpicture}
 
-\hypertarget{maximum-likelihood-estimation-mle}{%
-\chapter{Maximum Likelihood Estimation
-(MLE)}\label{maximum-likelihood-estimation-mle}}
+\newpage
 
-\[
-\arg\max_{\theta} \prod_{i=1}^n P(x_i | \theta)
-\]
+\hypertarget{maximum-likelihood}{%
+\chapter{Maximum Likelihood}\label{maximum-likelihood}}
+
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $\underset{\theta}{\mathop{\mathrm{arg\,max}}} \prod_{i=1}^n P(x_i | \theta)$}
+\end{center}
+
+\hfill\break
+
+\begin{figure*}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-2-normal_distribution.jpeg}
+    \caption*{\Large Normal Distribution, Variance and Mean}
+  \end{center}
+\end{figure*}
+
+\newpage
+
+\vspace*{\fill}
+
+\begin{a_def_eq}{Maximum Likelihood Estimation}{def8} 
+
+\begin{align}
+\mathop{\mathrm{arg\,max}}_{\theta} \prod_{i=1}^n P(x_i | \theta)
+\end{align}
+
+
+\begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
+    \item[$x_i$] The \textbf{observed data point} or the \( i \)-th element of the dataset, which the likelihood function evaluates based on the parameter \( \theta \).
+    \vspace{0.5\baselineskip}
+    \item[$\theta$] The \textbf{parameter(s)} to be estimated using MLE. These can represent different characteristics of the distribution (e.g., mean, variance).
+    \vspace{0.5\baselineskip}
+    \item[$\hat{\theta}$] The \textbf{MLE estimate} of the parameter \( \theta \), representing the value that maximizes the likelihood function.
+    \vspace{0.5\baselineskip}
+    \item[$P(x_i | \theta)$] The \textbf{likelihood function} evaluated for the data point \( x_i \) given the parameter \( \theta \). It represents the probability of observing \( x_i \) under the assumed parameter.
+    \vspace{0.5\baselineskip}
+    \item[$\prod$] The \textbf{product operator}, which combines the likelihoods of all observed data points \( x_1, x_2, \dots, x_n \) to compute the overall likelihood of the dataset.
+    \vspace{0.5\baselineskip}
+    \item[$\arg\max$] The \textbf{argument of the maximum}, which identifies the value of \( \theta \) that maximizes the likelihood function.
+    \vspace{0.5\baselineskip}
+\end{description}
+
+\end{a_def_eq}
+
+\hfill\break
 
 \textbf{Introduction}: MLE is a method used to estimate the parameters
 of a statistical model.
