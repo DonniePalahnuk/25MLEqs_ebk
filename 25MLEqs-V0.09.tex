@@ -270,8 +270,8 @@ includeheadfoot  }
 % Should use only once in a Chapter 
 \newtcbtheorem[use counter=chonlycounter]{a_def_eq}{Key ML Equation}
 {enhanced,frame empty,interior empty,colframe=blue!50!white,
-  coltitle=blue!40!black,fonttitle=\bfseries,colbacktitle=blue!15!white,
-  borderline={0.5mm}{0mm}{blue!15!white},
+  coltitle=blue!20!black,fonttitle=\bfseries,colbacktitle=blue!35!white,
+  borderline={0.5mm}{0mm}{blue!50!white},
   attach boxed title to top left={yshift=-2mm},
   boxed title style={boxrule=0.4pt},varwidth boxed title, 
   breakable, colback=white
@@ -279,7 +279,7 @@ includeheadfoot  }
 
 \newtcbtheorem[number within=chapter]{a_def}{Definition}
 {enhanced,frame empty,interior empty,colframe=blue!50!white,
-  coltitle=blue!40!black,fonttitle=\bfseries,colbacktitle=blue!15!white,
+  coltitle=blue!40!black,fonttitle=\bfseries,colbacktitle=blue!10!white,
   borderline={0.5mm}{0mm}{blue!15!white},
   attach boxed title to top left={yshift=-2mm},
   boxed title style={boxrule=0.4pt},varwidth boxed title, 
@@ -378,6 +378,7 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
   \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
   \vhEntry{0.08.0}{2024.11.25}{DP}{Start MLE}
+  \vhEntry{0.09.0}{2024.11.27}{DP}{Start Linear Regression}
 \end{versionhistory}
 \newpage
 
@@ -896,7 +897,7 @@ R for illustration.
 
 \begin{figure}[htbp]
 
-{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/gradient-descent-iteration-plot1-1} 
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/gradient-descent-iteration-plot1-1} 
 
 }
 
@@ -928,7 +929,7 @@ R for illustration.
 
 \begin{figure}[htbp]
 
-{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/gradient-descent-iteration-plot2-1} 
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/gradient-descent-iteration-plot2-1} 
 
 }
 
@@ -1742,7 +1743,7 @@ distribution using a histogram:
 
 \begin{figure}[htbp]
 
-{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/z_score_example-1} 
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/z_score_example-1} 
 
 }
 
@@ -2610,7 +2611,7 @@ N_{pdf}(\mu,\sigma) = N_{pdf}(\mu=1,\sigma=1)
 
 \begin{figure}[htbp]
 
-{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/example1-1} 
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/example1-1} 
 
 }
 
@@ -2655,7 +2656,7 @@ noise}\label{example-1-scatter-data-with-linear-overlay-and-some-noise}}
 
 \begin{figure}[htbp]
 
-{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/example2-1} 
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/example2-1} 
 
 }
 
@@ -3899,7 +3900,7 @@ R:
 
 \begin{figure}[htbp]
 
-{\centering \includegraphics{25MLEqs-V0.07_files/figure-latex/cosine_similarity_example_2-1} 
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/cosine_similarity_example_2-1} 
 
 }
 
@@ -4477,7 +4478,9 @@ conditional probability.
 
 \begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[scale=1.0] 
+\resizebox{0.9\textwidth}{!}
+{
+\begin{tikzpicture}[scale=1.1] 
     [
     new set=my nodes, 
     new set=my nodes2,
@@ -4543,6 +4546,7 @@ conditional probability.
 
 }
 \end{tikzpicture}
+}
 \caption{Probability Graph $\Omega$ bridged by commutative intersection $P(A \cap B) = P(B \cap A)$}.
 \label{fig:ProbGraph1-diagram}
 \end{figure}
@@ -5540,8 +5544,8 @@ results.
 
 \begin{figure*}[h!]
   \begin{center}
-    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-2-normal_distribution.jpeg}
-    \caption*{\Large Normal Distribution, Variance and Mean}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-8-MLE.jpeg}
+    \caption*{\Large Parametric based Maximum}
   \end{center}
 \end{figure*}
 
@@ -5585,7 +5589,443 @@ likelihood of making the observations given the model.
 models, including logistic regression and Gaussian mixture models. It
 provides a way to fit models to data and make statistical inferences.
 
+\vspace*{\fill}
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\newpage
+
+\hypertarget{linear-regression}{%
+\chapter{Linear Regression}\label{linear-regression}}
+
+\begin{center}
+\colorbox{white}{\color{navyimpactblue} \huge $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \epsilon$}
+\end{center}
+
+\hfill\break
+
+\begin{figure*}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{pictures/Whimsical-9-LR.jpeg}
+    \caption*{\Large Line Fitting Straight Assumption}
+  \end{center}
+\end{figure*}
+
+\newpage
+
+\vspace*{\fill}
+
+\begin{a_def_eq}{Linear Regression}{def9} 
+
+\begin{align}
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \epsilon
+\end{align}
+
+
+\begin{description}[align=left, labelwidth=2cm, labelsep=0em, leftmargin=2cm]
+    \item[$y$] The \textbf{dependent variable}, representing the outcome or the target we aim to predict.
+    \vspace{0.5\baselineskip}
+    \item[$x_i$] The \textbf{independent variable(s)}, representing the features or predictors for the \( i \)-th observation.
+    \vspace{0.5\baselineskip}
+    \item[$\beta_0$] The \textbf{intercept}, representing the expected value of \( y \) when all predictors are zero.
+    \vspace{0.5\baselineskip}
+    \item[$\beta_i$] The \textbf{coefficient} for predictor \( x_i \), representing the change in the expected value of \( y \) for a one-unit change in \( x_i \), while holding all other variables constant.
+    \vspace{0.5\baselineskip}
+    \item[$\epsilon$] The \textbf{error term}, accounting for the variability in \( y \) that cannot be explained by the linear combination of predictors.
+    \vspace{0.5\baselineskip}
+\end{description}
+
+\end{a_def_eq}
+
+\hfill\break
+
+\textbf{Introduction}: Linear regression is a simple and widely used
+method for predictive analysis.
+
+\textbf{Description}: It models the relationship between a dependent
+variable and one or more independent variables by fitting a linear
+equation to observed data.
+
+\textbf{Importance in ML}: Linear regression is fundamental for
+understanding relationships between variables and is used in predictive
+modeling to estimate outcomes.
+
+\vspace*{\fill}
+
+\newpage
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Linear regression is a fundamental statistical approach used to model
+the relationship between a dependent variable and one or more
+independent variables. The objective is to establish a linear
+relationship between inputs (predictors) and an output variable that
+allows for interpretation, prediction, and inference.
+
+This chapter discusses Equation 9, which formulates the core concept of
+linear regression. The method is commonly applied across various fields
+such as finance, economics, medicine, and more.
+
+\hypertarget{mathematical-formulation}{%
+\section{Mathematical Formulation}\label{mathematical-formulation}}
+
+The linear regression equation is represented by Equation 9. Here, the
+model is built by finding the coefficients
+\(\beta_0, \beta_1, \ldots, \beta_n\) that minimize the error term
+\(\epsilon\).
+
+The general approach for estimation in linear regression is based on
+minimizing the residual sum of squares (RSS):
+
+\[
+RSS = \sum_{i=1}^n (y_i - (\beta_0 + \beta_1 x_{i1} + \cdots + \beta_n x_{in}))^2
+\]
+
+The goal is to determine values for the coefficients \(\beta_i\) that
+minimize the \(RSS\), resulting in the best fit line through the
+observed data.
+
+\hypertarget{understanding-the-components}{%
+\section{Understanding the
+Components}\label{understanding-the-components}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Dependent Variable (\(y\))}: The outcome that we are trying to
+  predict.
+\item
+  \textbf{Independent Variables (\(x_i\))}: Predictors or features used
+  in the model.
+\item
+  \textbf{Coefficients (\(\beta_i\))}: Parameters that describe the
+  influence of the predictors on the outcome.
+\item
+  \textbf{Error Term (\(\epsilon\))}: Represents the portion of \(y\)
+  that cannot be explained by the linear model.
+\end{itemize}
+
+\hypertarget{estimation-using-ordinary-least-squares-ols}{%
+\section{Estimation using Ordinary Least Squares
+(OLS)}\label{estimation-using-ordinary-least-squares-ols}}
+
+Ordinary Least Squares (OLS) is the most common method used to estimate
+the parameters in linear regression. The idea is to minimize the
+difference between the observed values and the values predicted by the
+model. This difference is captured by the residual sum of squares, which
+is minimized to obtain the optimal values of the coefficients.
+
+\hypertarget{implementation-in-r}{%
+\section{Implementation in R}\label{implementation-in-r}}
+
+Below, we demonstrate how to fit a linear regression model in R using a
+simple mock dataset. The dataset consists of a response variable \(y\)
+and two predictors \(x_1\) and \(x_2\).
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generating Mock Data}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{5}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{)}
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{10}\NormalTok{, }\AttributeTok{sd =} \DecValTok{3}\NormalTok{)}
+\NormalTok{epsilon }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{x1 }\SpecialCharTok{{-}} \FloatTok{0.5}\SpecialCharTok{*}\NormalTok{x2 }\SpecialCharTok{+}\NormalTok{ epsilon}
+
+\CommentTok{\# Creating a data frame}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(y, x1, x2)}
+
+\CommentTok{\# Linear Regression Model}
+\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2, }\AttributeTok{data =}\NormalTok{ data)}
+
+\CommentTok{\# Summary of the Model}
+\FunctionTok{summary}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8730 -0.6607 -0.1245  0.6214  2.0798 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  3.38862    0.43979   7.705 1.13e-11 ***
+## x1           1.93341    0.05243  36.873  < 2e-16 ***
+## x2          -0.49206    0.03300 -14.912  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9513 on 97 degrees of freedom
+## Multiple R-squared:  0.9442, Adjusted R-squared:  0.943 
+## F-statistic: 820.2 on 2 and 97 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\normalsize
+
+\newpage
+
+\hypertarget{limitations-or-pitfalls-of-linear-regression}{%
+\section{Limitations or Pitfalls of Linear
+Regression}\label{limitations-or-pitfalls-of-linear-regression}}
+
+While linear regression is a simple and often effective approach, it
+comes with certain limitations and potential pitfalls. Understanding
+these drawbacks is crucial when determining whether linear regression is
+the best choice for a given dataset. Here are some of the key
+limitations:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Assumption of Linearity}: Linear regression assumes that there
+  is a linear relationship between the independent and dependent
+  variables. If the true relationship is non-linear, the linear model
+  will not adequately capture the complexity of the data, leading to
+  poor predictive performance.
+\item
+  \textbf{Outliers Can Have a Large Influence}: Linear regression is
+  sensitive to outliers, which can disproportionately affect the fit of
+  the model. A single extreme value in the data can significantly alter
+  the coefficient estimates, leading to a biased or misleading
+  interpretation of the model (more on this below).
+\item
+  \textbf{Multicollinearity}: When independent variables are highly
+  correlated, the estimates of the regression coefficients can become
+  unstable. This phenomenon, known as multicollinearity, makes it
+  difficult to determine the independent effect of each predictor on the
+  dependent variable.
+\item
+  \textbf{Non-Constant Variance (Homoscedasticity)}: Linear regression
+  assumes that the variance of the errors is constant across all levels
+  of the independent variables. If this assumption is violated
+  (heteroscedasticity), it can lead to inefficient estimates and affect
+  hypothesis testing.
+\item
+  \textbf{Assumption of Normality in Errors}: Linear regression assumes
+  that the error terms are normally distributed. If the errors deviate
+  significantly from normality, this can impact confidence intervals and
+  the reliability of hypothesis tests.
+\item
+  \textbf{Overfitting in High Dimensions}: When there are many
+  predictors relative to the number of observations, linear regression
+  can easily overfit the data, capturing noise instead of the underlying
+  trend. Regularization methods such as Lasso or Ridge regression may be
+  more appropriate in such cases.
+\end{enumerate}
+
+\newpage
+
+\hypertarget{impact-of-outliers-on-goodness-of-fit}{%
+\section{Impact of Outliers on Goodness of
+Fit}\label{impact-of-outliers-on-goodness-of-fit}}
+
+Outliers are extreme values that do not follow the general trend of the
+rest of the data. In linear regression, outliers can have a major
+influence on the estimated model parameters, ultimately affecting the
+goodness of fit. Let's discuss how outliers impact the model:
+
+\begin{itemize}
+\item
+  \textbf{Effect on Coefficients}: Since linear regression aims to
+  minimize the residual sum of squares (RSS), any point that lies far
+  away from the regression line will have a disproportionately large
+  impact on the resulting line. The presence of outliers can pull the
+  regression line toward themselves, distorting the relationship between
+  the dependent and independent variables.
+\item
+  \textbf{Leverage and Influence}: Outliers can be categorized into two
+  types: those that have high leverage and those that have high
+  influence. Leverage points are those that lie far from the mean of the
+  predictors, and they can significantly affect the position of the
+  regression line even if their response values align with the trend.
+  Influential points are outliers that change the overall fit of the
+  model, and removing these points can substantially alter the estimated
+  coefficients.
+\item
+  \textbf{Example of Outlier Influence}: The effect of an outlier can be
+  illustrated using a simple plot:
+\end{itemize}
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Generating Mock Data with an Outlier}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{456}\NormalTok{)}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{5}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{)}
+\NormalTok{epsilon }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{x1 }\SpecialCharTok{+}\NormalTok{ epsilon}
+
+\CommentTok{\# Adding an Outlier}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(x1, }\DecValTok{20}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(y, }\DecValTok{100}\NormalTok{)}
+
+\CommentTok{\# Fitting a Linear Model}
+\NormalTok{data\_with\_outlier }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(y, x1)}
+\NormalTok{model\_with\_outlier }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1, }\AttributeTok{data =}\NormalTok{ data\_with\_outlier)}
+
+\CommentTok{\# Plotting}
+\FunctionTok{plot}\NormalTok{(x1, y, }\AttributeTok{main =} \StringTok{"Effect of Outlier on Linear Regression"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"x1"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"y"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{19}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(model\_with\_outlier, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/unnamed-chunk-3-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:unnamed-chunk-3}
+\end{figure}
+\normalsize
+
+\newpage
+
+In the plot above, the red regression line is influenced by the single
+outlier, deviating significantly from what it would be without that
+extreme point. In practice, techniques such as robust regression can be
+employed to minimize the impact of such outliers.
+
+\hypertarget{residual-sum-of-squares-rss-and-l2-norm}{%
+\subsection{Residual Sum of Squares (RSS) and L2
+Norm}\label{residual-sum-of-squares-rss-and-l2-norm}}
+
+\hypertarget{residual-sum-of-squares-rss}{%
+\subsubsection{Residual Sum of Squares
+(RSS)}\label{residual-sum-of-squares-rss}}
+
+The Residual Sum of Squares (RSS) is a key concept in linear regression,
+representing the total deviation of the observed values from the values
+predicted by the model. The objective of linear regression is to
+minimize the RSS, which is mathematically defined as:
+
+\[
+R S S=\sum_{i=1}^n\left(y_i-\hat{y}_i\right)^2
+\]
+
+\hypertarget{the-l2-norm}{%
+\subsubsection{The L2 Norm}\label{the-l2-norm}}
+
+The RSS minimization problem is related to the concept of the L2 norm.
+In the context of linear regression, the L2 norm represents the
+Euclidean distance between the actual observed values and the predicted
+values of the model. The L2 norm is defined as:
+
+\[
+\|\mathbf{r}\|_2=\left(\sum_{i=1}^n r_i^2\right)^{1 / 2}
+\]
+
+where \(r_i=y_i-\hat{y}_i\) are the residuals. The RSS is simply the
+squared L 2 norm of the residual vector, meaning that the linear
+regression objective can be understood as minimizing the L2 distance
+between the predicted and actual values.
+
+This connection to the L2 norm is one of the reasons why linear
+regression is so sensitive to outliers. Because each residual is
+squared, larger residuals have a disproportionate impact, which leads to
+a model that might be unduly influenced by a few data points.
+
+\hypertarget{comparison-with-l1-norm}{%
+\subsubsection{Comparison with L1 Norm}\label{comparison-with-l1-norm}}
+
+An alternative to the L2 norm is the L1 norm, which forms the basis for
+Lasso Regression. The L1 norm is defined as:
+
+\[
+\|\mathbf{r}\|_1=\sum_{i=1}^n\left|r_i\right|
+\]
+
+Minimizing the L1 norm instead of the L2 norm results in a model that is
+less sensitive to outliers. This is because the L1 norm does not square
+the residuals, giving less weight to extreme errors. In fact, L1-based
+models often produce sparse solutions, making them particularly useful
+in high-dimensional settings where feature selection is important.
+
+\hypertarget{regularization-and-the-l2-penalty}{%
+\subsubsection{Regularization and the L2
+Penalty}\label{regularization-and-the-l2-penalty}}
+
+In practice, Ridge Regression (a form of regularized linear regression)
+adds an L2 penalty term to the loss function to prevent overfitting:
+
+\[
+L(\beta)=R S S+\lambda \sum_{j=1}^n \beta_j^2
+\]
+
+The \(\lambda\) term controls the amount of regularization, shrinking
+the coefficients toward zero and reducing model complexity. This can be
+particularly useful when dealing with multicollinearity or
+high-dimensional datasets.
+
+Practical Implementation with Regularization
+
+Below is an example in R where we use the glmnet package to fit a Ridge
+regression model:
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load the glmnet package}
+\FunctionTok{library}\NormalTok{(glmnet)}
+
+\CommentTok{\# Generating Mock Data}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{789}\NormalTok{)}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{5}\NormalTok{, }\AttributeTok{sd =} \DecValTok{2}\NormalTok{)}
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{10}\NormalTok{, }\AttributeTok{sd =} \DecValTok{3}\NormalTok{)}
+\NormalTok{epsilon }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{*}\NormalTok{x1 }\SpecialCharTok{{-}} \FloatTok{0.5}\SpecialCharTok{*}\NormalTok{x2 }\SpecialCharTok{+}\NormalTok{ epsilon}
+
+\CommentTok{\# Creating a matrix for predictors (required by glmnet)}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(x1, x2))}
+
+\CommentTok{\# Fitting a Ridge Regression Model}
+\NormalTok{ridge\_model }\OtherTok{\textless{}{-}} \FunctionTok{glmnet}\NormalTok{(X, y, }\AttributeTok{alpha =} \DecValTok{0}\NormalTok{) }\CommentTok{\# alpha = 0 for Ridge}
+
+\CommentTok{\# Plotting the coefficient paths}
+\FunctionTok{plot}\NormalTok{(ridge\_model, }\AttributeTok{xvar =} \StringTok{"lambda"}\NormalTok{, }\AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{title}\NormalTok{(}\AttributeTok{main =} \StringTok{"Coefficient Paths for Ridge Regression"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[h]
+
+{\centering \includegraphics{25MLEqs-V0.09_files/figure-latex/unnamed-chunk-4-1} 
+
+}
+
+\caption{Default caption for all figures}\label{fig:unnamed-chunk-4}
+\end{figure}
+\normalsize
+
+The plot above shows how the coefficients shrink as the regularization
+parameter \(\lambda\) increases, helping to control overfitting while
+still capturing the main patterns in the data.
+
+\hypertarget{equation-summary}{%
+\section{Equation Summary}\label{equation-summary}}
+
+In this extended discussion of linear regression, we highlighted some of
+the key limitations of the method, discussed the significant impact that
+outliers can have on the model, and introduced the concept of RSS and
+its relation to the L2 norm. We also explored how these concepts are
+extended in regularized linear regression, such as Ridge regression, to
+address issues like overfitting and multicollinearity. Linear regression
+remains a powerful and widely used tool, but it's important to be
+mindful of the underlying assumptions and potential pitfalls. By
+understanding the limitations and exploring regularization techniques,
+we can build more robust and effective predictive models.
+
+\newpage
 
 \newpage
 
@@ -5610,68 +6050,6 @@ useful for predictive modeling.
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
-
-\hypertarget{f1-score}{%
-\chapter{F1 Score}\label{f1-score}}
-
-\[
-F_1 = \frac{2 \cdot P \cdot R}{P + R}
-\]
-
-\textbf{Introduction}: The F1 score is a measure of a test's accuracy
-that considers both precision (P) and recall (R).
-
-\textbf{Description}: It is the harmonic mean of precision and recall,
-providing a single metric to evaluate model performance.
-
-\textbf{Importance in ML}: The F1 score is particularly useful for
-imbalanced datasets where the distribution of classes is uneven,
-providing a balanced measure of model effectiveness.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\newpage
-
-\hypertarget{relu-rectified-linear-unit}{%
-\chapter{ReLU (Rectified Linear
-Unit)}\label{relu-rectified-linear-unit}}
-
-\[
-\text{ReLU}(x) = \max(0, x)
-\]
-
-\textbf{Introduction}: ReLU is an activation function used in neural
-networks.
-
-\textbf{Description}: It outputs the input directly if positive;
-otherwise, it outputs zero.
-
-\textbf{Importance in ML}: ReLU is crucial for deep learning as it helps
-mitigate the vanishing gradient problem, allowing models to learn faster
-and perform better.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\newpage
-
-\hypertarget{softmax-function}{%
-\chapter{Softmax Function}\label{softmax-function}}
-
-\[
-P(y = j | z) = \frac{e^{z w_j}}{\sum_{k=1}^K e^{z w_k}}
-\]
-
-\textbf{Introduction}: Softmax is an activation function that outputs a
-probability distribution over multiple classes.
-
-\textbf{Description}: It converts raw scores into probabilities, which
-sum up to one, making it suitable for multi-class classification.
-
-\textbf{Importance in ML}: Softmax is commonly used in the output layer
-of neural networks for classification problems involving multiple
-classes, making it essential for multi-class models.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \newpage
 
@@ -5942,28 +6320,6 @@ different classes by maximizing the margin between them.
 \textbf{Importance in ML}: SVMs are effective for high-dimensional
 spaces and are used in classification problems where the decision
 boundary is non-linear.
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
-\newpage
-
-\hypertarget{linear-regression}{%
-\chapter{Linear Regression}\label{linear-regression}}
-
-\[
-y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_n x_n + \epsilon
-\]
-
-\textbf{Introduction}: Linear regression is a simple and widely used
-method for predictive analysis.
-
-\textbf{Description}: It models the relationship between a dependent
-variable and one or more independent variables by fitting a linear
-equation to observed data.
-
-\textbf{Importance in ML}: Linear regression is fundamental for
-understanding relationships between variables and is used in predictive
-modeling to estimate outcomes.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
