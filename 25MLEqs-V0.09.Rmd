@@ -12,6 +12,7 @@ output:
   pdf_document:
     latex_engine:       lualatex
     # pandoc_args: ["--verbose"]
+    # pandoc_args: ["--listings"]
     toc:                yes
     number_sections:    yes
     keep_tex:           yes
@@ -94,7 +95,11 @@ header-includes:
   %\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
   
   %\usepackage[skins]{tcolorbox}
+  
   \usepackage{listings}
+  % make code block listings specific
+  \renewcommand{\lstlistingname}{Code Listing}
+  
   \usepackage{booktabs}
   \usepackage{changepage}               % width formatting on page
 
@@ -504,6 +509,10 @@ Gradient Descent is a foundational optimization algorithm used to iteratively mi
 The following R code demonstrates how to implement gradient descent for this polynomial, including plotting the descent path and function value across iterations. This practical example aims to give you a clear understanding of how gradient descent operates on real functions, using R for illustration. Note that gd_result is the dataframe result fed to ggplot. 
 \
 
+
+
+\begin{lstlisting}[caption={\raggedright Gradient Descent: Over a Polynomial}, label={lst:GradDec1}]
+\end{lstlisting}
 \scriptsize
 ```{r}
 # Set seed for reproducibility
@@ -545,8 +554,9 @@ gd_result <- gradient_descent(learning_rate, iterations, start_point)
 ```
 \normalsize
 
-The following R code demonstrates how to implement gradient descent for this polynomial, including plotting the descent path and function value across iterations. This practical example aims to give you a clear understanding of how gradient descent operates on real functions, using R for illustration.
 
+\begin{lstlisting}[caption={\raggedright Gradient Descent: Objective Function vs. Iteration}, label={lst:GradDec2}]
+\end{lstlisting}
 \scriptsize
 ```{r gradient-descent-iteration-plot1, fig.cap="Gradient Descent on Polynomial Function - Iteration vs Function Value", fig.pos='htbp'}
 library(ggplot2)
@@ -563,6 +573,8 @@ ggplot(gd_result, aes(x = Iteration, y = function_values)) +
 \normalsize
 
 \newpage
+\begin{lstlisting}[caption={\raggedright Gradient Descent: Plot the Path of Descent}, label={lst:GradDec3}]
+\end{lstlisting}
 \scriptsize
 ```{r gradient-descent-iteration-plot2, fig.cap="Gradient Descent on Polynomial Function - Trace the Path on the Polynomial", fig.pos='htbp'}
 # Additional Plot: Trace the Path of Gradient Descent on the Polynomial
@@ -3912,6 +3924,7 @@ For a binary classification problem, a classifier like SVM finds the optimal hyp
 \newpage 
 
 
+
 # Epilogue - Guidance and Test Materials
 
 ## Applying Musk Rules to Writing Your Book on the "25 Key Equations in Machine Learning" {.unnumbered}
@@ -4044,11 +4057,31 @@ print(f"The sum of the numbers 'n2' is: {total_sum2}")
 
 \newpage
 
-<!-- Can Add listings if needed here- of the code listings and figures if indexed. -->
+# Apendix II - test area 
+
+\renewcommand{\lstlistlistingname}{Code Block Listings}
+
+\begin{lstlisting}[caption={Test Code Block Listing}, label={lst:Tst_Listing}]
+\end{lstlisting}
+\scriptsize
+
+```{r my-code, engine='R', fig.cap="A scatterplot."}
+# Your R code here
+summary(cars)
+```
+\normalsize
+
+
+<!-- List of Figures. -->
 \listoffigures
+
+
+<!-- List of Code Blocks. -->
+
+<!--- \addcontentsline{toc}{section}{Listings} --->
 \lstlistoflistings
 
-\newpage
+
 # Galley Sheet {-}
 
 ## **GALLEY Sheet info**
