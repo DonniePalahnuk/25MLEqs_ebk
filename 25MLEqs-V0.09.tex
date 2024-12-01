@@ -100,7 +100,14 @@
 \usepackage{tikz}
 \usetikzlibrary{trees} % Required for tree structure
 % \usetikzlibrary {graphs}
-\usetikzlibrary {graphs,shapes.geometric, quotes}
+% \usetikzlibrary {graphs,shapes.geometric, quotes}
+\usetikzlibrary{graphs, 
+              arrows.meta,
+              calc, 
+              chains,
+              quotes,
+              positioning,
+              shapes.geometric}
 \usepackage{amsmath}
 
 \usepackage{pgfplots}
@@ -5595,9 +5602,251 @@ provides a way to fit models to data and make statistical inferences.
 
 \vspace*{\fill}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\newpage
+
+\hypertarget{chapter-starts-here}{%
+\section{Chapter Starts Here}\label{chapter-starts-here}}
 
 \newpage
+
+\hypertarget{determining-mle-a-generalized-approach}{%
+\section{Determining MLE: A Generalized
+Approach}\label{determining-mle-a-generalized-approach}}
+
+Maximum Likelihood Estimation (MLE) is one of the most widely used
+methods in statistical estimation, offering a flexible and efficient way
+to estimate parameters of a statistical model based on observed data. At
+its core, MLE aims to find the set of parameters that maximize the
+likelihood of the observed data under a given model. In the context of
+this section, we will explore the general methodology for computing the
+MLE, without assuming any specific form for the underlying probability
+density function (PDF). Instead, this flowchart serves as a broad,
+multidimensional illustration of the steps required to derive the MLE,
+providing a systematic approach to parameter estimation applicable to a
+wide range of statistical models.
+
+\hypertarget{general-overview-of-the-mle-process}{%
+\subsection{General Overview of the MLE
+Process}\label{general-overview-of-the-mle-process}}
+
+The flowchart presented here details the sequential steps involved in
+the computation of the MLE for a given dataset. It is a generalized
+workflow that does not assume a particular distribution or
+parameterization for the data. Instead, it provides a robust framework
+for identifying the parameters of an unknown model, ensuring that the
+resulting MLE is well-defined and mathematically sound. By focusing on
+the methodology of parameter estimation, the flowchart offers a clear
+visualization of the steps involved in determining the maximum
+likelihood estimates (MLE) that best describe the observed data.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Initialization and Likelihood Calculation: The first step in this
+  process is the specification of the likelihood function \(L(\Theta)\),
+  where \(\Theta=\left[\theta_1, \theta_2, \ldots, \theta_m\right]\) is
+  the vector of parameters to be estimated, and
+  \(X=\left[x_1, x_2, \ldots, x_n\right]\) represents the observed data.
+  For a given model, the likelihood function \(L(\Theta)\) is defined as
+  the probability of observing the data given a particular set of
+  parameter values. In this generalized framework, the likelihood
+  function is assumed to take the form
+  \(L(\Theta)=\prod_{i=1}^n P\left(x_i \mid \Theta\right)\), where
+  \(P\left(x_i \mid \Theta\right)\) represents the conditional
+  probability of the data point \(x_i\) given the parameter vector
+  \(\Theta\).
+\item
+  Log-Likelihood and Gradient Calculation: Since the likelihood function
+  is often complicated and involves large products of probabilities, it
+  is common practice to work with the loglikelihood function,
+  \(\ell(\Theta)=\ln L(\Theta)\). Taking the logarithm of the likelihood
+  simplifies the expression and transforms products into sums, making it
+  more tractable for optimization. The log-likelihood is given by
+  \(\ell(\Theta)=\sum_{i=1}^n \ln P\left(x_i \mid \Theta\right)\). The
+  next step involves computing the gradient of the log-likelihood with
+  respect to the parameters, denoted as
+  \(\nabla_{\Theta} \ell(\Theta)\). This gradient represents the
+  first-order partial derivatives of the log-likelihood function with
+  respect to each parameter \(\theta_k\), and it provides the direction
+  in which the log-likelihood increases most rapidly.
+\item
+  Solving for the Local Maxima: The goal of MLE is to maximize the
+  log-likelihood function. To find the parameter values that maximize
+  \(\ell(\Theta)\), we set the gradient equal to zero, i.e.,
+  \(\nabla_{\Theta} \ell(\Theta)=0\). This condition ensures that the
+  log-likelihood function has a local maximum at the estimated parameter
+  values. Solving this system of equations typically requires numerical
+  methods, especially in high-dimensional settings, where an analytical
+  solution may not be feasible.
+\item
+  Hessian Matrix and Curvature Evaluation: After finding the critical
+  points where the gradient is zero, we next examine the nature of these
+  critical points. This is accomplished by evaluating the second-order
+  partial derivatives of the log-likelihood function, which form the
+  Hessian matrix \(H(\Theta)\). The Hessian matrix is defined as
+  \(H(\Theta)=\frac{\partial^2 \ell(\Theta)}{\partial \Theta^2}\), and
+  it encapsulates information about the curvature of the log-likelihood
+  surface. A negative-definite Hessian matrix indicates that the
+  critical point corresponds to a local maximum. The negative
+  definiteness of the Hessian can be verified by examining its
+  eigenvalues. If all eigenvalues of the Hessian are negative, the
+  critical point is indeed a maximum, and the corresponding parameter
+  values are the MLE.
+\item
+  Eigenvalue Check and Final Validation: The final step in the process
+  is to verify whether the Hessian matrix is negative-definite, which
+  confirms that the solution corresponds to a local maximum. This can be
+  done by checking if all the eigenvalues of the Hessian matrix are
+  negative. In the flowchart, this is represented as checking the
+  condition \(\mathbf{v}^{\top} H(\Theta) \mathbf{v}<0\) for all
+  non-zero vectors \(\mathbf{v}\), or equivalently by checking whether
+  the eigenvalues of \(H\) are negative (i.e.,
+  \(H \mathbf{v}=\lambda \mathbf{v}\) with \(\lambda_i<0\) for all \(i\)
+  ). If the Hessian is negative-definite, the local maximum is
+  confirmed, and the MLE for the parameters is validated.
+\item
+  Iteration and Convergence: In some cases, especially in
+  high-dimensional or complex problems, the optimization may require
+  iterative steps to converge to the global maximum. The algorithm may
+  re-seed the initial parameter estimates \(\Theta\) and attempt to find
+  new local maxima until convergence is achieved. The algorithm halts
+  once the MLE is determined, and the estimated parameters \(\Theta\)
+  are printed as the final result.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.95\textwidth}{!}
+{
+\begin{tikzpicture}
+  [
+        node distance = 8mm and 16mm,
+        start chain = A going below,
+    start chain = B going below,
+        base/.style = 
+            {
+        draw, minimum width=32mm, minimum height=8mm,
+        align=center, on chain=A
+        },
+        base2/.style = 
+            {
+        draw, minimum width=32mm, minimum height=8mm,
+        align=center, on chain=B
+        },
+    startstop/.style = {base, rounded corners, fill=red!20},
+    process/.style = {base, fill=yellow!30},
+        io/.style = 
+                {
+                base, trapezium, trapezium left angle=70, 
+                trapezium right angle=110, fill=blue!30
+                },
+        decision/.style = {base, diamond, fill=green!30},
+        every edge quotes/.style = {auto=right},
+        math_cmnt_head/.style={base2, rounded corners, fill=red!20},
+        math_cmnt/.style={base2, fill=blue!20}
+  ]
+
+\node [startstop]           {MLE Evaluation};            % <-- A-1
+\node [process]         {$P(X\!\! \mid\! \Theta)$};
+\node [process]         {$L(\Theta)=\prod_{i=1}^n P\left(x_i\! \mid\! \Theta\right)$};
+\node [process]         {$\ell(\Theta)=\ln L(\Theta)=\sum_{i=1}^n \ln P\left(x_i\! \mid\! \Theta\right)$};
+\node [process]         {$\frac{\partial \ell(\Theta)}{\partial \theta_k}=\left[\nabla_{\Theta} \ell(\Theta)\right]_k$};
+\node [process, yshift=-0.3cm]         {
+                Solve for $\Theta$ such that:\\ \\$\nabla_{\Theta} \ell(\Theta)=0$ \\ \\
+                via system  \{$\frac{\partial \ell(\Theta)}{\partial \theta_k}=0$\}; \\ \\
+                finding values of: \\ 
+                
+                $\Theta =\left[\theta_1 \cdots \theta_k \cdots \theta_m\right]$
+                };
+\node [process]         {
+                $H(\Theta)=\frac{\partial^2 \ell(\Theta)}{\partial \Theta^2} = 
+                \left[\begin{array}{ccc}\frac{\partial^2 \ell(\Theta)}{\partial \theta_1^2} & 
+                    \cdots & \frac{\partial^2 \ell(\Theta)}{\partial \theta_1 \partial \theta_k} \\ 
+                \vdots & \ddots & \vdots \\ 
+                \frac{\partial^2 \ell(\Theta)}{\partial \theta_k \partial \theta_1} &
+                     \cdots & \frac{\partial^2 \ell(\Theta)}{\partial \theta_k^2}\end{array}\right]$
+                };
+\node [decision]         {H \\ negative \\ definite?};
+\node [process]         {MLE Params $\Theta$ Defined and Validated};
+\node [startstop]           {MLE Determined}; 
+          % <-- A-6
+%
+\node [process,                             % <-- A-7
+       left=of A-8]     {re-seed $\Theta$ \\ find new local maxima};
+
+\node [math_cmnt_head, on chain=B, xshift=7cm] {Underlying key step \\ details and identities};
+
+\node [math_cmnt, on chain=B, yshift=0.2cm ] {
+  $ \begin{aligned}
+    X&=\left[x_1, x_2, \ldots, x_n\right] \\
+    \Theta &=\left[\theta_1, \theta_2, \ldots, \theta_m\right] \\
+  \end{aligned}$
+};
+
+\node [math_cmnt, on chain = B, yshift=0.25cm] {
+  $ \begin{aligned}
+    \prod_{i=1}^{n} p^{x_{i}} &= p^{\sum x_{i}} \\
+    \log \left(\prod_{i=1}^{n} p^{x_{i}}\right)&=\sum_{i=1}^{n} x_{i} \log (p)\\ 
+  \end{aligned}$
+};
+
+\node [math_cmnt, on chain = B, yshift=-9.3cm] {
+                $\mathbf{v}^{\top} H(\Theta) \mathbf{v}<0 \; $ for all $\; \mathbf{v} \neq 0$ \\ 
+                -- or -- \\ 
+                $H \mathbf{v}=\lambda \mathbf{v}$\\
+                $\lambda_i<0$ for all $i=1,2, \ldots, k$\\ 
+                (eigenvalues of $H$ are negative)
+};
+
+
+%%
+\draw [arrows=-Stealth] 
+    (A-1) edge["choose conditional pdf"]            (A-2)
+    (A-2) edge["find likelihoood"]      (A-3)
+    (A-3) edge["calculate log likelihoood"]     (A-4)
+    (A-4) edge["calculate derivatives via gradient"]        (A-5)
+    (A-5) edge node[pos=0.3, auto=right] {solve for local maxima} (A-6)
+    (A-6) edge["calculate Hessian"]     (A-7)
+    (A-7) edge["check if negative definite"]            (A-8)
+    (A-8) edge["yes"]           (A-9)
+    (A-8) edge["no"]            (A-11)
+    (A-9) edge["parametric model found for pdf"]                        (A-10)
+    (A-11) |- ($(A-5.south west)!0.5!([yshift=-3mm] A-6.north west)$) -| ([xshift=- 9mm] A-6.north);
+
+\end{tikzpicture}
+}
+\caption{MLE Flow Chart}.
+\label{fig:MLE_Flow-diagram}
+\end{figure}
+
+\newpage
+
+This generalized flowchart for determining the MLE highlights the
+flexibility and power of the maximum likelihood method. By not assuming
+a specific form for the underlying PDF, it provides a versatile
+framework that can be applied to a wide variety of statistical models.
+Whether the data follows a normal distribution, a Poisson distribution,
+or any other form, the steps outlined in this process can be adapted to
+estimate the parameters of the model. The primary goal of this workflow
+is to demonstrate the general steps involved in determining the MLE,
+from likelihood calculation and gradient computation to the evaluation
+of the Hessian matrix and verification of the local maximum.
+
+Through these steps, one can confidently arrive at the parameter
+estimates that best describe the data according to the principle of
+maximum likelihood. The beauty of this approach lies in its generality,
+making it an invaluable tool for statisticians, data scientists, and
+anyone interested in understanding the underlying relationships in
+complex datasets. By following the methodical procedure outlined here,
+practitioners can ensure that the MLE provides a robust and accurate
+representation of the data, laying the foundation for further analysis
+and modeling.
+
+\hypertarget{next-section-of-mle}{%
+\section{next section of MLE}\label{next-section-of-mle}}
+
+go go go
 
 \hypertarget{linear-regression}{%
 \chapter{Linear Regression}\label{linear-regression}}
