@@ -3563,7 +3563,7 @@ $$
 Where:
 - $I(\theta)$ is the **Fisher Information** of the parameter \( \theta \), which quantifies the amount of information the observed data provides about the parameter.
 
-## 2. Intuition Behind the Cramer-Rao Lower Bound
+**Intuition Behind the Cramer-Rao Lower Bound**
 
 The CRLB gives an indication of how well a parameter can be estimated based on the available data:
 - The **Fisher Information** \( I(\theta) \) essentially measures the sensitivity of the likelihood function to changes in the parameter \( \theta \). A high value of \( I(\theta) \) implies that the likelihood function changes steeply with respect to \( \theta \), indicating that the parameter is easier to estimate.
@@ -3571,7 +3571,7 @@ The CRLB gives an indication of how well a parameter can be estimated based on t
 
 The **CRLB** provides the lowest possible variance for an unbiased estimator, which means that no other unbiased estimator can achieve a variance lower than this bound. Thus, it serves as a benchmark for evaluating the efficiency of an estimator.
 
-## 3. Efficiency of Estimators
+**Efficiency of Estimators**
 
 An estimator that **attains the CRLB** is called an **efficient estimator**. Such an estimator is said to be optimal because it achieves the minimum possible variance for unbiased estimators, making it the best possible estimator in terms of accuracy among the class of unbiased estimators.
 
@@ -3591,7 +3591,7 @@ For example, in the case of estimating the mean of a normal distribution with kn
 
 - **Trade-off Between Bias and Variance**: Although the CRLB is useful for unbiased estimators, many real-world problems involve estimators that are biased but have a lower overall **mean squared error (MSE)**. The **bias-variance trade-off** often leads to the choice of biased estimators that offer lower MSE compared to strictly unbiased ones.
 
-## 6. Examples
+## Examples
 
 - **Normal Distribution Example**: For a normal distribution with mean \( \mu \) and variance \( \sigma^2 \), if \( \sigma^2 \) is known, the CRLB for estimating \( \mu \) is:
 
