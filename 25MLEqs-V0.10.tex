@@ -391,8 +391,9 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
   \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
   \vhEntry{0.08.0}{2024.11.25}{DP}{Start MLE}
-  \vhEntry{0.09.0}{2024.11.27}{DP}{Start Linear Regression}
-  \vhEntry{0.10.0}{2024.11.27}{DP}{Continue MLE, start OLS}
+  \vhEntry{0.09.0}{2024.12.01}{DP}{Start Linear Regression}
+  \vhEntry{0.10.0}{2024.12.06}{DP}{Continue MLE, start OLS}
+  \vhEntry{0.10.1}{2024.12.08}{DP}{Continue Naive Bayes}
 \end{versionhistory}
 \newpage
 
@@ -5133,6 +5134,323 @@ the class.
 
 \newpage
 
+\newpage
+
+\hypertarget{motivation-for-laplace-smoothing}{%
+\section{Motivation for Laplace
+Smoothing}\label{motivation-for-laplace-smoothing}}
+
+In probabilistic models like Naive Bayes, the posterior probability of a
+class is calculated as a product of conditional probabilities. If any
+one of these conditional probabilities is zero, the entire product
+becomes zero:
+
+\[
+P(C \mid D) \propto P(C) \prod_{i=1}^n P(x_i \mid C)
+\]
+
+Here: - \(C\) is the class, - \(D = \{x_1, x_2, \dots, x_n\}\) is the
+set of observed features.
+
+If \(P(x_k \mid C) = 0\) for any \(k\), the entire product becomes zero:
+
+\[
+P(C \mid D) = 0 \quad \text{if any} \quad P(x_k \mid C) = 0
+\]
+
+This occurs when a feature \(x_k\) is absent in the training data for a
+given class \(C\), leading to zero probability. This is problematic as
+it eliminates the class from consideration even when other features
+strongly support it.
+
+\textbf{Solution: Laplace Smoothing}
+
+To address this issue, we add a small constant \(\alpha\) (typically
+\(\alpha = 1\)) to the counts, ensuring no probability is ever zero.
+This technique is called \textbf{Laplace smoothing}.
+
+\hypertarget{formal-definition-of-laplace-smoothing}{%
+\section{Formal Definition of Laplace
+Smoothing}\label{formal-definition-of-laplace-smoothing}}
+
+\textbf{Without Smoothing}
+
+The conditional probability \(P(x \mid C)\) is defined as:
+
+\[
+P(x \mid C) = \frac{\text{count}(x, C)}{\sum_{x' \in V} \text{count}(x', C)}
+\]
+
+Where: - \(\text{count}(x, C)\): Frequency of feature \(x\) in class
+\(C\), - \(V\): The set of all possible features, -
+\(\sum_{x' \in V} \text{count}(x', C)\): Total frequency of features in
+class \(C\).
+
+If \(\text{count}(x, C) = 0\), then \(P(x \mid C) = 0\), resulting in
+\(P(C \mid D) = 0\).
+
+\textbf{With Laplace Smoothing}
+
+Laplace smoothing adjusts the formula to:
+
+\[
+P(x \mid C) = \frac{\text{count}(x, C) + \alpha}{\sum_{x' \in V} \text{count}(x', C) + \alpha |V|}
+\]
+
+Where: - \(\alpha\): Smoothing parameter (typically \(\alpha = 1\)), -
+\(|V|\): The number of unique features.
+
+\hypertarget{naive-bayes-formula-with-laplace-smoothing}{%
+\section{Naive Bayes Formula with Laplace
+Smoothing}\label{naive-bayes-formula-with-laplace-smoothing}}
+
+With Laplace smoothing, the posterior probability is computed as:
+
+\[
+P(C \mid D) \propto P(C) \prod_{i=1}^n \frac{\text{count}(x_i, C) + \alpha}{\sum_{x' \in V} \text{count}(x', C) + \alpha |V|}
+\]
+
+\textbf{Advantages of Laplace Smoothing}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Ensures \(P(x \mid C) > 0\) for all features \(x\), avoiding zero
+  probabilities.
+\item
+  Handles previously unseen features gracefully during prediction.
+\end{enumerate}
+
+** Implementation in R**
+
+Below is an example of Laplace smoothing implementation in R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example of Laplace smoothing implementation}
+
+\CommentTok{\# Feature counts in two classes}
+\NormalTok{feature\_counts\_class1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{feature\_counts\_class2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# Total feature counts in each class}
+\NormalTok{total\_class1 }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(feature\_counts\_class1)}
+\NormalTok{total\_class2 }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(feature\_counts\_class2)}
+
+\CommentTok{\# Vocabulary size (number of unique features)}
+\NormalTok{vocab\_size }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(feature\_counts\_class1)}
+
+\CommentTok{\# Smoothing parameter (alpha)}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \DecValTok{1}
+
+\CommentTok{\# Calculate smoothed probabilities for a feature in each class}
+\NormalTok{smoothed\_prob\_class1 }\OtherTok{\textless{}{-}}\NormalTok{ (feature\_counts\_class1 }\SpecialCharTok{+}\NormalTok{ alpha) }\SpecialCharTok{/}\NormalTok{ (total\_class1 }\SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ vocab\_size)}
+\NormalTok{smoothed\_prob\_class2 }\OtherTok{\textless{}{-}}\NormalTok{ (feature\_counts\_class2 }\SpecialCharTok{+}\NormalTok{ alpha) }\SpecialCharTok{/}\NormalTok{ (total\_class2 }\SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ vocab\_size)}
+
+\CommentTok{\# Print the smoothed probabilities}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Smoothed probabilities for class 1:"}\NormalTok{, smoothed\_prob\_class1, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Smoothed probabilities for class 2:"}\NormalTok{, smoothed\_prob\_class2, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\hypertarget{example-of-zero-probability-problem-with-nb}{%
+\section{Example of Zero Probability Problem (with
+NB)}\label{example-of-zero-probability-problem-with-nb}}
+
+For SPAM Email assessment
+
+In the Naive Bayes algorithm, the conditional probability of a word
+given a class is calculated as:
+
+\[
+P(\text{word} | \text{class}) = \frac{\text{count}(\text{word in class})}{\text{total words in class}}
+\]
+
+If a word does not appear in a class in the training data,
+\(\text{count}(\text{word in class}) = 0\), resulting in
+\(P(\text{word} | \text{class}) = 0\). This leads to a zero probability
+for the entire class since probabilities are multiplied in Naive Bayes.
+
+\hypertarget{solution-laplace-smoothing}{%
+\section{Solution: Laplace Smoothing}\label{solution-laplace-smoothing}}
+
+To address this issue, we use Laplace smoothing, which ensures no
+probability is ever zero. The formula becomes:
+
+\[
+P(\text{word} | \text{class}) = \frac{\text{count}(\text{word in class}) + 1}{\text{total words in class} + V}
+\]
+
+Where: - \(V\) is the vocabulary size (the total number of unique words
+in the dataset). - \(+1\) ensures all probabilities are greater than
+zero.
+
+\hypertarget{adjusted-naive-bayes-formula}{%
+\subsection{Adjusted Naive Bayes
+Formula}\label{adjusted-naive-bayes-formula}}
+
+After applying Laplace smoothing, the Naive Bayes formula is:
+
+\[
+P(\text{class} | \text{document}) \propto P(\text{class}) \prod_{\text{word} \in \text{document}} \frac{\text{count}(\text{word in class}) + 1}{\text{total words in class} + V}
+\]
+
+\hypertarget{implementation-in-r}{%
+\section{Implementation in R}\label{implementation-in-r}}
+
+Here's how you can implement Laplace smoothing in R:
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example Vocabulary}
+\NormalTok{vocabulary }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Lunch"}\NormalTok{, }\StringTok{"Money"}\NormalTok{, }\StringTok{"Dear"}\NormalTok{, }\StringTok{"Friend"}\NormalTok{)}
+
+\CommentTok{\# Word counts in two classes: Normal (N) and Spam (S)}
+\NormalTok{word\_counts\_N }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{Lunch =} \DecValTok{2}\NormalTok{, }\AttributeTok{Money =} \DecValTok{1}\NormalTok{, }\AttributeTok{Dear =} \DecValTok{5}\NormalTok{, }\AttributeTok{Friend =} \DecValTok{3}\NormalTok{)}
+\NormalTok{word\_counts\_S }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{Lunch =} \DecValTok{0}\NormalTok{, }\AttributeTok{Money =} \DecValTok{7}\NormalTok{, }\AttributeTok{Dear =} \DecValTok{2}\NormalTok{, }\AttributeTok{Friend =} \DecValTok{1}\NormalTok{)}
+
+\CommentTok{\# Total words in each class}
+\NormalTok{total\_words\_N }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(word\_counts\_N)}
+\NormalTok{total\_words\_S }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(word\_counts\_S)}
+
+\CommentTok{\# Vocabulary size}
+\NormalTok{V }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(vocabulary)}
+
+\CommentTok{\# Laplace Smoothed Probabilities for word "Lunch"}
+\NormalTok{P\_Lunch\_given\_N }\OtherTok{\textless{}{-}}\NormalTok{ (word\_counts\_N[}\StringTok{"Lunch"}\NormalTok{] }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (total\_words\_N }\SpecialCharTok{+}\NormalTok{ V)}
+\NormalTok{P\_Lunch\_given\_S }\OtherTok{\textless{}{-}}\NormalTok{ (word\_counts\_S[}\StringTok{"Lunch"}\NormalTok{] }\SpecialCharTok{+} \DecValTok{1}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ (total\_words\_S }\SpecialCharTok{+}\NormalTok{ V)}
+
+\CommentTok{\# Output}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"P(Lunch | N) ="}\NormalTok{, P\_Lunch\_given\_N, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"P(Lunch | S) ="}\NormalTok{, P\_Lunch\_given\_S, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\normalsize
+
+\newpage
+
+\hypertarget{naive-bayes-commutative-property}{%
+\section{Naive Bayes Commutative
+Property}\label{naive-bayes-commutative-property}}
+
+Naive Bayes makes a critical assumption: \textbf{features are
+conditionally independent given the class}. This implies that the order
+of features does not affect the computed probabilities. Mathematically:
+
+\[
+P(C \mid x_1, x_2, \ldots, x_n) \propto P(C) \prod_{i=1}^n P(x_i \mid C)
+\]
+
+Since multiplication is commutative, rearranging the features
+\(x_1, x_2, \ldots, x_n\) does not change the result:
+
+\[
+P(C \mid x_1, x_2, \ldots, x_n) = P(C \mid x_{\sigma(1)}, x_{\sigma(2)}, \ldots, x_{\sigma(n)})
+\]
+
+where \(\sigma\) is any permutation of the feature indices. For example:
+
+\[
+P(C \mid x_1, x_2) = P(C \mid x_2, x_1)
+\]
+
+\textbf{Conditional Independence Assumption}
+
+The root cause of this behavior is the \textbf{conditional independence
+assumption} in Naive Bayes:
+
+\[
+P(x_1, x_2, \ldots, x_n \mid C) = \prod_{i=1}^n P(x_i \mid C)
+\]
+
+As a result: 1. The sequence \(x_1, x_2\) produces the same result as
+\(x_2, x_1\). 2. Any sequential or contextual dependency between
+features is ignored.
+
+For instance:
+
+\[
+P(x_1, x_2 \mid C) = P(x_2, x_1 \mid C)
+\]
+
+This makes Naive Bayes invariant to the order of features.
+
+** Implications of the Commutative Property**
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Naivety of Naive Bayes
+\end{enumerate}
+
+By ignoring feature order, Naive Bayes becomes naive in applications
+where sequential dependencies matter, such as: - Natural language
+processing (e.g., ``Friend Dear'' vs.~``Dear Friend''), - Time-series
+analysis (e.g., stock price sequences).
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Loss of Information
+\end{enumerate}
+
+For datasets where the order of features carries important information,
+the independence assumption results in a loss of discriminatory power.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Trade-off for Simplicity
+\end{enumerate}
+
+The simplicity of the model allows for fast computation and scalability
+but at the cost of ignoring meaningful relationships between features.
+
+\textbf{Addressing the Limitation}
+
+Alternative approaches that account for sequential dependencies include:
+1. \textbf{N-gram Models}: Capture dependencies between adjacent
+features in text. 2. \textbf{Hidden Markov Models (HMMs)}: Incorporate
+sequential information. 3. \textbf{Neural Networks}: Modern
+architectures (e.g., RNNs, Transformers) explicitly model feature order.
+
+Here is a simple example of Naive Bayes ignoring feature order:
+
+\scriptsize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Example data}
+\NormalTok{class\_probs }\OtherTok{\textless{}{-}} \FloatTok{0.67}  \CommentTok{\# P(C)}
+\NormalTok{feature\_probs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{Dear =} \FloatTok{0.43}\NormalTok{, }\AttributeTok{Friend =} \FloatTok{0.29}\NormalTok{)  }\CommentTok{\# P(x | C)}
+
+\CommentTok{\# Compute scores for "Dear Friend" and "Friend Dear"}
+\NormalTok{score\_dear\_friend }\OtherTok{\textless{}{-}}\NormalTok{ class\_probs }\SpecialCharTok{*}\NormalTok{ feature\_probs[}\StringTok{"Dear"}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ feature\_probs[}\StringTok{"Friend"}\NormalTok{]}
+\NormalTok{score\_friend\_dear }\OtherTok{\textless{}{-}}\NormalTok{ class\_probs }\SpecialCharTok{*}\NormalTok{ feature\_probs[}\StringTok{"Friend"}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ feature\_probs[}\StringTok{"Dear"}\NormalTok{]}
+
+\CommentTok{\# Output}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Score for \textquotesingle{}Dear Friend\textquotesingle{}:"}\NormalTok{, score\_dear\_friend, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Score for \textquotesingle{}Friend Dear\textquotesingle{}:"}\NormalTok{, score\_friend\_dear, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\normalsize
+
+\newpage
+
+\newpage
+
 \hypertarget{modifications-in-venn-diagram-representation}{%
 \section{Modifications in Venn Diagram
 Representation}\label{modifications-in-venn-diagram-representation}}
@@ -6133,9 +6451,7 @@ Where: - \(I(\theta)\) is the \textbf{Fisher Information} of the
 parameter \(\theta\), which quantifies the amount of information the
 observed data provides about the parameter.
 
-\hypertarget{intuition-behind-the-cramer-rao-lower-bound}{%
-\section{2. Intuition Behind the Cramer-Rao Lower
-Bound}\label{intuition-behind-the-cramer-rao-lower-bound}}
+\textbf{Intuition Behind the Cramer-Rao Lower Bound}
 
 The CRLB gives an indication of how well a parameter can be estimated
 based on the available data: - The \textbf{Fisher Information}
@@ -6152,8 +6468,7 @@ estimator, which means that no other unbiased estimator can achieve a
 variance lower than this bound. Thus, it serves as a benchmark for
 evaluating the efficiency of an estimator.
 
-\hypertarget{efficiency-of-estimators}{%
-\section{3. Efficiency of Estimators}\label{efficiency-of-estimators}}
+\textbf{Efficiency of Estimators}
 
 An estimator that \textbf{attains the CRLB} is called an
 \textbf{efficient estimator}. Such an estimator is said to be optimal
@@ -6212,7 +6527,7 @@ Inference}\label{role-in-statistical-inference}}
 \end{itemize}
 
 \hypertarget{examples}{%
-\section{6. Examples}\label{examples}}
+\section{Examples}\label{examples}}
 
 \begin{itemize}
 \item
@@ -6822,8 +7137,8 @@ difference between the observed values and the values predicted by the
 model. This difference is captured by the residual sum of squares, which
 is minimized to obtain the optimal values of the coefficients.
 
-\hypertarget{implementation-in-r}{%
-\section{Implementation in R}\label{implementation-in-r}}
+\hypertarget{implementation-in-r-1}{%
+\section{Implementation in R}\label{implementation-in-r-1}}
 
 Below, we demonstrate how to fit a linear regression model in R using a
 simple mock dataset. The dataset consists of a response variable \(y\)
@@ -6986,11 +7301,11 @@ goodness of fit. Let's discuss how outliers impact the model:
 
 \begin{figure}[h]
 
-{\centering \includegraphics{25MLEqs-V0.10_files/figure-latex/unnamed-chunk-4-1} 
+{\centering \includegraphics{25MLEqs-V0.10_files/figure-latex/unnamed-chunk-7-1} 
 
 }
 
-\caption{Default caption for all figures}\label{fig:unnamed-chunk-4}
+\caption{Default caption for all figures}\label{fig:unnamed-chunk-7}
 \end{figure}
 \normalsize
 
@@ -7105,11 +7420,11 @@ regression model:
 
 \begin{figure}[h]
 
-{\centering \includegraphics{25MLEqs-V0.10_files/figure-latex/unnamed-chunk-5-1} 
+{\centering \includegraphics{25MLEqs-V0.10_files/figure-latex/unnamed-chunk-8-1} 
 
 }
 
-\caption{Default caption for all figures}\label{fig:unnamed-chunk-5}
+\caption{Default caption for all figures}\label{fig:unnamed-chunk-8}
 \end{figure}
 \normalsize
 

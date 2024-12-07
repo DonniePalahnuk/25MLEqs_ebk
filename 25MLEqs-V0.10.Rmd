@@ -295,9 +295,6 @@ knitr::opts_chunk$set(
 library(reticulate)           # Python integration
 # cat("\\small\n")
 ```
-
-
-
 \
 
 \begin{versionhistory}
@@ -308,8 +305,9 @@ library(reticulate)           # Python integration
   \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
   \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
   \vhEntry{0.08.0}{2024.11.25}{DP}{Start MLE}
-  \vhEntry{0.09.0}{2024.11.27}{DP}{Start Linear Regression}
-  \vhEntry{0.10.0}{2024.11.27}{DP}{Continue MLE, start OLS}
+  \vhEntry{0.09.0}{2024.12.01}{DP}{Start Linear Regression}
+  \vhEntry{0.10.0}{2024.12.06}{DP}{Continue MLE, start OLS}
+  \vhEntry{0.10.1}{2024.12.08}{DP}{Continue Naive Bayes}
 \end{versionhistory}
 \newpage
 
@@ -3061,6 +3059,260 @@ This is what makes Naive Bayes "naive" - it assumes that each feature (or piece 
 \newpage
 
 ## Raw Bayes Text Here First
+
+\newpage
+
+\newpage
+
+## Motivation for Laplace Smoothing
+
+In probabilistic models like Naive Bayes, the posterior probability of a class is calculated as a product of conditional probabilities. If any one of these conditional probabilities is zero, the entire product becomes zero:
+
+$$
+P(C \mid D) \propto P(C) \prod_{i=1}^n P(x_i \mid C)
+$$
+
+Here:
+- \( C \) is the class,
+- \( D = \{x_1, x_2, \dots, x_n\} \) is the set of observed features.
+
+If \( P(x_k \mid C) = 0 \) for any \( k \), the entire product becomes zero:
+
+$$
+P(C \mid D) = 0 \quad \text{if any} \quad P(x_k \mid C) = 0
+$$
+
+This occurs when a feature \( x_k \) is absent in the training data for a given class \( C \), leading to zero probability. This is problematic as it eliminates the class from consideration even when other features strongly support it.
+
+**Solution: Laplace Smoothing**
+
+To address this issue, we add a small constant \( \alpha \) (typically \( \alpha = 1 \)) to the counts, ensuring no probability is ever zero. This technique is called **Laplace smoothing**.
+
+
+## Formal Definition of Laplace Smoothing
+
+**Without Smoothing**
+
+The conditional probability \( P(x \mid C) \) is defined as:
+
+$$
+P(x \mid C) = \frac{\text{count}(x, C)}{\sum_{x' \in V} \text{count}(x', C)}
+$$
+
+Where:
+- \( \text{count}(x, C) \): Frequency of feature \( x \) in class \( C \),
+- \( V \): The set of all possible features,
+- \( \sum_{x' \in V} \text{count}(x', C) \): Total frequency of features in class \( C \).
+
+If \( \text{count}(x, C) = 0 \), then \( P(x \mid C) = 0 \), resulting in \( P(C \mid D) = 0 \).
+
+**With Laplace Smoothing**
+
+Laplace smoothing adjusts the formula to:
+
+$$
+P(x \mid C) = \frac{\text{count}(x, C) + \alpha}{\sum_{x' \in V} \text{count}(x', C) + \alpha |V|}
+$$
+
+Where:
+- $\alpha$: Smoothing parameter (typically $\alpha = 1$),
+- $|V|$: The number of unique features.
+
+## Naive Bayes Formula with Laplace Smoothing
+
+With Laplace smoothing, the posterior probability is computed as:
+
+$$
+P(C \mid D) \propto P(C) \prod_{i=1}^n \frac{\text{count}(x_i, C) + \alpha}{\sum_{x' \in V} \text{count}(x', C) + \alpha |V|}
+$$
+
+**Advantages of Laplace Smoothing**
+
+1. Ensures \( P(x \mid C) > 0 \) for all features \( x \), avoiding zero probabilities.
+2. Handles previously unseen features gracefully during prediction.
+
+** Implementation in R**
+
+Below is an example of Laplace smoothing implementation in R:
+
+```{r eval=FALSE}
+# Example of Laplace smoothing implementation
+
+# Feature counts in two classes
+feature_counts_class1 <- c(2, 0, 5, 3)
+feature_counts_class2 <- c(0, 7, 2, 1)
+
+# Total feature counts in each class
+total_class1 <- sum(feature_counts_class1)
+total_class2 <- sum(feature_counts_class2)
+
+# Vocabulary size (number of unique features)
+vocab_size <- length(feature_counts_class1)
+
+# Smoothing parameter (alpha)
+alpha <- 1
+
+# Calculate smoothed probabilities for a feature in each class
+smoothed_prob_class1 <- (feature_counts_class1 + alpha) / (total_class1 + alpha * vocab_size)
+smoothed_prob_class2 <- (feature_counts_class2 + alpha) / (total_class2 + alpha * vocab_size)
+
+# Print the smoothed probabilities
+cat("Smoothed probabilities for class 1:", smoothed_prob_class1, "\n")
+cat("Smoothed probabilities for class 2:", smoothed_prob_class2, "\n")
+```
+
+\newpage
+
+
+## Example of Zero Probability Problem (with NB)
+
+For SPAM Email assessment 
+
+In the Naive Bayes algorithm, the conditional probability of a word given a class is calculated as:
+
+$$
+P(\text{word} | \text{class}) = \frac{\text{count}(\text{word in class})}{\text{total words in class}}
+$$
+
+If a word does not appear in a class in the training data, $\text{count}(\text{word in class}) = 0$, resulting in $P(\text{word} | \text{class}) = 0$. This leads to a zero probability for the entire class since probabilities are multiplied in Naive Bayes.
+
+## Solution: Laplace Smoothing
+
+To address this issue, we use Laplace smoothing, which ensures no probability is ever zero. The formula becomes:
+
+$$
+P(\text{word} | \text{class}) = \frac{\text{count}(\text{word in class}) + 1}{\text{total words in class} + V}
+$$
+
+Where:
+- $V$ is the vocabulary size (the total number of unique words in the dataset).
+- $+1$ ensures all probabilities are greater than zero.
+
+### Adjusted Naive Bayes Formula
+
+After applying Laplace smoothing, the Naive Bayes formula is:
+
+$$
+P(\text{class} | \text{document}) \propto P(\text{class}) \prod_{\text{word} \in \text{document}} \frac{\text{count}(\text{word in class}) + 1}{\text{total words in class} + V}
+$$
+
+## Implementation in R
+
+Here’s how you can implement Laplace smoothing in R:
+
+\scriptsize
+```{r eval=FALSE}
+# Example Vocabulary
+vocabulary <- c("Lunch", "Money", "Dear", "Friend")
+
+# Word counts in two classes: Normal (N) and Spam (S)
+word_counts_N <- c(Lunch = 2, Money = 1, Dear = 5, Friend = 3)
+word_counts_S <- c(Lunch = 0, Money = 7, Dear = 2, Friend = 1)
+
+# Total words in each class
+total_words_N <- sum(word_counts_N)
+total_words_S <- sum(word_counts_S)
+
+# Vocabulary size
+V <- length(vocabulary)
+
+# Laplace Smoothed Probabilities for word "Lunch"
+P_Lunch_given_N <- (word_counts_N["Lunch"] + 1) / (total_words_N + V)
+P_Lunch_given_S <- (word_counts_S["Lunch"] + 1) / (total_words_S + V)
+
+# Output
+cat("P(Lunch | N) =", P_Lunch_given_N, "\n")
+cat("P(Lunch | S) =", P_Lunch_given_S, "\n")
+```
+\normalsize
+
+
+\newpage
+
+## Naive Bayes Commutative Property
+
+Naive Bayes makes a critical assumption: **features are conditionally independent given the class**. This implies that the order of features does not affect the computed probabilities. Mathematically:
+
+$$
+P(C \mid x_1, x_2, \ldots, x_n) \propto P(C) \prod_{i=1}^n P(x_i \mid C)
+$$
+
+Since multiplication is commutative, rearranging the features \( x_1, x_2, \ldots, x_n \) does not change the result:
+
+$$
+P(C \mid x_1, x_2, \ldots, x_n) = P(C \mid x_{\sigma(1)}, x_{\sigma(2)}, \ldots, x_{\sigma(n)})
+$$
+
+where \( \sigma \) is any permutation of the feature indices. For example:
+
+$$
+P(C \mid x_1, x_2) = P(C \mid x_2, x_1)
+$$
+
+
+**Conditional Independence Assumption**
+
+The root cause of this behavior is the **conditional independence assumption** in Naive Bayes:
+
+$$
+P(x_1, x_2, \ldots, x_n \mid C) = \prod_{i=1}^n P(x_i \mid C)
+$$
+
+As a result:
+1. The sequence \( x_1, x_2 \) produces the same result as \( x_2, x_1 \).
+2. Any sequential or contextual dependency between features is ignored.
+
+For instance:
+
+$$
+P(x_1, x_2 \mid C) = P(x_2, x_1 \mid C)
+$$
+
+This makes Naive Bayes invariant to the order of features.
+
+** Implications of the Commutative Property**
+
+1. Naivety of Naive Bayes
+
+By ignoring feature order, Naive Bayes becomes naive in applications where sequential dependencies matter, such as:
+- Natural language processing (e.g., "Friend Dear" vs. "Dear Friend"),
+- Time-series analysis (e.g., stock price sequences).
+
+2. Loss of Information
+
+For datasets where the order of features carries important information, the independence assumption results in a loss of discriminatory power.
+
+3. Trade-off for Simplicity
+
+The simplicity of the model allows for fast computation and scalability but at the cost of ignoring meaningful relationships between features.
+
+
+**Addressing the Limitation**
+
+Alternative approaches that account for sequential dependencies include:
+1. **N-gram Models**: Capture dependencies between adjacent features in text.
+2. **Hidden Markov Models (HMMs)**: Incorporate sequential information.
+3. **Neural Networks**: Modern architectures (e.g., RNNs, Transformers) explicitly model feature order.
+
+Here is a simple example of Naive Bayes ignoring feature order:
+
+\scriptsize
+```{r eval=FALSE}
+# Example data
+class_probs <- 0.67  # P(C)
+feature_probs <- c(Dear = 0.43, Friend = 0.29)  # P(x | C)
+
+# Compute scores for "Dear Friend" and "Friend Dear"
+score_dear_friend <- class_probs * feature_probs["Dear"] * feature_probs["Friend"]
+score_friend_dear <- class_probs * feature_probs["Friend"] * feature_probs["Dear"]
+
+# Output
+cat("Score for 'Dear Friend':", score_dear_friend, "\n")
+cat("Score for 'Friend Dear':", score_friend_dear, "\n")
+```
+\normalsize
+
+\newpage 
 
 
 
