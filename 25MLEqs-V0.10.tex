@@ -394,6 +394,7 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.09.0}{2024.12.01}{DP}{Start Linear Regression}
   \vhEntry{0.10.0}{2024.12.06}{DP}{Continue MLE, start OLS}
   \vhEntry{0.10.1}{2024.12.08}{DP}{Continue Naive Bayes}
+  \vhEntry{0.10.2}{2024.12.09}{DP}{Continue MLE - added examples to MLE}
 \end{versionhistory}
 \newpage
 
@@ -6738,6 +6739,8 @@ The MLE for linear regression parameters under Gaussian noise assumptions coinci
 When analytical solutions aren't available, numerical methods like
 gradient descent or Newton-Raphson are used:
 
+\scriptsize
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{def}\NormalTok{ mle\_optimization(data, initial\_params):}
@@ -6751,6 +6754,699 @@ gradient descent or Newton-Raphson are used:
 \end{Highlighting}
 \end{Shaded}
 
+\normalsize
+
+\newpage
+
+\hypertarget{example---npdf}{%
+\section{Example - Npdf}\label{example---npdf}}
+
+This section demonstrates the application of Maximum Likelihood
+Estimation (MLE) to the Normal Probability Density Function (Npdf), one
+of the most widely used distributions in statistics. The goal is to
+estimate the parameters of the normal distribution-the mean ( \(\mu\) )
+and variance \(\left(\sigma^2\right)\)-directly from observed data. By
+applying MLE, we derive parameter estimates that maximize the likelihood
+of the observed data under the assumption that it follows a normal
+distribution.
+
+The normal distribution, defined by its bell-shaped curve, is
+characterized by two parameters: the mean, which determines the
+distribution's center, and the variance, which controls its spread.
+Using MLE, we systematically derive these parameters by constructing the
+likelihood function for the normal distribution and then simplifying it
+using logarithmic transformations. This process highlights the power of
+MLE in handling complex probabilistic models, especially through the use
+of log-likelihoods for easier computation.
+
+This example serves as a concrete illustration of how MLE works in
+practice, focusing on the normal distribution as a specific case. By
+working through the derivation step by step, we demonstrate how MLE
+transforms the abstract concept of likelihood maximization into a
+practical tool for estimating key statistical parameters. The final
+results provide closed-form solutions for the mean and variance,
+showcasing the elegance and utility of MLE in parameter estimation for
+real-world data.
+
+Identities
+
+Recall we can expand the product by using use some simple ``nifty'\,'
+identities for the log function and sum of exponents:
+
+\[
+\begin{aligned}
+\prod_{i=1}^{n} p^{x_{i}}&=p^{\sum x_{i}} \\
+\log \left(\prod_{i=1}^{n} p^{x_{i}}\right)&=\sum_{i=1}^{n} x_{i} \log (p)\\ 
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+\log(a \times b) &= \log(a) + \log(b)\\
+\prod_{i=1}^{n} p^{x_{i}}&=p^{\sum x_{i}} \\
+\log \left(p^{a}\right)&=a \log (p) \\
+\log \left(p^{a+b}\right)&=a \log (p)+b \log (p) \\
+\log \left(\prod_{i=1}^{n} p^{x_{i}}\right)&=\sum_{i=1}^{n} x_{i} \log (p)\\ 
+\log (e) &= 1
+\end{aligned}
+\]
+
+Taking the log of the likelihood function (for ease of \(1^{st}\) order
+derivative minimization):
+
+\begin{equation}
+\log ( \prod_{i=1}^{n} f_{X}(x ; \mu, \sigma))
+\end{equation}
+
+\[
+\log ( \prod_{i=1}^{n} f_{X}(x ; \mu, \sigma))
+\]
+
+\begin{align}
+=\log \left(\frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\left(x_{1}-\mu\right)^{2} / 2 \sigma^{2}} \times \ldots \times \frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\left(x_{n}-\mu\right)^{2} / 2 \sigma^{2}}\right)
+\end{align}
+
+Now note specifically for \(x_{1}\): \begin{align}
+\log \left(\frac{1}{\sqrt{2 \pi \sigma^{2}}} \times e^{-\left(x_{1}-\mu\right)^{2} / 2 \sigma^{2}}\right)
+\end{align}
+
+\begin{align}
+=\overbrace{\log \left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right)+ \log \left(e^{-\left(x_{1}-\mu\right)^{2} / 2 \sigma^{2}}\right)}^{\log(a \times b) = \log(a) + \log(b}
+\end{align}
+
+\begin{align}
+=\log \left[\left(2 \pi \sigma^{2}\right)^{-1 / 2}\right] - \overbrace{ \frac{\left(x_{1}-\mu\right)^{2}}{2 \sigma^{2}} \log (e)}^{\log \left(p^{a}\right) =a \log (p)}
+\end{align}
+
+\[
+ = -\frac{1}{2} \log \left(2 \pi \sigma^{2}\right) -\frac{\left(x_{1}-\mu\right)^{2}}{2 \sigma^{2}} = -\frac{1}{2} \log (2 \pi)-\frac{1}{2} \log \left(\sigma^{2}\right)-\frac{\left(x_{1}-\mu\right)^{2}}{2 \sigma^{2}}
+\] \[
+= -\frac{1}{2} \log (2 \pi)-\log (\sigma)-\frac{\left(x_{1}-\mu\right)^{2}}{2 \sigma^{2}}
+\]
+
+Which gives us a easier to handle MLE objective function for
+differentiation:
+
+By summing over all n samples for \(x_{i}\):
+
+\[
+\log \left[L\left(\mu, \sigma \mid x_{1}, \ldots, x_{n}\right)\right]
+\]
+
+\[
+\begin{gathered}
+=-\frac{1}{2} \log (2 \pi)-\log (\sigma)-\frac{\left(x_{1}-\mu\right)^{2}}{2 \sigma^{2}}
+-\ldots-\frac{1}{2} \log (2 \pi)-\log (\sigma)-\frac{\left(x_{n}-\mu\right)^{2}}{2 \sigma^{2}}
+\end{gathered}
+\]
+
+\[
+=-\frac{n}{2} \log (2 \pi)-n \log (\sigma)-\frac{\left(x_{1}-\mu\right)^{2}}{2 \sigma^{2}}-\ldots-\frac{\left(x_{n}-\mu\right)^{2}}{2 \sigma^{2}}
+\]
+
+Both the mean and the variance are UNKNOWN - and we want to estimate
+them on the basis of these observations ! We want to determine the
+proper \(\mu\), and \$ v\$ based on the data.
+
+Note that the term \(x\) is a `vector'
+
+\$\text {We seek to minimize this expression: } \$
+
+\[
+-\frac{n}{2} \log (2 \pi)- n \log \sigma -\sum_{i=1}^{n} \frac{\left(x_{i}-\mu\right)^{2}}{2 \sigma^{2}}
+\]
+
+\(\text {We minimize w.r.t. } \mu \text {, }\)
+
+to obtain the estimate of the mean:
+
+\[
+\frac{\partial}{\partial \mu} \log \left[L\left(\mu, \sigma \mid x_{1}, \ldots, x_{n}\right)\right] = 0
+\]
+
+\[
+\frac{\partial \left( \frac{n}{2} \log (2 \pi) + {n} \log \sigma+\sum_{i=1}^{n} \frac{\left(x_{i}-\mu\right)^{2}}{2 \sigma^{2}}\right)}{\partial \mu}= 0
+\] \[
+=0-0+\frac{\left(x_{1}-\mu\right)}{\sigma^{2}}+\ldots+\frac{\left(x_{n}-\mu\right)}{\sigma^{2}}
+\]
+
+\[
+=\frac{1}{\sigma^{2}}\left[\left(x_{1}+\ldots+x_{n}\right)-n \mu\right]=0
+\]
+
+\[
+\frac{1}{\sigma^{2}} \sum_{i=1}^{n} \left(x_{i}-\mu\right)=0 ~~~~ \Rightarrow ~~~~ \sum_{i=1}^{n}  x_{i}=n \mu ~~~~ \Rightarrow ~~~~ \widehat{\mu}=\frac{x_{1}+\cdots+x_{n}}{n}
+\]
+
+\(\text {We minimize w.r.t. } \sigma \text {, }\) to obtain the estimate
+of the variance:
+
+\[
+\frac{\partial}{\partial \sigma} \log \left[L\left(\mu, \sigma \mid x_{1}, \ldots, x_{n}\right)\right] = 0
+\]
+
+\[
+\frac{\partial \left( \frac{n}{2} \log (2 \pi) + {n} \log \sigma+\sum_{i=1}^{n} \frac{\left(x_{i}-\mu\right)^{2}}{2 \sigma}\right)}{\partial \sigma}= 0
+\]
+
+\[
+=0-\frac{n}{\sigma} -\sum_{i=1}^{n}\frac{\left(x_{i}-\mu\right)^{2}}{2}(-2) \sigma^{-3} = 0
+\]
+
+\[
+\frac{n}{\sigma}+\sum_{i=1}^{n}\frac{\left(x_{1}-\mu\right)^{2}}{\sigma^{3}} = 0 
+\]
+
+\[
+\begin{aligned}
+&0=-n+\frac{1}{\sigma^{2}}\left[\left(x_{1}-\mu\right)^{2}+\ldots+\left(x_{n}-\mu\right)^{2}\right] \\
+&n=\frac{1}{\sigma^{2}}\left[\left(x_{1}-\mu\right)^{2}+\ldots+\left(x_{n}-\mu\right)^{2}\right] \\
+&n \sigma^{2}=\left(x_{1}-\mu\right)^{2}+\ldots+\left(x_{n}-\mu\right)^{2}
+\end{aligned}
+\]
+
+\[
+\sigma^{2} \cdot n -\sum_{i=1}^{n} \left(x_{i}-\mu\right)^{2}=0 ~~~ \Rightarrow ~~~ \widehat{\sigma}=\sqrt{\frac{1}{n} \sum_{i=1}^{n}\left(x_{i}-\widehat{\mu}\right)^{2}}
+\]
+
+\[
+\widehat{\sigma}=\sqrt{\frac{\left(x_{1}-\mu\right)^{2}+\ldots+\left(x_{n}-\mu\right)^{2}}{n}}
+\]
+
+Thus maximum of the MLE \(L\left(\Theta \mid X \right)\), or in this
+case: \(\log \left(L\left(\Theta \mid X \right)\right)\), for
+
+\[
+\quad f_{X}(x ; \mu, \sigma)= \frac{1}{\sqrt{2 \pi \sigma}} \exp \left\{-\frac{\left(x-\mu\right)^{2}}{2 \sigma}\right\}
+\] results in the estimate for the mean \(\mu\) and the standard
+deviation \(\sigma\).\textbackslash{}
+
+\[
+\Rightarrow ~~~~ \widehat{\mu}=\frac{x_{1}+\cdots+x_{n}}{n}
+\]
+
+\[
+\Rightarrow ~~~~ \widehat{\sigma}=\sqrt{\frac{\left(x_{1}-\mu\right)^{2}+\ldots+\left(x_{n}-\mu\right)^{2}}{n}}
+\]
+
+\newpage
+
+\hypertarget{example---wpdf}{%
+\section{Example - Wpdf}\label{example---wpdf}}
+
+In this section, we apply the Maximum Likelihood Estimation (MLE) method
+to the Weibull Probability Density Function (Wpdf), a widely used
+distribution in reliability analysis and survival studies. Unlike the
+normal distribution, the Weibull distribution is a non-symmetric,
+two-parameter model characterized by its shape parameter \(k\) (or
+\(\gamma\) ) and scale parameter \(\lambda\) (or \(\theta\) ). Despite
+these differences, the general approach to MLE derivation remains the
+same, demonstrating the versatility of MLE as a parameter estimation
+technique.
+
+The Weibull distribution differs from the normal distribution in that it
+can model a variety of behaviors depending on the shape parameter \(k\),
+making it especially useful for modeling failure times and lifespans.
+The two parameters \(k\) and \(\lambda\) determine the shape and scale
+of the distribution, respectively, and must be estimated from observed
+data. Using MLE, we construct the likelihood function for the Weibull
+distribution based on the assumption that the data are independent and
+identically distributed (i.i.d.).
+
+While the MLE derivation for the Weibull distribution follows the same
+principles as the normal distribution, the asymmetry and mathematical
+complexity of the Weibull model make the process more challenging.
+Specifically, the lack of a closed-form analytical solution for the
+shape parameter \(\hat{\gamma}\) requires us to rely on numerical
+methods or iterative techniques for estimation. Once \(\hat{\gamma}\) is
+estimated, the scale parameter \(\hat{\theta}\) can be determined more
+directly.
+
+This section provides a step-by-step derivation of the MLE equations for
+the Weibull distribution, highlighting the mathematical tools required
+to solve for the parameters. By the end, we will have a framework for
+estimating the shape and scale parameters of the Weibull distribution,
+demonstrating how the MLE approach extends seamlessly beyond symmetric
+distributions like the normal to more complex, asymmetric models.
+
+We start by assuming Weibull pdf that is \textbf{Independent Identically
+Distributed} which is usually designated as i.i.d. (or perhaps Markov
+depending on how you define or scope the analysis):
+
+\[
+X = \left\{x_{1}, \ldots, x_{n}\right\}, \quad W{_{pdf}}(k, \lambda)
+\]
+
+\[
+f(x ; \lambda, k)= \begin{cases}\frac{k}{\lambda}\left(\frac{x}{\lambda}\right)^{k-1} e^{-(x / \lambda)^{k}}, & x \geq 0 \\ 0, & x<0\end{cases}
+\]
+
+\[
+L\left(\Theta \mid X \right)= L\left(x_{1}, \cdots x_{n} ; \gamma, \theta\right)=\prod_{i=1}^{n}(\gamma / \theta) x_{i}^{\gamma-1} \exp \left(-x_{i}^{\gamma} / \theta\right)
+\]
+
+Consider the maximum of
+\(\log \left(L\left(\Theta \mid X \right)\right)\):\textbackslash{}
+
+\[
+\frac{\partial (\log L\left(\Theta \mid X \right))}{\partial \gamma}=0 
+\quad and \quad
+\frac{\partial (\log L\left(\Theta \mid X \right))}{\partial \theta}=0 
+\quad and \quad 
+\]
+
+Solving the first order differentials:
+
+\[
+\frac{\partial \ln L}{\partial \gamma}=\frac{n}{\gamma}+\sum_{1}^{n} \ln x_{i}-\frac{1}{\theta} \sum_{1}^{n} x_{i}^{\gamma} \ln x_{i}=0
+\]
+
+\[
+\frac{\partial \ln L}{\partial \theta}=-\frac{n}{\theta}+\frac{1}{\theta^{2}} \sum_{1}^{n} x_{i}^{\gamma} \quad=0
+\]
+
+On eliminating \(\theta\) between these two equations and simplifying,
+we have \[
+\left[\frac{\sum_{1}^{n} x_{i}^{\gamma} \ln x_{i}}{\sum_{1}^{n} x_{i}^{\gamma}}-\frac{1}{\gamma}\right]=\frac{1}{n} \sum_{1}^{n} \ln x_{i},
+\]
+
+\noindent We have to now solve the MLE for the best estimate of
+\(\hat{\gamma}\). There is no analytic closed solution here for
+\(\hat{\gamma}\), unfortunately. However, this can be solved by
+iteration, or trial and error. Once two values \(\gamma_{1}\) and
+\(\gamma_{2}\) have been found in an interval such that
+\(\gamma_{1}<\gamma<\gamma_{2}\), end with a linear interpolation for
+\(\hat{\gamma}\).
+
+\textbf{Trial and Error Approach}
+
+Step-by-Step Algorithm for Trial-and-Error Search to Estimate
+\(\hat{\gamma}\) Since there is no closed-form solution for the shape
+parameter \(\hat{\gamma}\) in the Weibull distribution MLE, we can use a
+trial-and-error search algorithm to estimate it. This involves
+iteratively testing values of \(\gamma\) until we find the one that
+satisfies the MLE equation with sufficient accuracy. Below is an
+algorithmic approach to perform this search, step by step:
+
+Step 1: Define the MLE Residual Function
+
+Rearrange the MLE equation for \(\gamma\) into a residual function that
+must evaluate to zero:
+
+\[
+\operatorname{Residual}(\gamma)=\left[\frac{\sum_{i=1}^n x_i^\gamma \ln x_i}{\sum_{i=1}^n x_i^\gamma}-\frac{1}{\gamma}\right]-\frac{1}{n} \sum_{i=1}^n \ln x_i
+\]
+
+The goal is to find the \(\gamma\) that makes
+\(\operatorname{Residual}(\gamma) \approx 0\).
+
+Step 2: Set an Initial Search Range
+
+\begin{itemize}
+\tightlist
+\item
+  Choose an initial search interval \(\left[\gamma_1, \gamma_2\right]\)
+  based on prior knowledge of the Weibull distribution or the data. For
+  example:
+\item
+  Start with \(\gamma_1=0.5\) (a reasonable lower bound for the shape
+  parameter).
+\item
+  Choose \(\gamma_2=5.0\) (a reasonable upper bound for most practical
+  applications).
+\end{itemize}
+
+Step 3: Evaluate the Residual Function at the Bounds
+
+\begin{itemize}
+\tightlist
+\item
+  Compute Residual \(\left(\gamma_1\right)\) and
+  \(\operatorname{Residual}\left(\gamma_2\right)\) :
+\item
+  If
+  \(\operatorname{Residual}\left(\gamma_1\right) \cdot \operatorname{Residual}\left(\gamma_2\right)>0\),
+  the root may not lie in this interval. Adjust the bounds and repeat.
+\item
+  If
+  \(\operatorname{Residual}\left(\gamma_1\right) \cdot \operatorname{Residual}\left(\gamma_2\right)<0\),
+  a root exists in the interval \(\left[\gamma_1, \gamma_2\right]\), and
+  you can proceed.
+\end{itemize}
+
+Step 4: Use Bisection or Iterative Refinement
+
+If a root exists in the interval \(\left[\gamma_1, \gamma_2\right]\),
+refine the estimate of \(\gamma\) iteratively:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Compute the Midpoint:
+\end{enumerate}
+
+\[
+\gamma_{\text {mid }}=\frac{\gamma_1+\gamma_2}{2} .
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  Evaluate the Residual at the Midpoint: Residual
+  \(\left(\gamma_{\text {mid }}\right)\).
+\item
+  Update the Interval Based on the Sign:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  If Residual
+  \(\left(\gamma_{\text {mid }}\right) \cdot \operatorname{Residual}\left(\gamma_1\right)<0\),
+  the root lies in \(\left[\gamma_1, \gamma_{\text {mid }}\right]\). Set
+  \(\gamma_2=\) \(\gamma_{\text {mid }}\).
+\item
+  If
+  \(\operatorname{Residual}\left(\gamma_{\text {mid }}\right) \cdot \operatorname{Residual}\left(\gamma_2\right)<0\),
+  the root lies in \(\left[\gamma_{\text {mid }}, \gamma_2\right]\). Set
+  \(\gamma_1=\) \(\gamma_{\text {mid }}\).
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Repeat steps \(1-3\) until the interval
+  \(\left[\gamma_1, \gamma_2\right]\) is sufficiently small (i.e.,
+  \(\left|\gamma_2-\gamma_1\right|<\) tolerance).
+\end{enumerate}
+
+Step 5: Perform Linear Interpolation (Optional)
+
+Once the interval \(\left[\gamma_1, \gamma_2\right]\) is sufficiently
+small, you can use linear interpolation to estimate \(\hat{\gamma}\)
+more precisely:
+
+\[
+\hat{\gamma}=\gamma_1-\frac{\operatorname{Residual}\left(\gamma_1\right)}{\operatorname{Residual}\left(\gamma_2\right)-\operatorname{Residual}\left(\gamma_1\right)} \cdot\left(\gamma_2-\gamma_1\right)
+\]
+
+Step 6: Verify the Solution
+
+\begin{itemize}
+\tightlist
+\item
+  Evaluate Residual \((\hat{\gamma})\) to ensure it is sufficiently
+  close to zero (e.g.,
+  \(|\operatorname{Residual}(\hat{\gamma})|<10^{-6}\) ).
+\item
+  If the residual is not small enough, adjust the initial bounds or
+  tolerance and repeat the process.
+\end{itemize}
+
+Step 7: Estimate the Scale Parameter \(\hat{\theta}\)
+
+Once \(\hat{\gamma}\) is determined, compute the scale parameter
+\(\hat{\theta}\) using:
+
+\[
+\hat{\theta}=\frac{1}{n} \sum_{i=1}^n x_i^{\hat{\gamma}} .
+\]
+
+Notes
+
+\begin{itemize}
+\tightlist
+\item
+  Bisection Method: The method converges reliably but may be slower than
+  other rootfinding techniques like Newton-Raphson.
+\item
+  Newton-Raphson: While faster, it requires the derivative of the
+  residual function and a good initial guess, so it may not always be
+  practical for this problem.
+\item
+  Tolerance: Choose a small tolerance, such as \(10^{-6}\), to ensure
+  accurate estimates.
+\end{itemize}
+
+This algorithm provides a robust framework for estimating
+\(\hat{\gamma}\) through trial and error, leveraging numerical methods
+to handle the absence of a closed-form solution.
+
+With \(\hat{\gamma}\) thus determined, \(\theta\) is estimated as
+
+\[
+\hat{\theta}=\sum_{1}^{n} x_{i}^{\hat{\gamma}} / n
+\] \noindent Interestingly enough - this simply looks like the average
+of the \(x_{i}\) at some power \(\hat{\gamma}\).
+
+\newpage
+
+\hypertarget{example---bernoulli-distribution}{%
+\section{Example - Bernoulli
+Distribution}\label{example---bernoulli-distribution}}
+
+Coin tosses are best modeled with a Bernoulli distribution. The common
+formulation used for the Frequentist approach is via the Probability
+Mass Function (PMF) formulation. A very simple case of this formulation
+is as follows;
+
+\[
+f(x ; p)=p^{x}(1-p)^{1-x}.
+\]
+
+Where, \(x\) is a `random variable' that represents an observation of a
+coin toss (here we assume \(x=1\) for \textit{Heads} and \(x=0\) for
+\textit{Tails}). Here \(p\) is a parameter referred to as the
+`probability' of \textit{Heads}. We will refer to the set of all
+possible `parameters' as \(\Theta\) onward. This function represents how
+probable each value of x is according to the particular distribution law
+we have chosen. Note the simple properties of this PMF:
+
+\begin{align}
+x=1 \; & \rightarrow \; f(1; p) = p\\
+x=0 \; & \rightarrow \; f(0; p) = 1-p 
+\end{align}
+
+What is important to understand here is that \(x\) is a discrete outcome
+of the toss, either \(1\) or \(0\), or specifically
+\(x \in \left\{1, 0\right\}\) as a set of only two possible outcomes.
+Carefully noting this is NOT the analog range
+\(0 \leq x \leq 1\).\textbackslash{}
+
+We can determine or `regress' so to speak the parameter \(p\) from the
+data. In order to do this - lets consider a Frequentist approach
+employing a Maximum Likelihood Estimation (MLE) procedure. This method
+takes approach of maximizing likelihood of \(m\) potential parameters
+\(\left\{p_{1}, \ldots, p_{m}\right\}\) given the data set
+\(\left\{x_{1}, \ldots, x_{n}\right\}\) of size \(n\). \(\mathcal{L}\)
+represents the likelihood:
+
+\begin{align}
+\mathcal{L}(\Theta ; D) & =f\left(x_{1}, \ldots, x_{n} \mid \Theta\right)\\
+D & =\left\{x_{1}, \ldots, x_{n}\right\}\\
+\Theta & =\left\{p_{1}, \ldots, p_{m}\right\}
+\end{align}
+
+Be careful to note that there are \(n\) data points, and a model with
+\(m\) parameters. \textbackslash{}
+
+But substitution using the definition of the PME the expression now
+becomes:
+
+\[
+\mathcal{L}(\Theta ; D)=\prod_{i=1}^{n} f\left(x_{i} ; p\right)=\prod_{i=1}^{n} p^{x_{i}}(1-p)^{1-x_{i}}=p^{\sum x_{i}}(1-p)^{1-\sum x_{i}}
+\]
+
+Of note here is that we are leveraging the Markov Chain principle - that
+the sequential coin flips are NOT auto-correlated!
+
+\[
+\prod_{i=1}^{n} f\left(x_{i} ; p\right)=\prod_{i=1}^{n} p^{x_{i}}(1-p)^{1-x_{i}}
+\]
+
+This is a multiplicative sum, or multiplying the of each event to each
+subsequent event. This is important to note and understand. Markov means
+here that you can just chain the events together in a probability
+multiplicative sum.
+
+And this can be evaluated for a local maximum by using the first
+derivative:
+
+\[
+\frac{\partial (\mathcal{L}(\Theta ; D))}{\partial \Theta}=0
+\]
+
+Ok - this is the really hard to solve - no?
+
+\[
+\frac{\partial (\mathcal{L}(\Theta ; D))}{\partial \Theta}=
+\frac{\partial (\prod_{i=1}^{n} f\left(x_{i} ; p\right))}{\partial p}=
+\frac{\partial (\prod_{i=1}^{n} p^{x_{i}}(1-p)^{1-x_{i}})}{\partial p}=0
+\]
+
+How do you approach this? \ldots{} ok - lets go do a quick trick here!
+
+Take a side step\ldots{} what do we know about first derivatives, and
+the \(\text{log}\) of first derivatives ?
+
+Take a generic polynomial first derivative to determine it's maximum
+point:
+
+\[
+\frac{\partial\left(x^{2}+5\right)}{\partial x}=0
+\]
+
+The maximum is at:
+
+\[
+2 x=0
+\]\\
+
+Now take the log(f(x)), and look at ti's first derivative to determine
+the maximum:
+
+\[
+\frac{\partial \log \left(x^{2}+5\right)}{\partial x}=0
+\]
+
+The maximum is at:
+
+\[
+\frac{2 x}{x^{2}+5}=0
+\]
+
+with this solution \$x=0 \$, being the same.
+
+Interesting - we can use this!!
+
+Now, strictly speaking, you have to be careful that the function is
+indeed defined for \(f(x;p)\) and \(\log (f(x;p))\) at the maximum of
+interest otherwise things get a bit weird. But in our case it works.
+Why? Basically because \(p \in [0,1]\), and the assumption is the PMF is
+smooth and not discontinuous in this range of \(p\). Carefully noting
+this IS the analog range \(0 \leq p \leq 1\).
+
+So, with this in mind - we can leverage this idea in form of the MLE
+first derivative expression:
+
+\[
+\frac{\partial \log (\mathcal{L}(\Theta ; D))}{\partial \Theta}=0
+\]
+
+Working with:
+
+\[
+\mathcal{L}(\Theta ; D)=p^{\sum x_{i}}(1-p)^{1-\sum x_{i}}
+\]
+
+We can expand this to the following:
+
+\[
+\log (\mathcal{L}(\Theta ; D))
+=\sum x_{i} \log (p)+\left(n-\sum x_{i}\right) \log (1-p)
+\]
+
+using some simple identities for the log function and sum of exponents:
+\[
+\begin{aligned}
+\prod_{i=1}^{n} p^{x_{i}}&=p^{\sum x_{i}} \\
+\log \left(p^{a}\right)&=a \log (p) \\
+\log \left(p^{a+b}\right)&=a \log (p)+b \log (p) \\
+\log \left(\prod_{i=1}^{n} p^{x_{i}}\right)&=\sum_{i=1}^{n} x_{i} \log (p) 
+\end{aligned}
+\]
+
+Now we can more easily handle this first order derivative of the MLE
+expression \[
+\frac{\partial (\mathcal{L}(\Theta ; D))}{\partial \Theta}=0
+\]
+
+From above: \[
+\frac{\partial (\mathcal{L}(\Theta ; D))}{\partial \Theta}=
+\frac{\partial (p^{\sum x_{i}}(1-p)^{1-\sum x_{i}})}{\partial p}=0
+\]
+
+This becomes, by application of the log:
+
+\[
+\frac{\partial \log (\mathcal{L}(\Theta ; D))}{\partial p}=\frac{\partial\left(\sum x_{i} \log (p)+\left(n-\sum x_{i}\right) \log (1-p)\right)}{\partial p}=
+\frac{\partial \sum x_{i} \log (p)}{\partial p}+\frac{\left.\partial\left(n-\sum x_{i}\right) \log (1-p)\right)}{\partial p}
+\]
+
+Note that there is not dependency of \(p\) on \(x_{i}\) or \(n\).
+Meaning - that the model parameter \(p\), does not depend on the
+individual \(x_{i}\) since we are looking for the maximum of the set of
+\(x_{i}\)s (or \(D =\left\{x_{1}, \ldots, x_{n}\right\}\) the whole
+set). This is not so easy to see - think about it carefully. Thus;
+
+\[
+\frac{\left.\partial\left(n-\sum x_{i}\right) \log (1-p)\right)}{\partial p} = \left(n-\sum x_{i}\right) \frac{\partial \log (1-p))}{\partial p}
+\]
+
+Which is now easier to deal with and solve.
+
+\[
+\frac{\partial \log (\mathcal{L}(\Theta ; D))}{\partial p}=
+\sum x_{i} \frac{\partial \log (p)}{\partial p}+\left(n-\sum x_{i}\right) \frac{\partial \log (1-p))}{\partial p}=
+\frac{\sum x_{i}}{p}-\frac{n-\sum x_{i}}{1-p}
+\]
+
+But wait how did you do that?
+
+Note the following Chain Rule differential identity:
+
+\[
+\frac{d(f(g(p)))}{d p}=\frac{d f}{d g} \frac{d g}{d p} = \frac{-1}{1-p}
+\]
+
+With the idea here that \(f(p) = \log (g(p))\) and \(g(p) = (1-p)\).
+
+So lets solve for the maximum: \[
+\frac{\partial \log (\mathcal{L}(\Theta ; D))}{\partial p}=\frac{\sum x_{i}}{p}-\frac{n-\sum x_{i}}{1-p}=0
+\]
+
+Multiplying everything by \(p(1-p)\) and expanding parenthesis we get:
+
+\[
+\sum x_{i}(1-p)-\left(n-\sum x_{i}\right) p=0
+\]
+
+\[
+\sum x_{i}-p \sum x_{i}-n p+p \sum x_{i}=0
+\]
+
+Canceling out the terms and rearranging:
+
+\[
+\sum x_{i}-n p=0
+\]
+
+\[
+p=\frac{\sum x_{i}}{n}
+\]
+
+So, here is the derivation of our intuitive formula. The Bernoulli
+distribution and its MLE estimate of the mean.
+
+But what does this say? \ldots{} it is simple really \ldots{}
+
+Take a coin flip it \(n\) times, and add up the results with either
+\(x\) is either \(1\) or \(0\), and average this value over the total
+number of flips \(n\). What do you get? The probability of the coin p
+being heads or tails, which, if it is a fair coin, should be
+\(p = 0.5\).
+
+Crazy right?
+
+The illustration is to show concepts, not solve something really
+important.
+
+\newpage
+
 \newpage
 
 \hypertarget{mle-section}{%
@@ -6760,21 +7456,6 @@ gradient descent or Newton-Raphson are used:
 
 \hypertarget{mle-section-1}{%
 \section{MLE Section}\label{mle-section-1}}
-
-\newpage
-
-\hypertarget{mle-section-2}{%
-\section{MLE Section}\label{mle-section-2}}
-
-\newpage
-
-\hypertarget{mle-section-3}{%
-\section{MLE Section}\label{mle-section-3}}
-
-\newpage
-
-\hypertarget{mle-section-4}{%
-\section{MLE Section}\label{mle-section-4}}
 
 \newpage
 
