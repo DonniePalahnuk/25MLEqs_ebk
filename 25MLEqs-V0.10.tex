@@ -97,25 +97,24 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
+%\usepackage{lipsum}         % Generates filler text  
+
 \usepackage{tikz}
-\usetikzlibrary{trees} % Required for tree structure
-% \usetikzlibrary {graphs}
-% \usetikzlibrary {graphs,shapes.geometric, quotes}
-\usetikzlibrary{graphs, 
-              arrows.meta,
-              calc, 
-              chains,
-              quotes,
-              positioning,
-              shapes.geometric}
+\usetikzlibrary{
+  trees, graphs, arrows.meta, calc, chains, 
+  quotes, positioning, shapes.geometric,
+  arrows.meta, shapes,backgrounds }
+\usepackage{tikz-3dplot}
+
 \usepackage{amsmath}
 
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.18} 
+\pgfplotsset{compat=1.18}
 
 \newcommand{\docTitle}{25 ML Fundamental Equations}
 
-\raggedbottom                         % ensures no page fill
+% ensures no page fill:
+\raggedbottom
 
 % setup special chapter only counter
 \newcounter{chonlycounter}
@@ -123,83 +122,71 @@
 
 % setup some special branding fonts 
 % (this is only used at start of document - for product names )
-  \usepackage{fontspec}
-  \usepackage{textcomp}
-  \newfontface\poppins{Poppins}[Path=fonts/, 
-                            UprightFont=*-Regular, 
-                            BoldFont=*-Bold]
-  \newcommand{\textpoppins}[1]{{\poppins #1}}
+\usepackage{fontspec}
+\usepackage{textcomp}
 
-  \newfontface\fluxreg{FluxRegular}[Path=fonts/, 
-                            UprightFont=*.otf]
-  \newcommand{\textfluxreg}[1]{{\fluxreg #1}}
+% Poppins Font
+\newfontface\poppins{Poppins}[Path=fonts/, UprightFont=*-Regular, BoldFont=*-Bold]
+\newcommand{\textpoppins}[1]{{\poppins #1}}
 
-  \newfontface\lato{Lato}[Path=fonts/, 
-                            UprightFont=*-Regular]
-  \newcommand{\textlato}[1]{{\lato #1}}
+% FluxRegular Font
+\newfontface\fluxreg{FluxRegular}[Path=fonts/,UprightFont=*.otf]
+\newcommand{\textfluxreg}[1]{{\fluxreg #1}}
 
-  \newfontface\ssp{SourceSansPro}[Path=fonts/, 
-                            UprightFont=*-Regular]
-  \newcommand{\textssp}[1]{{\ssp #1}}
+% Lato Font
+\newfontface\lato{Lato}[Path=fonts/, UprightFont=*-Regular]
+\newcommand{\textlato}[1]{{\lato #1}}
 
-  \newfontface\couriernew{Courier New}
-  \newcommand{\textcouriernew}[1]{{\couriernew #1}}
+% SourceSans Font
+\newfontface\ssp{SourceSansPro}[Path=fonts/, UprightFont=*-Regular]
+\newcommand{\textssp}[1]{{\ssp #1}}
 
-  \newfontface\arial{Arial}
-  \newcommand{\textarial}[1]{{\arial #1}}
+% Courier New Font
+\newfontface\couriernew{Courier New}
+\newcommand{\textcouriernew}[1]{{\couriernew #1}}
 
-  \newfontface\palatino{Palatino}
-  \newcommand{\textpalatino}[1]{{\palatino #1}}
+% Arial Font
+\newfontface\arial{Arial}
+\newcommand{\textarial}[1]{{\arial #1}}
 
-% FOR GRAPHICS tikz and pgfplots
-%\usepackage{pgfplots}                % math plotting
-%\pgfplotsset{compat=1.18}
+% Plantino
+\newfontface\palatino{Palatino}
+\newcommand{\textpalatino}[1]{{\palatino #1}}
 
 \usepackage{rotating}
-
 \usepackage{lineno}
-
 \usepackage{hyperref}
 \usepackage{cleveref}
-
-\usepackage{tikz}                    % tikz megatool
-\usepackage{tikz-3dplot}
-\usetikzlibrary{arrows.meta,shapes,backgrounds}
-
-%\usepackage{fvextra}                 % special linebreaking 
-%\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
-
-%\usepackage[skins]{tcolorbox}
 
 \usepackage{listings}
 % make code block listings specific
 \renewcommand{\lstlistingname}{Code Listing}
 
 \usepackage{booktabs}
-\usepackage{changepage}               % width formatting on page
+% width formatting on page
+\usepackage{changepage}       
 
-\definecolor{dblu}{HTML}{002db3}
-%\definecolor{cyan}{HTML}{99ccff}
-%\definecolor{ltorng}{HTML}{99ccff}
-%\definecolor{ltgrn}{HTML}{002db3}
+% custom colors
+\definecolor{dblu}  {HTML}{002db3}
+\definecolor{cyan}  {HTML}{99ccff}
+\definecolor{ltorng}{HTML}{99ccff}
+\definecolor{ltgrn }{HTML}{002db3}
 
 \usepackage{titling}
 
-% testing 20240414 - margin methods - to adjust
-
-\usepackage{layout}       % for margins setting ->employ:"\layout"
+% margin methods - to adjust margins
+% for margins setting -> employ:"\layout"
+\usepackage{layout}       
 \usepackage{multicol}  
 \usepackage{geometry} 
 
 % Set asymmetric page margins (book formatting)
 \geometry{
-inner=0.75in,   % Inner margin
-outer=1.0in,    % Outer margin
-bottom=0.6in,   % Bottom margin
-top=0.6in,      % Bottom margin
-includeheadfoot  }
-
-%\usepackage{lipsum}         % Generates filler text
+  inner=0.75in,         % Inner margin
+  outer=1.0in,          % Outer margin
+  bottom=0.6in,         % Bottom margin
+  top=0.6in,            % Bottom margin
+  includeheadfoot }
 
 % math fonts and coloring
 \usepackage{amsmath}
@@ -227,7 +214,6 @@ includeheadfoot  }
   citecolor=blue
 }
 
-
 \usepackage{enumitem}
 \usepackage{varwidth}
 \usepackage[nochapter, tocentry, owncaptions, tablegrid]{vhistory}
@@ -238,7 +224,6 @@ includeheadfoot  }
 \captionsetup[figure]{font=small,labelfont=small}
 
 % Regular Theorems, definitions, lemmas, proofs
-
 \theoremstyle{plain}      % from `amsthm'
 \newtheorem{theorem}{Theorem}
 
@@ -252,17 +237,17 @@ includeheadfoot  }
 
 \newtheorem{algorithm}{Algorithm} 
 \newtheoremstyle{note}    % style name
-{2ex}                     % above space
-{2ex}                     % below space
-{}                        % body font
-{}                        % indent amount
-{\scshape}                % head font
-{.}                       % post head punctuation
-{\newline}                % post head punctuation
-{}                        % head spec
+  {2ex}                     % above space
+  {2ex}                     % below space
+  {}                        % body font
+  {}                        % indent amount
+  {\scshape}                % head font
+  {.}                       % post head punctuation
+  {\newline}                % post head punctuation
+  {}                        % head spec
 
 \theoremstyle{note}         % from `amsthm'
-\newtheorem{scnote}{Note}  
+\newtheorem{scnote}{Note}   % ?? check this - looks wrong
 
 % Colorbox - Theorems, definitions, lemmas, proofs
 
@@ -270,6 +255,7 @@ includeheadfoot  }
 \newtheorem{lem}{Lemma}		% from `amsthm'
 \newtheorem{pruf}{Proof}		% from `amsthm'
 
+% Colorbox Framed Theorem
 \newtcbtheorem[number within=chapter]{a_thm}{Theorem}
 {enhanced,frame empty,interior empty,colframe=green!50!white,
   coltitle=green!40!black,fonttitle=\bfseries,colbacktitle=green!15!white,
@@ -279,8 +265,10 @@ includeheadfoot  }
   breakable, colback=white
 }{theo}
 
-% This is for Key Equations - and only indexes the Charter Number
-% Should use only once in a Chapter 
+% Colorbox Framed Theorem 2
+% This is Theorem Box for Key Equations 
+% Only indexes the Chapter Number, not Chapt.Section
+% Should use only once in a Chapter!!
 \newtcbtheorem[use counter=chonlycounter]{a_def_eq}{Key ML Equation}
 {enhanced,frame empty,interior empty,colframe=blue!50!white,
   coltitle=blue!20!black,fonttitle=\bfseries,colbacktitle=blue!35!white,
@@ -290,6 +278,7 @@ includeheadfoot  }
   breakable, colback=white
 }{def_eq}
 
+% Colorbox Framed Definition
 \newtcbtheorem[number within=chapter]{a_def}{Definition}
 {enhanced,frame empty,interior empty,colframe=blue!50!white,
   coltitle=blue!40!black,fonttitle=\bfseries,colbacktitle=blue!10!white,
@@ -299,6 +288,7 @@ includeheadfoot  }
   breakable, colback=white
 }{defi}
 
+% Colorbox Framed Example
 \newtcbtheorem[number within=chapter]{a_exmp}{Example}
 {enhanced,frame empty,interior empty,colframe=cyan!50!white,
   coltitle=cyan!20!black,fonttitle=\bfseries,colbacktitle=cyan!15!white,
@@ -308,6 +298,7 @@ includeheadfoot  }
   breakable, colback=white
 }{exmp}
 
+% Colorbox Framed Lemma
 \newtcbtheorem[number within=chapter]{a_lemma}{Lemma}
 {enhanced,frame empty,interior empty,colframe=cyan!50!white,
   coltitle=cyan!20!black,fonttitle=\bfseries,colbacktitle=cyan!15!white,
@@ -317,6 +308,8 @@ includeheadfoot  }
   breakable, colback=white
 }{lema}
 
+% tcolorboxenvironment Lemma 
+% ?? needed
 \tcolorboxenvironment{lem}{
 enhanced jigsaw,colframe=cyan,interior hidden, breakable,before skip=10pt,after skip=10pt 
 }
@@ -326,19 +319,20 @@ before skip=10pt,after skip=10pt,
 borderline west={1mm}{0pt}{red}
 }
 
-\pretitle{%
+\pretitle{
 \begin{flushleft} \LARGE
 \includegraphics[width=2cm,height=2cm]{pictures/IH2.jpg}
 \end{flushleft}
 \begin{flushright} \LARGE
 }
 
-\posttitle{\end{flushright}}
-\preauthor{\begin{flushright}}
-\postauthor{\end{flushright}}
-\predate{\begin{flushright}}
-\postdate{\end{flushright}}
+\posttitle  {\end   {flushright}}
+\preauthor  {\begin {flushright}}
+\postauthor {\end   {flushright}}
+\predate    {\begin {flushright}}
+\postdate   {\end   {flushright}}
 
+%Title page messaging
 \ohead[]{IH - Machine Learning Reviews}
 \ifoot{\hsize=350pt \docTitle\ -- Version \vhCurrentVersion}
 \ofoot{\thepage~/~\pageref{LastPage}}
@@ -387,14 +381,9 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.00.0}{2024.10.25}{DP}{Created!}
   \vhEntry{0.01.0}{2024.10.25}{DP}{Thereom boxes changes, layout changes}
   \vhEntry{0.03.0}{2024.10.26}{DP}{Buildout Chapter Frames}
-  \vhEntry{0.04.0-0.06.0}{2024.11.07}{DP}{Chapter Builds}
-  \vhEntry{0.07.0-0.07.6}{2024.11.24}{DP}{Naive Bayes chapter drafted and updates}
-  \vhEntry{0.07.7}{2024.11.24}{DP}{Naive Bayes chapter update - prob space}
-  \vhEntry{0.08.0}{2024.11.25}{DP}{Start MLE}
-  \vhEntry{0.09.0}{2024.12.01}{DP}{Start Linear Regression}
-  \vhEntry{0.10.0}{2024.12.06}{DP}{Continue MLE, start OLS}
-  \vhEntry{0.10.1}{2024.12.08}{DP}{Continue Naive Bayes}
-  \vhEntry{0.10.2}{2024.12.09}{DP}{Continue MLE - added examples to MLE}
+  \vhEntry{0.04.0}{2024.11.07}{DP}{Chapter Builds}
+  \vhEntry{0.07.0}{2024.11.24}{DP}{Naive Bayes, MLE, LinReg, OLS}
+  \vhEntry{0.10.3}{2024.12.12}{DP}{Continue Naive Bayes, Continue MLE}
 \end{versionhistory}
 \newpage
 
@@ -408,43 +397,49 @@ InsightHatch: ``25MLEqs''\\
 This book is a journey through the 25 most important mathematical
 equations that underpin modern data science and machine learning. The
 idea is not only to learn about each of these equations but also to
-deeply understand their applications, background, and practical
-examples. We will explore each concept visually and instructively,
-shedding light on how these fundamental equations contribute to building
+further understand the application, background, and illustrate practical
+examples. We explore each concept visually and instructively, shedding
+light on how these fundamental equations contribute to building
 intelligent systems.
 
-Mathematics is the language of the universe, and it is the foundation of
-the incredible advances we see today in artificial intelligence and
-machine learning. The purpose of this book is to develop a learning
-guide that is both informative and visually compelling, bringing out the
-beauty and utility of these powerful mathematical tools. From
-optimization algorithms like Gradient Descent to classification
-techniques like Naive Bayes, and from measures of information like
-Entropy to clustering algorithms like K-Means, this book aims to provide
-an accessible yet thorough explanation of how these concepts work and
-why they are essential.
+Mathematics is the foundation of the incredible advances we see today in
+artificial intelligence and machine learning. The purpose of this book
+is to provide a learning guide that is both informative and visually
+compelling, bringing out the underlying beauty and utility of these
+powerful component mathematical tools. From optimization algorithms like
+Gradient Descent to classification techniques like Naive Bayes, and from
+measures of information like Entropy to clustering algorithms like
+K-Means, this book aims to provide an accessible yet thorough
+explanation of how these concepts work and why they are essential.
 
 Each chapter focuses on one equation, starting with an introduction,
-followed by a detailed description, and ending with examples of how it
-is used in practice. Whether you're an aspiring data scientist, a
-seasoned engineer, or just curious about the mathematics that drives
-intelligent technology, this book will provide you with a solid
-understanding of these essential tools and how they interact to solve
-complex problems. Visual aids, illustrative examples, and in-depth
-explanations will help demystify each topic, making learning both
-engaging and enjoyable.
+followed by a detailed description, supporting side discussions are
+provided where appropriate, also provided are examples of how it is used
+in practice. Whether you're an aspiring data scientist, a seasoned
+engineer, or just curious about the mathematics that drives intelligent
+technology, this book will provide you with a solid understanding of
+these essential tools and how they interact to solve complex problems.
+Visual aids, illustrative examples, and in-depth explanations will help
+demystify each topic, making learning both engaging and enjoyable. The
+author takes some liberty on occassion and presents sideline discussions
+of related material, with the hope of not making this book a handbook of
+sorts but more of a \textbf{group of essays} on supporting related
+topics which help the reader to see how the chapter equation is
+intertwined with other key points or concepts.
 
-Each section will be followed by questions and homework problems. These
+Each section is followed by questions and homework problems. These
 problems are selected based on their popularity and effectiveness in
 enhancing understanding. The goal is to provide exercises that solidify
 the reader's comprehension of each topic. An answer key is provided at
-the end of the book to facilitate learning and self-assessment.
+the end of the book to facilitate learning and self-assessment. Solving
+(or attempting to solve, as well as reviewing the answer keys), these
+problems is helpful to get ever further examples and insight under a
+practioner's belt.
 
 Many of the examples and problems use Python and R to provide practical
-insights. Code blocks in Python and R (and in some instances
-Mathematica) are used throughout to illustrate the concepts discussed.
-All the example codes, as well as the entire book, are posted on the
-author's GitHub repository for easy access and reproducibility.
+insights. Code blocks in Python and R are used throughout to illustrate
+the concepts discussed. The entire book, is posted on the author's
+GitHub repository for easy access and reproducibility.
 
 Whenever possible, all examples that originate from a particular source
 are acknowledged by citation and recognition of the original author. If
@@ -459,7 +454,7 @@ framework and tools}
 
 With the current advent of ML based LLMs and the availability of
 typesetting \LaTeX , we combine tools like
-\textbf{\large{\textpoppins{Mathpix}}} (the \LaTeX  equation generating
+\textbf{\large{\textpoppins{Mathpix}}} (the \LaTeX   equation generating
 snipping tool) and \textcouriernew{R Markdown} driven by
 \textbf{\large{\textarial{Pandoc}}} and
 \textbf{\large{\textpalatino{knitr}}} to essentially ``GET IT DONE''.
@@ -470,15 +465,21 @@ nearly full \LaTeX  capability with access to R \&
 \textbf{\large{\textlato{reticulate}}}) programming code blocks and also
 the ability to bridge to
 \text{\large{\textssp{MATHEMATICA}}}\textsuperscript{\textregistered} if
-needed. On a powerful laptop, this tool suite (under RStudio) leaves the
-door open to a wider world of analysis and computation. While RStudio is
-not perfect, it does allow for an IDE approach which leverages
-typesetting and computation framework (through R,
-\textbf{\large{\textfluxreg{Python}}} and
+needed.
+
+This tool suite (under RStudio) leaves the door open to a wider world of
+analysis and computation. While RStudio has it's warts, it does allow
+for an IDE approach which leverages typesetting and computation
+framework (through R, \textbf{\large{\textfluxreg{Python}}} and
 \text{\large{\textssp{MATHEMATICA}}}\textsuperscript{\textregistered})
-that makes it a worthy Swiss Army Knife. The alternative is also VS
-Code, which is great, however the mixed mode \textcouriernew{R Markdown}
-\& \LaTeX  computational environment is pretty flexible.
+that makes it a worthy Swiss Army Knife.
+
+The alternative is also VS Code, which is great, with mixed mode
+\textcouriernew{R Markdown} \& \LaTeX  computational environment is
+pretty flexible. Which ever you use - RStudio or VS Code, combined
+typesetting with inline comput
+
+?? Quarto ?? \ldots{} need a fork here ??
 
 \hypertarget{the-complimentary-nod-to-ml-llm-tools}{%
 \subsection*{The complimentary nod to ML LLM
@@ -729,27 +730,7 @@ some general guidelines:
   lead to a slow convergence or an unstable training process.
 \item
   \textbf{Considerations}:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \textbf{Too Small}: If \(\alpha\) is too small, gradient descent
-    will take very small steps towards the optimum, resulting in a very
-    slow convergence process.
-  \item
-    \textbf{Too Large}: If \(\alpha\) is too large, gradient descent
-    might overshoot the minimum or even diverge, causing the cost
-    function to oscillate or increase.
-  \item
-    \textbf{Adaptive Learning Rates}: Some advanced algorithms like
-    \textbf{Adam} use adaptive learning rates which adjust automatically
-    as training progresses.
-  \end{itemize}
 \end{itemize}
-
-In practice, tuning the learning rate often involves trial and error or
-the use of techniques like \textbf{learning rate schedules} or
-\textbf{grid search} to find the best value for a specific problem.
 
 \hypertarget{math-behind-the-gradient-nabla-jtheta_j}{%
 \section{\texorpdfstring{Math Behind the Gradient
