@@ -338,6 +338,7 @@ borderline west={1mm}{0pt}{red}
 \ofoot{\thepage~/~\pageref{LastPage}}
 \cfoot[]{}
 
+
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -383,7 +384,7 @@ InsightHatch: ``25MLEqs''\\
   \vhEntry{0.04.0}{2024.11.07}{DP}{Chapter Builds}
   \vhEntry{0.07.0}{2024.11.24}{DP}{Naive Bayes, MLE, LinReg, OLS}
   \vhEntry{0.10.3}{2024.12.12}{DP}{Continue Naive Bayes, Continue MLE}
-  \vhEntry{0.12.0}{2025.01.10}{DP}{Cleanup}
+  \vhEntry{0.10.4}{2025.01.10}{DP}{Working into the new year - fixed a bug, cleaning up}
 \end{versionhistory}
 \newpage
 
@@ -730,27 +731,7 @@ some general guidelines:
   lead to a slow convergence or an unstable training process.
 \item
   \textbf{Considerations}:
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \textbf{Too Small}: If \(\alpha\) is too small, gradient descent
-    will take very small steps towards the optimum, resulting in a very
-    slow convergence process.
-  \item
-    \textbf{Too Large}: If \(\alpha\) is too large, gradient descent
-    might overshoot the minimum or even diverge, causing the cost
-    function to oscillate or increase.
-  \item
-    \textbf{Adaptive Learning Rates}: Some advanced algorithms like
-    \textbf{Adam} use adaptive learning rates which adjust automatically
-    as training progresses.
-  \end{itemize}
 \end{itemize}
-
-In practice, tuning the learning rate often involves trial and error or
-the use of techniques like \textbf{learning rate schedules} or
-\textbf{grid search} to find the best value for a specific problem.
 
 \hypertarget{math-behind-the-gradient-nabla-jtheta_j}{%
 \section{\texorpdfstring{Math Behind the Gradient

@@ -271,6 +271,7 @@ header-includes:
   \ifoot{\hsize=350pt \docTitle\ -- Version \vhCurrentVersion}
   \ofoot{\thepage~/~\pageref{LastPage}}
   \cfoot[]{}
+
   ``` 
 ---
 <!-- headers above -->
@@ -285,8 +286,7 @@ knitr::opts_chunk$set(
   fig.cap = "Default caption for all figures",  # Optional default caption
   fig.align = "center"
 )
-library(reticulate)           # Python integration
-# cat("\\small\n")
+library(reticulate)                             # Python integration
 ```
 \
 
@@ -298,14 +298,12 @@ library(reticulate)           # Python integration
   \vhEntry{0.04.0}{2024.11.07}{DP}{Chapter Builds}
   \vhEntry{0.07.0}{2024.11.24}{DP}{Naive Bayes, MLE, LinReg, OLS}
   \vhEntry{0.10.3}{2024.12.12}{DP}{Continue Naive Bayes, Continue MLE}
-  \vhEntry{0.12.0}{2025.01.10}{DP}{Cleanup}
+  \vhEntry{0.10.4}{2025.01.10}{DP}{Working into the new year - fixed a bug, cleaning up}
 \end{versionhistory}
 \newpage
 
 <!-- table counter rest - because version table -->
 \setcounter{table}{0}
-
-
 
 \frontmatter
 # Prefice and Introduction
@@ -470,11 +468,7 @@ The learning rate \(\alpha\) controls the step size when updating the parameters
   A typical value for the learning rate lies between \(0.001\) and \(0.1\). Values outside this range can either lead to a slow convergence or an unstable training process.
 
 - **Considerations**:
-  - **Too Small**: If \(\alpha\) is too small, gradient descent will take very small steps towards the optimum, resulting in a very slow convergence process.
-  - **Too Large**: If \(\alpha\) is too large, gradient descent might overshoot the minimum or even diverge, causing the cost function to oscillate or increase.
-  - **Adaptive Learning Rates**: Some advanced algorithms like **Adam** use adaptive learning rates which adjust automatically as training progresses.
 
-In practice, tuning the learning rate often involves trial and error or the use of techniques like **learning rate schedules** or **grid search** to find the best value for a specific problem.
 
 ## Math Behind the Gradient \(\nabla J(\theta_j)\)
 
